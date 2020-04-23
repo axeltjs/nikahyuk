@@ -26,6 +26,10 @@
             background-image: linear-gradient(to bottom right, #ffd161, #ff7e70, #ff1685);
             background-repeat: no-repeat;
         } */
+
+        .is-invalid{
+            border: 1px solid red;
+        }
     </style>
 
   </head>
@@ -90,19 +94,65 @@
 
         <div id="register" class="animate form registration_form">
           <section class="login_content">
-            <form>
+            <form method="POST" action="{{ route('register') }}#signup">
+                @csrf
               <h1>Create Account</h1>
               <div>
-                <input type="text" class="form-control" placeholder="Username" required="" />
+                <input id="name" type="text" placeholder="Name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                @error('name')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
               </div>
               <div>
-                <input type="email" class="form-control" placeholder="Email" required="" />
+                <input id="email" placeholder="Email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+
+                @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Password" required="" />
+                <input id="phone" type="text" placeholder="Phone" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone" >
+                
+                @error('phone')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
               </div>
               <div>
-                <a class="btn btn-default submit" href="index.html">Submit</a>
+                <input id="password" placeholder="Password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+
+                @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+              </div>
+              <div>
+                <input id="password-confirm" placeholder="Password Confirmation" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+              </div>
+              <div>
+                <div class="radio pull-left">
+                    <label>
+                      <input type="radio" class="flat" value="Customer" checked name="role"> I want to sign in as a <b style="color:#27ae60">Customer</b>
+                    </label>
+                  </div>
+                  <div class="radio pull-left">
+                    <label>
+                      <input type="radio" class="flat" value="Vendor" name="role"> I want to sign in as a <b style="color:#8e44ad">Vendor</b>
+                    </label>
+                  </div>
+              </div>
+              <div class="clearfix"></div>
+              <br>
+              <div>
+                <button type="submit" class="btn btn-block btn-primary">
+                    {{ __('Register') }}
+                </button>
               </div>
 
               <div class="clearfix"></div>
@@ -116,8 +166,8 @@
                 <br />
 
                 <div>
-                  <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-                  <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+                    <h1><i class="fa fa-heart"></i> Nikahyuk!</h1>
+                    <p>©2020 All Rights Reserved.</p>
                 </div>
               </div>
             </form>
