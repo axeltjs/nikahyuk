@@ -21,4 +21,8 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'Admin\HomeController@index')->name('home');
+
+    Route::group(['middleware' => 'role:Customer'], function () {
+        Route::get('customer/survey', 'Admin\SurveyController@index')->name('customer.survey');
+    });
 });
