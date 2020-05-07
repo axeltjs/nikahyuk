@@ -7,6 +7,10 @@
         .form_wizard .stepContainer{
             display: none !important;
         }
+
+        .adjust{
+            max-width: 496px;
+        }
     </style>
 @endsection
 @section('content')
@@ -41,17 +45,15 @@
 <!-- bootstrap-datetimepicker -->    
 <script src="{{ asset('admin/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
 <script>
-    $('.datepicker').datetimepicker({
-        format: 'DD-MM-YYYY',
-        widgetPositioning:{
-            horizontal: 'auto',
-            vertical: 'bottom'
-        }
-    });
-
     $('document').ready(function(){
         $('.buttonFinish').on('click', function(){
             $('form').submit();
+        });
+       
+        $('#event_date').daterangepicker({
+            locale: {
+                format: 'DD/MM/YYYY',
+            }
         });
     })
 </script>

@@ -46,7 +46,11 @@
                         <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 ">
-                        <input type="number" id="budget" name="budget" required="required" class="form-control">
+                        <div class="col-md-12 xdisplay_inputx form-group row has-feedback">
+                            {!! Form::number('budget', old('budget'), ['class' => 'has-feedback-left form-control', 'required', 'id' => 'budget']) !!}
+                            <span class="fa fa-rupiah form-control-feedback left" aria-hidden="true">Rp.</span>
+                            <span id="inputSuccess2Status2" class="sr-only">(success)</span>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -54,7 +58,11 @@
                     <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 ">
-                        <input type="number" id="invitation-qty" name="invitation_qty" required="required" class="form-control">
+                        <div class="col-md-12 xdisplay_inputx form-group row has-feedback">
+                            {!! Form::number('invitation_qty', old('invitation_qty'), ['class' => 'has-feedback-right form-control', 'required', 'id' => 'invitation_qty']) !!}
+                            <span class="form-control-feedback right" aria-hidden="true" style="width:50px;">Orang</span>
+                            <span id="inputSuccess2Status2" class="sr-only">(success)</span>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -62,8 +70,16 @@
                             class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 ">
-                        <input name="event_date" id="waktu-acara" class="datepicker form-control" required="required"
-                            type="text">
+                        <fieldset>
+                            <div class="control-group ">
+                              <div class="controls">
+                                <div class="input-prepend input-group">
+                                  <span class="add-on input-group-addon"><i class="fa fa-calendar" style="margin-top:5px"></i></span>
+                                  {!! Form::text('event_date', old('event_date'), ['id' => 'event_date', 'class' => 'form-control adjust']) !!}
+                                </div>
+                              </div>
+                            </div>
+                          </fieldset>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -72,6 +88,7 @@
                     </label>
                     <div class="col-md-6 col-sm-6 ">
                         <input type="text" id="location" name="location" required="required" class="form-control">
+                        
                     </div>
                 </div>
         </div>

@@ -12,6 +12,7 @@ class Survey extends Model
         'event_date',
         'location_lat',
         'location_long',
+        'invitation_qty',
         'theme'
     ];
 
