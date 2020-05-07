@@ -85,9 +85,9 @@
 
         <!-- footer content -->
         <footer>
-          <div class="pull-left">Copyright &copy; Axel Saputra 2020</div>
+          <div class="pull-left">Crafted with <i class="fa fa-heart"></i> Axel Saputra 2020</div>
           <div class="pull-right">
-            Crafted with <i class="fa fa-heart"></i> Template by <a href="https://colorlib.com">Colorlib</a>
+             Template by <a href="https://colorlib.com">Colorlib</a>
           </div>
           <div class="clearfix"></div>
         </footer>
