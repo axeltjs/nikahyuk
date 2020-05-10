@@ -3,6 +3,7 @@
     <link rel="stylesheet" href="{{ asset('admin/vendors/bootstrap-daterangepicker/daterangepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('admin/vendors/iCheck/skins/flat/green.css') }}" rel="stylesheet">
     <style>
         .form_wizard .stepContainer{
             display: none !important;
@@ -42,6 +43,7 @@
 <!-- bootstrap-daterangepicker -->
 <script src="{{ asset('admin/vendors/moment/min/moment.min.js') }}"></script>
 <script src="{{ asset('admin/vendors/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+<script src="{{ asset('admin/vendors/iCheck/icheck.min.js') }}"></script>
 <!-- bootstrap-datetimepicker -->    
 <script src="{{ asset('admin/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
@@ -70,6 +72,19 @@
             let selected_province_id = $(".provinsi :selected").val();            
             getCity(selected_province_id);
         });
+
+       $('.select_all').on('ifChecked', function (event) {
+            $('.pilihan_item_acara').iCheck('check');
+            
+            // if ($('.select_all').filter(':checked').length == $('.select_all').length) {
+            //     $('.select_all').iCheck('check');
+            // }
+        });
+
+        $('.select_all').on('ifUnchecked', function (event) {
+            $('.pilihan_item_acara').iCheck('uncheck');
+        });
+
 
     })
 </script>

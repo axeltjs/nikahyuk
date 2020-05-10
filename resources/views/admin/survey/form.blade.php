@@ -80,25 +80,37 @@
                 </div>
         </div>
         <div id="step-2">
-            <h2 class="StepTitle">Step 2 Content</h2>
-            <p>
-                do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-                aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-                officia deserunt mollit anim id est laborum.
-            </p>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                mollit anim id est laborum.
-            </p>
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 label-align">Tema Acara</label>
+                <div class="col-md-6 col-sm-6">
+                    {!! Form::select('theme', $tema, old('theme'), ['class' => 'form-control select2 theme', 'style' => 'width:100%', 'placeholder' => 'Pilih Tema Acara ...']) !!}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 label-align">Item Acara</label>
+                <div class="col-md-6 col-sm-6">
+                    <div class="checkbox">
+                        <label>
+                            {!! Form::checkbox('check_all', null, null, ['class' => 'flat select_all']) !!}
+                            Pilih semua item acara
+                        </label>
+                    </div>
+                </div>   
+            </div>
+            <div class="form-group row">
+                 <label for="" class="col-form-label col-md-3 label-align">&nbsp;</label>
+                <div class="col-md-6 col-sm-6">
+                    @foreach($item_acara as $item)
+                    <div class="checkbox">
+                        <label>
+                            {!! Form::checkbox('item_acara[]', $item, null, ['class' => 'flat pilihan_item_acara']) !!}
+                            &nbsp;{{ $item }}
+                        </label>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
         </div>
         {!! Form::close() !!}
     </div>
-    <!-- End SmartWizard Content -->
 </div>
