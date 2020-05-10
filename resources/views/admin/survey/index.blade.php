@@ -2,7 +2,7 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('admin/vendors/bootstrap-daterangepicker/daterangepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css') }}">
-
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
     <style>
         .form_wizard .stepContainer{
             display: none !important;
@@ -27,7 +27,7 @@
         <div class="col-md-12 col-sm-12 ">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Survey <small>sesuaikan dengan budget dan kebutuhan Anda</small></h2>
+                    <span>Sesuaikan dengan budget dan kebutuhan Anda</span>
                     <div class="clearfix"></div>
                 </div>
                 @include('admin.survey.form')
@@ -44,8 +44,17 @@
 <script src="{{ asset('admin/vendors/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 <!-- bootstrap-datetimepicker -->    
 <script src="{{ asset('admin/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script src="{{ asset('js/city.js') }}"></script>
+
 <script>
     $('document').ready(function(){
+        $('document').ready(function(){
+            getProvince();
+        });
+
+        $('.select2').select2();
+        
         $('.buttonFinish').on('click', function(){
             $('form').submit();
         });
@@ -55,6 +64,13 @@
                 format: 'DD/MM/YYYY',
             }
         });
+
+        $('.provinsi').on("select2:select", function(e) { 
+            $('.city').empty();
+            let selected_province_id = $(".provinsi :selected").val();            
+            getCity(selected_province_id);
+        });
+
     })
 </script>
 @endsection
