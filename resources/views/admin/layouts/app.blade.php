@@ -20,7 +20,17 @@
     <link href="{{ asset('admin/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css') }}" rel="stylesheet"/>
     <!-- Custom Theme Style -->
     <link href="{{ asset('admin/build/css/custom.min.css') }}" rel="stylesheet">
-
+    <!-- Notif -->
+    <link href="{{ asset('admin/vendors/pnotify/dist/pnotify.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/pnotify/dist/pnotify.buttons.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/pnotify/dist/pnotify.nonblock.css') }}" rel="stylesheet">
+    
+    <style>
+      .ui-pnotify-icon .glyphicon{
+        margin-top: 6px;
+      }
+    </style>
+    
     @yield('css')
 
   </head>
@@ -97,6 +107,10 @@
 
     <!-- jQuery -->
     <script src="{{ asset('admin/vendors/jquery/dist/jquery.min.js') }}"></script>
+    <!-- Notif -->
+    <script src="{{ asset('admin/vendors/pnotify/dist/pnotify.js') }}"></script>
+    <script src="{{ asset('admin/vendors/pnotify/dist/pnotify.buttons.js') }}"></script>
+    <script src="{{ asset('admin/vendors/pnotify/dist/pnotify.nonblock.js') }}"></script>
     <!-- Bootstrap -->
     <script src="{{ asset('admin/vendors/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
     <!-- FastClick -->
@@ -109,6 +123,32 @@
     <script src="{{ asset('admin/build/js/custom.min.js') }}"></script>
 
     @yield('js')
-
+    
+    @if($errors->isNotEmpty())
+        <script>
+            $(document).ready(function(){
+                new PNotify({
+                    title: 'Error',
+                    text: '@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach',
+                    type: 'error',
+                    hide: false,
+                    styling: 'bootstrap3'
+                });
+            });
+        </script>
+    @endif
+    @if (session()->has('flash_notification.message'))
+      <script>
+          $(document).ready(function(){
+              new PNotify({
+                  title: '{{ ucfirst(session()->get("flash_notification.level")) }}',
+                  text: '{!! session()->get("flash_notification.message") !!}',
+                  type: '{{ session()->get("flash_notification.level") }}',
+                  hide: true,
+                  styling: 'bootstrap3'
+              });
+          });
+      </script>
+    @endif
   </body>
 </html>

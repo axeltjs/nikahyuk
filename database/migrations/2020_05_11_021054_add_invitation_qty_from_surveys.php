@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class EventItem extends Migration
+class AddInvitationQtyFromSurveys extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class EventItem extends Migration
      */
     public function up()
     {
-        Schema::create('event_item', function (Blueprint $table) {
-            $table->bigInteger('model_id');
-            $table->string('name');
-            $table->tinyInteger('active');
-            $table->string('model_type');
+        Schema::table('surveys', function (Blueprint $table) {
+            $table->integer('invitation_qty')->after('province_id');
+            $table->date('event_date_end')->after('event_date');
         });
     }
 
@@ -28,6 +26,8 @@ class EventItem extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('event_item');
+        Schema::table('surveys', function (Blueprint $table) {
+            //
+        });
     }
 }

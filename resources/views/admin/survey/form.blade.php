@@ -21,7 +21,12 @@
                 </a>
             </li>
         </ul>
-        {!! Form::open(['url' => '/asd/asd', 'method' => 'post']) !!}
+        @if($has_survey == null)
+            {!! Form::open(['url' => route("customer.survey.update"), 'method' => 'post']) !!}
+        @else 
+            {{-- Idk let's see later --}}
+        @endif
+        {{ csrf_field() }}
         <div id="step-1">
                 <div class="form-group row">
                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="budget">Budget 
@@ -29,7 +34,7 @@
                     </label>
                     <div class="col-md-6 col-sm-6 ">
                         <div class="col-md-12 xdisplay_inputx form-group row has-feedback">
-                            {!! Form::number('budget', old('budget'), ['class' => 'has-feedback-left form-control', 'required', 'id' => 'budget']) !!}
+                            {!! Form::number('budget', old('budget'), ['class' => 'has-feedback-left form-control angka', 'required', 'id' => 'budget']) !!}
                             <span class="fa fa-rupiah form-control-feedback left" aria-hidden="true">Rp.</span>
                             <span id="inputSuccess2Status2" class="sr-only">(success)</span>
                         </div>
@@ -41,7 +46,7 @@
                     </label>
                     <div class="col-md-6 col-sm-6 ">
                         <div class="col-md-12 xdisplay_inputx form-group row has-feedback">
-                            {!! Form::number('invitation_qty', old('invitation_qty'), ['class' => 'has-feedback-right form-control', 'required', 'id' => 'invitation_qty']) !!}
+                            {!! Form::number('invitation_qty', old('invitation_qty'), ['class' => 'has-feedback-right form-control angka', 'required', 'id' => 'invitation_qty']) !!}
                             <span class="form-control-feedback right" aria-hidden="true" style="width:50px;">Orang</span>
                             <span id="inputSuccess2Status2" class="sr-only">(success)</span>
                         </div>
@@ -69,13 +74,13 @@
                     <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 ">
-                        {!! Form::select('provinsi', [], old('provinsi'), ['class' => 'form-control select2 provinsi', 'placeholder' => 'Cari Provinsi ...']) !!}
+                        {!! Form::select('province_id', [], old('province_id'), ['class' => 'form-control select2 provinsi', 'placeholder' => 'Cari Provinsi ...']) !!}
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-form-label col-md-3 col-sm-3 label-align"></label>
                     <div class="col-md-6 col-sm-6 ">
-                        {!! Form::select('city', [], old('city'), ['class' => 'form-control select2 city', 'placeholder' => 'Cari Kota ...']) !!}
+                        {!! Form::select('city_id', [], old('city_id'), ['class' => 'form-control select2 city', 'placeholder' => 'Cari Kota ...']) !!}
                     </div>
                 </div>
         </div>

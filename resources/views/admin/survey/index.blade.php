@@ -46,13 +46,16 @@
 <script src="{{ asset('admin/vendors/iCheck/icheck.min.js') }}"></script>
 <!-- bootstrap-datetimepicker -->    
 <script src="{{ asset('admin/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
+<!-- CDN -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
 <script src="{{ asset('js/city.js') }}"></script>
 
 <script>
     $('document').ready(function(){
         $('document').ready(function(){
             getProvince();
+            
         });
 
         $('.select2').select2();

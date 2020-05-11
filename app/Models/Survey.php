@@ -10,10 +10,11 @@ class Survey extends Model
         'user_id',
         'budget',
         'event_date',
+        'event_date_end',
         'location_lat',
         'location_long',
-        'city',
-        'province',
+        'city_id',
+        'province_id',
         'invitation_qty',
         'theme'
     ];

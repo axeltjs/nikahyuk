@@ -24,5 +24,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['middleware' => 'role:Customer'], function () {
         Route::get('customer/survey', 'Admin\SurveyController@index')->name('customer.survey');
+        Route::post('customer/survey/update', 'Admin\SurveyController@updateSurvey')->name('customer.survey.update');
     });
 });

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class EventItem extends Migration
+class RemoveActiveFieldFromEventItem extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class EventItem extends Migration
      */
     public function up()
     {
-        Schema::create('event_item', function (Blueprint $table) {
-            $table->bigInteger('model_id');
-            $table->string('name');
-            $table->tinyInteger('active');
-            $table->string('model_type');
+        Schema::table('event_item', function (Blueprint $table) {
+            $table->dropColumn('active');
         });
     }
 
@@ -28,6 +25,8 @@ class EventItem extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('event_item');
+        Schema::table('event_item', function (Blueprint $table) {
+            //
+        });
     }
 }
