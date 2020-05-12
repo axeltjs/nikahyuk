@@ -21,11 +21,7 @@
                 </a>
             </li>
         </ul>
-        @if($has_survey == null)
-            {!! Form::open(['url' => route("customer.survey.update"), 'method' => 'post']) !!}
-        @else 
-            {{-- Idk let's see later --}}
-        @endif
+        {!! Form::open(['url' => route("customer.survey.update"), 'method' => 'post']) !!}
         {{ csrf_field() }}
         <div id="step-1">
                 <div class="form-group row">
@@ -62,7 +58,7 @@
                               <div class="controls">
                                 <div class="input-prepend input-group">
                                   <span class="add-on input-group-addon"><i class="fa fa-calendar" style="margin-top:5px"></i></span>
-                                  {!! Form::text('event_date', old('event_date'), ['id' => 'event_date', 'class' => 'form-control adjust']) !!}
+                                  {!! Form::text('event_date_range', old('event_date_range'), ['id' => 'event_date_range', 'class' => 'form-control adjust']) !!}
                                 </div>
                               </div>
                             </div>
@@ -73,8 +69,13 @@
                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="location">Tempat acara 
                     <span class="required">*</span>
                     </label>
+                    
                     <div class="col-md-6 col-sm-6 ">
-                        {!! Form::select('province_id', [], old('province_id'), ['class' => 'form-control select2 provinsi', 'placeholder' => 'Cari Provinsi ...']) !!}
+                        @if($has_survey)
+                            {!! Form::select('province_id', [], old('province_id'), ['class' => 'form-control select2 provinsi', 'placeholder' => 'Klik Untuk Cari Provinsi Lain ...']) !!}
+                        @else 
+                            {!! Form::select('province_id', [], old('province_id'), ['class' => 'form-control select2 provinsi', 'placeholder' => 'Cari Provinsi ...']) !!}
+                        @endif
                     </div>
                 </div>
                 <div class="form-group row">

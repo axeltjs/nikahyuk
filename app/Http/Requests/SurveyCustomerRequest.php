@@ -26,7 +26,7 @@ class SurveyCustomerRequest extends FormRequest
         return [
             'budget' => 'required|numeric',
             'invitation_qty' => 'required|numeric|min:1',
-            'event_date' => 'required',
+            'event_date_range' => 'required',
             'province_id' => 'required|numeric',
             'city_id' => 'required|numeric',
             'theme' => 'required',

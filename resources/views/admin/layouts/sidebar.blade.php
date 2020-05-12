@@ -2,6 +2,9 @@
     <div class="menu_section">
         <ul class="nav side-menu">
         <li><a href="javascript:void(0)"><i class="fa fa-home"></i> Home</a></li>
+        @hasrole('Customer')
+            <li><a href="{{ route('customer.survey') }}"><i class="fa fa-edit"></i> Survey</a></li>
+        @endhasrole
         <li><a><i class="fa fa-laptop"></i> Example <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
             <li><a href="index.html">Dashboard</a></li>

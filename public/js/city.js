@@ -20,7 +20,7 @@ let getCity = (province_id) => {
         url: 'http://api.rajaongkir.com/starter/city',
         method: 'GET',
         type: 'json',
-        delay: 250,
+        delay: 100,
         data: {
             'key': '85fad8953db6714f6d0b407c76554424',
             'province': province_id,
@@ -33,6 +33,7 @@ let getCity = (province_id) => {
             });
         },
     });
+
 }
 
 let getCityById = (province_id, city_id) => {
@@ -47,10 +48,19 @@ let getCityById = (province_id, city_id) => {
         },
         success: function (data) {
             let city = data.rajaongkir.results;
-            let nama = city[0].type + " " + city[0].city_name;
+            let nama = city.type + " " + city.city_name;
 
-            $('.provinsi_text').html(city[0].province);
+            $('.provinsi_text').html("Provinsi " + city.province);
             $('.city_text').html(nama);
+
+            let option1 = new Option(city.province, city.province_id);
+            option1.selected = true;
+
+            let option2 = new Option(city.city_name, city.city_id);
+            option2.selected = true;
+
+            $(".provinsi").append(option1);
+            $(".city").append(option2);
         },
     });
 }

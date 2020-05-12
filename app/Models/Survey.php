@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Survey extends Model
 {
+    use \App\Http\Controllers\Traits\TraitDate;
+
+    protected $appends = ['event_date_range'];
     protected $fillable = [
         'user_id',
         'budget',
@@ -22,5 +25,10 @@ class Survey extends Model
     public function user()
     {
         return $this->belonsTo(User::class, 'user_id');        
+    }
+
+    public function getEventDateRangeAttribute()
+    {
+        return $this->convertToRange($this->getAttribute('event_date'), $this->getAttribute('event_date_end'));
     }
 }

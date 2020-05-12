@@ -9,7 +9,7 @@ trait TraitDate
      * @return Array
      */
 
-    private function rangeToSql($date)
+    public function rangeToSql($date)
     {
         $getDate = explode(' - ', $date);
         $start = explode('/', $getDate[0]);
@@ -21,5 +21,13 @@ trait TraitDate
         ];
 
         return $result;
+    }
+
+    public function convertToRange($date_start, $date_end)
+    {
+        $date1 = date('d/m/Y', strtotime($date_start));
+        $date2 = date('d/m/Y', strtotime($date_end));
+
+        return $date1." - ".$date2;
     }
 }

@@ -21,7 +21,15 @@ class SurveyController extends Controller
 
     public function index()
     {
-        $tema = ['Nasional', 'Adat Bali',' Adat Jawa', 'Adat Bugis', 'Adat Dayak', 'Lainnya'];
+        $tema = [
+            'Nasional' => 'Nasional', 
+            'Adat Bali' => 'Adat Bali', 
+            'Adat Jawa' => 'Adat Jawa', 
+            'Adat Bugis' => 'Adat Bugis', 
+            'Adat Dayak' => 'Adat Dayak', 
+            'Lainnya' => 'Lainnya'
+        ];
+
         $item_acara = [
             'Mahar',
             'Gaun Pengantin',
@@ -38,15 +46,24 @@ class SurveyController extends Controller
         ];
 
         $has_survey = $this->survey->where('user_id', Auth::user()->id)->first();
+        if($has_survey){
+            $item_acara_cust = DB::table('event_item')->where([
+                'model_id' => $has_survey->id,
+                'model_type' => get_class($this->survey)
+            ])->pluck('name');
 
+            $has_survey->toArray();
+            $has_survey = collect($has_survey)->union(['item_acara' => $item_acara_cust->toArray()]);
+
+            session()->flash('_old_input', $has_survey);
+        }
         return view('admin.survey.index', compact('tema','item_acara','has_survey'));
     }
 
     public function updateSurvey(SurveyCustomerRequest $request)
     {
         $surveyClass = get_class($this->survey);
-        $date = $this->rangeToSql($request->get('event_date'));
-
+        $date = $this->rangeToSql($request->get('event_date_range'));
         // Update or Create the survey (1 person 1 survey)
         $survey = $this->survey->updateOrCreate(
             ['user_id' => Auth::user()->id],

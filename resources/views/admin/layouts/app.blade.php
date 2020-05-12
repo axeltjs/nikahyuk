@@ -29,6 +29,13 @@
       .ui-pnotify-icon .glyphicon{
         margin-top: 6px;
       }
+
+      .btn-xs{
+            max-width: 100px;
+            max-height: 23px;
+            padding: 2px;
+            font-size: 11px;
+        }
     </style>
     
     @yield('css')
