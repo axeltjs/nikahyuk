@@ -29,7 +29,7 @@
         <div class="col-md-12 col-sm-12 ">
             <div class="x_panel">
                 <div class="x_title">
-                    <span>Sesuaikan dengan budget dan kebutuhan Anda</span>
+                    <span>Sesuaikan dengan budget dan kebutuhanmu</span>
                     <div class="clearfix"></div>
                 </div>
                 @include('admin.survey.form')

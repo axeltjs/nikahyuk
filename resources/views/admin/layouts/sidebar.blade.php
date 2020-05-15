@@ -1,7 +1,7 @@
 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
     <div class="menu_section">
         <ul class="nav side-menu">
-        <li><a href="javascript:void(0)"><i class="fa fa-home"></i> Home</a></li>
+        <li><a href="{{ route('home') }}"><i class="fa fa-home"></i> Home</a></li>
         @hasrole('Customer')
             <li><a href="{{ route('customer.survey') }}"><i class="fa fa-edit"></i> Survey</a></li>
         @endhasrole
