@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Auth;
 
 class User extends Authenticatable
 {
@@ -46,5 +47,16 @@ class User extends Authenticatable
     public function company()
     {
         return $this->hasOne(Company::class, 'user_id');        
+    }
+
+    public function scopeFilter($query, $request)
+    {
+        return $query->where('name', 'LIKE', '%'.$request->get('q').'%')
+            ->orWhere('email', 'LIKE', '%'.$request->get('q').'%');
+    }
+
+    public function scopeExceptMe($query)
+    {
+        return $query->where('id', '!=', Auth::user()->id);
     }
 }

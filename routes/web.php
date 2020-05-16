@@ -21,6 +21,8 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'Admin\HomeController@index')->name('home');
+    Route::get('/profile', 'Admin\UserController@profileView')->name('profile');
+    Route::post('/profile/update', 'Admin\UserController@profilePost')->name('profile.update');
 
     Route::group(['middleware' => 'role:Customer'], function () {
         Route::get('customer/survey', 'Admin\SurveyController@index')->name('customer.survey');
@@ -32,5 +34,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('vendor/setup/update', 'Admin\SetupController@updateSetup')->name('vendor.setup.update');
         Route::resource('vendor/quotation', 'Admin\QuotationController');
         Route::get('vendor/get/client/budget','Admin\QuotationController@getClientBudget')->name('vendor.get.client.budget');
+    });
+
+    Route::group(['middleware' => 'role:Admin'], function () {
+        Route::resource('admin/user', 'Admin\UserController');
     });
 });

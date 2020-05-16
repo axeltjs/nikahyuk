@@ -10,7 +10,7 @@
               <img src="{{ asset('admin/images/img.jpg') }}" alt="">{{ Auth::user()->name }}
             </a>
             <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item"  href="javascript:;">Profile</a>
+                <a class="dropdown-item"  href="{{ route('profile') }}">Profile</a>
                 <a class="dropdown-item" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
