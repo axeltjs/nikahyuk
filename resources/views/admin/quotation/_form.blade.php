@@ -2,7 +2,7 @@
 	<label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Nama Pelanggan
 	</label>
 	<div class="col-md-6 col-sm-6 ">
-		{!! Form::select('customer_id', [], null, ['class'=>'form-control select2','id' => 'package_name','autofocus', 'tabindex' => '0']) !!}
+		{!! Form::select('customer_id', $user, null, ['class'=>'form-control select2','id' => 'customer_id','autofocus', 'tabindex' => '0', 'placeholder' => 'Pilih pelanggan']) !!}
 	</div>
 </div>
 
@@ -22,14 +22,7 @@
 	</div>
 </div>
 
-<div class="item form-group">
-	<label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Deskripsi Penawaran
-	</label>
-	<div class="col-md-6 col-sm-6 ">
-		{!! Form::textarea('description', null, ['class'=>'form-control','id' => 'description', 'tabindex' => '2']) !!}
-	</div>
-</div>
-
+@if(Request::get('type') == 'upload')
 <div class="item form-group">
 	<label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Upload Penawaran 
 	</label>
@@ -37,6 +30,15 @@
 		{!! Form::file('file', null, ['class' => 'form-control']) !!}
 	</div>
 </div>
+@else 
+<div class="item form-group">
+	<label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Deskripsi Penawaran
+	</label>
+	<div class="col-md-6 col-sm-6 ">
+		{!! Form::textarea('description', null, ['class'=>'form-control','id' => 'description', 'tabindex' => '2']) !!}
+	</div>
+</div>
+@endif
 
 <div class="form-group">
 	<div class="col-md-3">

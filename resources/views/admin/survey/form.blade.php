@@ -71,7 +71,7 @@
                     </label>
                     
                     <div class="col-md-6 col-sm-6 ">
-                        @if($has_company)
+                        @if($has_survey)
                             {!! Form::select('province_id', [], old('province_id'), ['class' => 'form-control select2 provinsi', 'placeholder' => 'Klik Untuk Cari Provinsi Lain ...']) !!}
                         @else 
                             {!! Form::select('province_id', [], old('province_id'), ['class' => 'form-control select2 provinsi', 'placeholder' => 'Cari Provinsi ...']) !!}

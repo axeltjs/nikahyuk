@@ -31,5 +31,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('vendor/setup', 'Admin\SetupController@index')->name('vendor.setup');
         Route::post('vendor/setup/update', 'Admin\SetupController@updateSetup')->name('vendor.setup.update');
         Route::resource('vendor/quotation', 'Admin\QuotationController');
+        Route::get('vendor/get/client/budget','Admin\QuotationController@getClientBudget')->name('vendor.get.client.budget');
     });
 });

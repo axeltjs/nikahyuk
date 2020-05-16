@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Quotation;
+use App\Models\SelectedVendor;
+use App\Models\Survey;
 use Auth;
 
 class QuotationController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +19,8 @@ class QuotationController extends Controller
      */
     public function index()
     {
-        $items = Quotation::where('creator_id', Auth::user()->id)->paginate(10);
+        $user = Auth::user()->id;
+        $items = Quotation::where('creator_id', $user)->paginate(10);
 
         return view('admin.quotation.index', compact('items'));
     }
@@ -28,9 +32,16 @@ class QuotationController extends Controller
      */
     public function create()
     {
+        $id = Auth::user()->id;
         $method = "create";
+        $user = SelectedVendor::where('vendor_id', $id);
+        if($user->first()){
+            $user = $user->get()->map(function($item){
+                return $item->client;
+            })->pluck('name','id');
+        }
 
-        return view('admin.quotation.create_edit', compact('method'));
+        return view('admin.quotation.create_edit', compact('method', 'user'));
     }
 
     /**
@@ -87,5 +98,14 @@ class QuotationController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getClientBudget(Request $request)
+    {
+        if($request->ajax()){
+            $budget = Survey::where('user_id', $request->get('id'))->first()->budget;
+            // return response()->json($budget);
+            return response()->json(number_format($budget));
+        }
     }
 }

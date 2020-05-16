@@ -10,6 +10,7 @@
     <div class="x_title">
         <h2>Daftar penawaran</h2>
         <a href="{{ url('vendor/quotation/create') }}" class="btn btn-primary btn-sm pull-right"> <i class="fa fa-plus"></i> Buat Penawaran</a>
+        <a href="{{ url('vendor/quotation/create?type=upload') }}" class="btn btn-success btn-sm pull-right"> <i class="fa fa-upload"></i> Upload Penawaran</a>
         <div class="clearfix"></div>
     </div>
     <div class="x_content">

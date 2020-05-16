@@ -39,11 +39,29 @@
 <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 <script>
-  var description = document.getElementById("description");
-    CKEDITOR.replace(description,{
-    language:'en-gb'
-  });
-  CKEDITOR.config.allowedContent = true;
-  $(".select2").select2();
+	var description = document.getElementById("description");
+		CKEDITOR.replace(description,{
+		language:'en-gb'
+	});
+	CKEDITOR.config.allowedContent = true;
+	$(".select2").select2();
+
+	$(document).ready(function(){
+		$('#customer_id').on("change", function(e) { 
+			let id = $("#customer_id :selected").val();
+			$.ajax({
+				url: '{{ route("vendor.get.client.budget") }}',
+				method: 'GET',
+				type: 'json',
+				data: {
+					'id': id
+				},
+				success: function (data) {
+					$('.budget').html('Rp. ' + data);
+				},
+			});
+		});
+	});
 </script>
+
 @endsection

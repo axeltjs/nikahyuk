@@ -13,11 +13,11 @@ class SelectedVendor extends Model
 
     public function client()
     {
-        return $this->belonsTo(User::class, 'customer_id');        
+        return $this->belongsTo(User::class, 'customer_id');        
     }
 
     public function vendor()
     {
-        return $this->belonsTo(User::class, 'vendor_id');        
+        return $this->belongsTo(User::class, 'vendor_id');        
     }
 }
