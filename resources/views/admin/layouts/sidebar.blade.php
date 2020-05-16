@@ -7,6 +7,7 @@
         @endhasrole
         @hasrole('Vendor')
             <li><a href="{{ route('vendor.setup') }}"><i class="fa fa-gear"></i> Konfigurasi Usaha</a></li>
+            <li><a href="{{ url('vendor/quotation') }}"><i class="fa fa-file"></i> Penawaran</a></li>
         @endhasrole
         <li><a><i class="fa fa-laptop"></i> Example <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">

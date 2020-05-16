@@ -128,6 +128,7 @@
     <script src="{{ asset('admin/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js') }}"></script>
     <!-- Custom Theme Scripts -->
     <script src="{{ asset('admin/build/js/custom.min.js') }}"></script>
+    <script src="{{ asset('js/laravel.js') }}"></script>
 
     @yield('js')
     
