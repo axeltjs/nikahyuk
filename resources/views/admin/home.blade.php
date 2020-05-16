@@ -2,7 +2,13 @@
 @section('content')
 <div class="page-title">
     <div class="title_left" style="width:100%;">
+      @hasrole('Customer')
       <h1>Halo calon pengantin yang berbahagia!</h1>
+      @endhasrole
+      
+      @hasrole('Vendor')
+      <h1>Selamat datang!</h1>
+      @endhasrole
     </div>
 </div>
 <div class="clearfix"></div>
