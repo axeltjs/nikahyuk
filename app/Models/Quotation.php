@@ -17,16 +17,17 @@ class Quotation extends Model
 
     public function client()
     {
-        return $this->belonsTo(User::class, 'customer_id');        
+        return $this->belongsTo(User::class, 'customer_id');        
     }
 
     public function vendor()
     {
-        return $this->belonsTo(User::class, 'creator_id');        
+        return $this->belongsTo(User::class, 'creator_id');        
     }
 
     public function getPriceFormatAttribute()
     {
         return "Rp. ".number_format($this->getAttribute('price'));
     }
+
 }

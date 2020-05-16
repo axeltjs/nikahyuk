@@ -22,6 +22,7 @@
                     <th>Nama Paket</th>
                     <th>Nama Client</th>
                     <th>Total Harga</th>
+                    <th>Tanggal Pembaruan</th>
                     <th>Aksi</th>
                 </tr>
                 @foreach ($items as $item)
@@ -29,9 +30,15 @@
                         <td>{{ $item->package_name }}</td>
                         <td>{{ $item->client->name }}</td>
                         <td>{{ $item->price_format }}</td>
-                        <td>
-                            <a href="#" class="btn btn-warning"> <i class="fa fa-edit"></i> Ubah</a>
-                            <a data-confirm="Apakah Anda yakin?" data-token="{{ csrf_token() }}" data-method="DELETE" href="{{ url('vendor/quotation/'.$item->id) }}" class="btn btn-block btn-danger"> <i class="fa fa-trash"></i> Hapus</a>
+                        <td>{{ $item->updated_at->diffForHumans()  }}</td>
+                        <td width="25%">
+                            <a target="__blank" href="{{ url('vendor/quotation/'.$item->id) }}" class="btn btn-info"> <i class="fa fa-eye"></i> Lihat</a>
+                            @if($item->file)
+                                <a href="{{ url('vendor/quotation/'.$item->id.'/edit?type=upload') }}" class="btn btn-warning"> <i class="fa fa-edit"></i> Ubah</a>
+                            @else
+                                <a href="{{ url('vendor/quotation/'.$item->id.'/edit') }}" class="btn btn-warning"> <i class="fa fa-edit"></i> Ubah</a>
+                            @endif
+                            <a data-confirm="Apakah Anda yakin?" data-token="{{ csrf_token() }}" data-method="DELETE" href="{{ url('vendor/quotation/'.$item->id) }}" class="btn btn-danger"> <i class="fa fa-trash"></i> Hapus</a>
                         </td>
                     </tr>
                 @endforeach

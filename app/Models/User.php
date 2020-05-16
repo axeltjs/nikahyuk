@@ -42,4 +42,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Survey::class, 'user_id');        
     }
+
+    public function company()
+    {
+        return $this->hasOne(Company::class, 'user_id');        
+    }
 }
