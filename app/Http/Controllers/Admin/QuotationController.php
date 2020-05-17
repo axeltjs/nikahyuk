@@ -21,10 +21,10 @@ class QuotationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user()->id;
-        $items = Quotation::where('creator_id', $user)->orderBy('updated_at','desc')->paginate(10);
+        $items = Quotation::filter($request)->where('creator_id', $user)->orderBy('updated_at','desc')->paginate(10);
 
         return view('admin.quotation.index', compact('items'));
     }

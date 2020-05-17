@@ -12,6 +12,20 @@ class User extends Authenticatable
 {
     use Notifiable, HasRoles;
 
+    protected static function boot() {
+        parent::boot();
+        
+        static::deleting(function($check) {
+            $check->survey()->delete();
+            $check->company()->delete();
+            $check->selectedVendor()->delete();
+            $check->selectedClient()->delete();
+            $check->quotationVendor()->delete();
+            $check->quotationClient()->delete();
+            $check->notification()->delete();
+        });
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -48,6 +62,32 @@ class User extends Authenticatable
     {
         return $this->hasOne(Company::class, 'user_id');        
     }
+
+    public function selectedVendor()
+    {
+        return $this->hasMany(SelectedVendor::class, 'vendor_id');
+    }
+
+    public function selectedClient()
+    {
+        return $this->hasMany(SelectedVendor::class, 'customer_id');
+    }
+
+    public function quotationVendor()
+    {
+        return $this->hasMany(Quotation::class, 'creator_id');
+    }
+
+    public function quotationClient()
+    {
+        return $this->hasMany(Quotation::class, 'customer_id');
+    }
+
+    public function notification()
+    {
+        return $this->hasMany(Notification::class, 'user_id');
+    }
+
 
     public function scopeFilter($query, $request)
     {

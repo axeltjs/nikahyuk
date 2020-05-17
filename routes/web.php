@@ -38,5 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['middleware' => 'role:Admin'], function () {
         Route::resource('admin/user', 'Admin\UserController');
+        Route::resource('admin/vendor/validation', 'Admin\VendorValidationController')->only(['index', 'show', 'post']);
+        Route::resource('admin/payment/validation', 'Admin\PaymentValidationController')->only(['index', 'show', 'post']);
     });
 });

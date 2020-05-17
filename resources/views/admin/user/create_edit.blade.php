@@ -10,11 +10,10 @@
 @endsection
 @section('content')
 
-<div class="title-block">
-	<div class="pull-left">
-		<h1 class="title"> User </h1>
-		<p class="title-description"> Lembar pengisian data user sistem</p>
-	</div>
+<div class="page-title">
+    <div class="title_left">
+        <h3 class="title">User </h3>
+    </div>
 </div>
 <div class="x_panel">
     <div class="x_title">

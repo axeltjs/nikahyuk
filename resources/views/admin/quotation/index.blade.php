@@ -1,9 +1,21 @@
 @extends('admin.layouts.app')
 @section('content')
-<div class="title-block">
-    <div class="pull-left">
-        <h1 class="title"> Penawaran </h1>
-        <p class="title-description"> Penawaran yang diajukan untuk client</p>
+<div class="page-title">
+    <div class="title_left">
+        <h3 class="title">Penawaran </h3>
+    </div>
+    <div class="title_right">
+        <form action="{{ URL::current() }}" method="GET">
+            <div class="col-md-5 col-sm-5 form-group pull-right top_search">
+                <div class="input-group">
+                {{-- <input type="text" class="form-control" placeholder="Search for..."> --}}
+                {!! Form::text('q', Request::get('q'), ['placeholder' => 'Pencarian ...','class' => 'form-control']) !!}
+                <span class="input-group-btn">
+                    <button class="btn btn-success" style="color:#fff">Go!</button>
+                </span>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 <div class="x_panel">

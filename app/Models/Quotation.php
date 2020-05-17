@@ -30,4 +30,13 @@ class Quotation extends Model
         return "Rp. ".number_format($this->getAttribute('price'));
     }
 
+    public function scopeFilter($query, $request)
+    {
+        if($request->has('q')){
+            return $query->whereHas('client', function($query) use ($request){
+                return $query->where('name', 'LIKE', '%'.$request->get('q').'%');            
+            })->orWhere('package_name', 'LIKE', '%'.$request->get('q').'%')
+            ->orWhere('price', 'LIKE', '%'.$request->get('q').'%');
+        }
+    }
 }
