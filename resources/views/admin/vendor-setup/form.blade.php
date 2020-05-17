@@ -51,6 +51,11 @@
                 <div class="col-md-6 col-sm-6 ">
                     <div class="col-md-12 xdisplay_inputx form-group row has-feedback">
                         {!! Form::file('photo', ['class' => 'form-control']) !!}
+                        @if(isset($has_company))
+                            @if($has_company['photo'])
+                                <a target="__blank" href="{{ url('storage/company/'.$has_company['photo']) }}" style="color:#3498db; margin-top:3px;">Lihat File</a>
+                            @endif
+                        @endif
                     </div>
                 </div>
             </div>
@@ -61,6 +66,11 @@
                 <div class="col-md-6 col-sm-6 ">
                     <div class="col-md-12 xdisplay_inputx form-group row has-feedback">
                         {!! Form::file('identity_card', ['class' => 'form-control']) !!}
+                        @if(isset($has_company))
+                            @if($has_company['identity_card'])
+                                <a target="__blank" href="{{ url('storage/company/'.$has_company['identity_card']) }}" style="color:#3498db; margin-top:3px;">Lihat File</a>
+                            @endif
+                        @endif
                     </div>
                 </div>
             </div>
@@ -70,6 +80,11 @@
                 <div class="col-md-6 col-sm-6 ">
                     <div class="col-md-12 xdisplay_inputx form-group row has-feedback">
                         {!! Form::file('business_permit', ['class' => 'form-control']) !!}
+                        @if(isset($has_company))
+                            @if($has_company['business_permit'])
+                                <a target="__blank" href="{{ url('storage/company/'.$has_company['business_permit']) }}" style="color:#3498db; margin-top:3px;">Lihat File</a>
+                            @endif
+                        @endif
                     </div>
                 </div>
             </div>
@@ -91,10 +106,9 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-form-label col-md-3 col-sm-3 label-align" for="location">Tempat acara 
+                <label class="col-form-label col-md-3 col-sm-3 label-align" for="location">Jangkauan Layanan 
                 <span class="required">*</span>
                 </label>
-                
                 <div class="col-md-6 col-sm-6 ">
                     @if($has_company)
                         {!! Form::select('province_id', [], old('province_id'), ['class' => 'form-control select2 provinsi', 'placeholder' => 'Klik Untuk Cari Provinsi Lain ...']) !!}
@@ -106,15 +120,15 @@
             <div class="form-group row">
                 <label class="col-form-label col-md-3 col-sm-3 label-align"></label>
                 <div class="col-md-6 col-sm-6 ">
-                    {!! Form::select('city_id', [], old('city_id'), ['class' => 'form-control select2 city', 'placeholder' => 'Cari Kota ...', 'multiple' => 'multiple']) !!}
+                    {!! Form::select('city_id[]', [], old('city_id'), ['class' => 'form-control select2 city', 'multiple' => 'multiple']) !!}
                 </div>
             </div>
         </div>
         <div id="step-2">
             <div class="form-group row">
-                <label class="col-form-label col-md-3 col-sm-3 label-align">Tema Acara</label>
+                <label class="col-form-label col-md-3 col-sm-3 label-align">Tema Adat Tersedia</label>
                 <div class="col-md-6 col-sm-6">
-                    {!! Form::select('theme', $tema, old('theme'), ['class' => 'form-control select2 theme', 'style' => 'width:100%', 'placeholder' => 'Pilih Tema Acara ...']) !!}
+                    {!! Form::select('theme[]', $tema, old('theme'), ['class' => 'form-control select2 theme', 'style' => 'width:100%', 'multiple' => 'multiple']) !!}
                 </div>
             </div>
             <div class="form-group row">

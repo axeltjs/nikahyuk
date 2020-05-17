@@ -23,7 +23,7 @@ trait TraitUpload
         if (empty($file_profile)) {
             return null;
         }
-
+        
         if (isset($pastData)) {
             $this->deletePhoto($dir, $pastData);
         }

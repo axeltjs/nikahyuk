@@ -9,11 +9,13 @@ use App\Models\Company;
 use Auth;
 use App\Http\Requests\VendorSetupRequest;
 use DB;
+use Exception;
 
 class SetupController extends Controller
 {
     use \App\Http\Controllers\Traits\TraitMessage;
     use \App\Http\Controllers\Traits\TraitDate;
+    use \App\Http\Controllers\Traits\TraitUpload;
 
     public function __construct(VendorSetup $setup, Company $company)
     {
@@ -47,61 +49,93 @@ class SetupController extends Controller
             'MC',
         ];
 
-        $has_company = $this->company->with(['eventItem','vendorSetup'])->where('user_id', Auth::user()->id)->first();
+        $has_company = $this->company->with(['vendorSetup'])->where('user_id', Auth::user()->id)->first();
         if($has_company){
-            // $item_acara_vend = DB::table('event_item')->where([
-            //     'model_id' => $has_company->id,
-            //     'model_type' => get_class($this->company)
-            // ])->pluck('name');
+            $citys = $has_company->vendorSetup->map(function($item){
+                return $item->where('name', 'city_id')->pluck('value');
+            })->first();
 
-            // $has_company->toArray();
-            // $has_company = collect($has_company)->union(['item_acara' => $item_acara_vend->toArray()]);
+            $themes = $has_company->vendorSetup->map(function($item){
+                return $item->where('name', 'theme')->pluck('value');
+            })->first();
 
+            $event_items = $has_company->vendorSetup->map(function($item){
+                return $item->where('name', 'item_acara')->pluck('value');
+            })->first();
+
+            $has_company->toArray();
+            $has_company = collect($has_company)->union(['city_id' => $citys, 'theme' => $themes, 'item_acara' => $event_items->toArray()]);
             session()->flash('_old_input', $has_company);
         }
-        
         return view('admin.vendor-setup.index', compact('tema','item_acara','has_company'));
     }
 
-    public function updateSurvey(VendorSetupRequest $request)
+    public function updateSetup(VendorSetupRequest $request)
     {
-        $surveyClass = get_class($this->survey);
-        $date = $this->rangeToSql($request->get('event_date_range'));
+        $setupClass = get_class($this->setup);
+        if(!$this->checkTheUpload($request)){
+            $this->message('Harap upload KTP dan Foto tempat usaha', 'danger');
+            return redirect()->back();
+        }
         
-        $survey = $this->survey->updateOrCreate(
+        $ktp = $this->photoUploaded($request->identity_card, 'company', 0);
+        $photo = $this->photoUploaded($request->photo, 'company', 0);
+        $izin = $this->photoUploaded($request->business_permit, 'company', 0);
+
+        $company = $this->company->updateOrCreate(
         ['user_id' => Auth::user()->id],
         [
-            'budget' => $request->get('budget'),
-            'event_date' => $date['start'],
-            'event_date_end' => $date['end'],
-            'city_id' => $request->get('city_id'),
-            'province_id' => $request->get('province_id'),
-            'invitation_qty' => $request->get('invitation_qty'),
-            'theme' => $request->get('theme'),
-        ]
-        );
-
-        $item_acara = $request->get('item_acara');
-        $array_item_acara = [];
-        foreach($item_acara as $item){
-            $array_item_acara[] = [
-                'model_id' => $survey->id,
-                'name' => $item,
-                'model_type' => $surveyClass
+            'name' => $request->get('name'),
+            'address' => $request->get('address'),
+            'budget_min' => $request->get('budget_min'),
+            'budget_max' => $request->get('budget_max'),
+            'identity_card' => $ktp,
+            'business_permit' => $izin,
+            'photo' => $photo
+        ]);
+        
+        $vendorSetup = [];
+        foreach($request->get('city_id') as $item){
+            $vendorSetup[] = [
+                'company_id' => $company->id,
+                'name' => 'city_id',
+                'value' => $item,
             ];
         }
 
-        // Delete the event item if exist
-        DB::table('event_item')->where([
-            'model_id' => $survey->id,
-            'model_type' => $surveyClass
-        ])->delete();
+        foreach($request->get('theme') as $item){
+            $vendorSetup[] = [
+                'company_id' => $company->id,
+                'name' => 'theme',
+                'value' => $item,
+            ];
+        }
 
-        // Insert again
-        DB::table('event_item')->insert($array_item_acara);
+        foreach($request->get('item_acara') as $item){
+            $vendorSetup[] = [
+                'company_id' => $company->id,
+                'name' => 'item_acara',
+                'value' => $item,
+            ];
+        }
+        $this->setup->where('company_id', $company->id)->delete();
+        $this->setup->insert($vendorSetup);
 
         $this->message('Sukses menyimpan konfigurasi usaha');
 
         return redirect('home');
+    }
+
+    public function checkTheUpload($request)
+    {
+        $checkCompany = $this->company->where(['user_id' => Auth::user()->id])->first();
+        
+        if($checkCompany == null){
+            if($request->identity_card == null || $request->photo == null){
+                return false;
+            }
+        }
+
+        return true;
     }
 }

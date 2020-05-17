@@ -25,7 +25,6 @@
     <div class="clearfix"></div>
 
     <div class="row">
-
         <div class="col-md-12 col-sm-12 ">
             <div class="x_panel">
                 <div class="x_title">
@@ -54,14 +53,10 @@
 <script>
 $('document').ready(function(){
     var clicked = 0;
-    @if(isset($has_company))
-        let prv = @php echo $has_company['province_id']; @endphp;
-        let ct = @php echo $has_company['city_id']; @endphp;
-        getCityById(prv, ct);
-        clicked = 1;
-    @else 
-        getProvince();
-    @endif
+    let ct = @php echo json_encode($has_company['city_id']); @endphp;
+    getCityById(0, ct);
+    // clicked = 1;
+    getProvince();
 
     $('.select2').select2();
     
@@ -76,7 +71,7 @@ $('document').ready(function(){
     });
 
     $('.provinsi').on("select2:select", function(e) { 
-        $('.city').empty();
+        // $('.city').empty();
         let selected_province_id = $(".provinsi :selected").val();            
         getCity(selected_province_id);
     });
@@ -96,7 +91,7 @@ $('document').ready(function(){
     $('.provinsi').on('change', function(){
         if(clicked == 1){
             $('.provinsi').empty();
-            $('.city').empty();
+            // $('.city').empty();
             
             clicked = 0;
             

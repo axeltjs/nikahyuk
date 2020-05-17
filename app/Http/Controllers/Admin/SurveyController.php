@@ -51,10 +51,9 @@ class SurveyController extends Controller
                 'model_id' => $has_survey->id,
                 'model_type' => get_class($this->survey)
             ])->pluck('name');
-
+            
             $has_survey->toArray();
             $has_survey = collect($has_survey)->union(['item_acara' => $item_acara_cust->toArray()]);
-
             session()->flash('_old_input', $has_survey);
         }
         return view('admin.survey.index', compact('tema','item_acara','has_survey'));

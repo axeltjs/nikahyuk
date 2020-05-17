@@ -10,9 +10,11 @@ class Company extends Model
         'user_id',
         'name', //nama usaha
         'address', //alamat usaha
-        'idendity_card', //ktp/sim
+        'identity_card', //ktp/sim
         'business_permit', //izin usaha
         'photo', //tempat usaha
+        'budget_min',
+        'budget_max'
     ];
 
     public function user()
@@ -29,4 +31,5 @@ class Company extends Model
     {
         return $this->morphMany(eventItem::class, 'model');        
     }
+
 }

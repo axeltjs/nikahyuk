@@ -73,7 +73,7 @@ $('document').ready(function(){
         $('form').submit();
     });
     
-    $('#event_date_range').daterangepicker({
+    $('#event_date').daterangepicker({
         locale: {
             format: 'DD/MM/YYYY',
         }

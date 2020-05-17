@@ -13,7 +13,7 @@ class VendorSetupRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,13 @@ class VendorSetupRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'city_id' => 'required',
+            'budget_min' => 'required_with:budget_max|numeric',
+            'photo' => 'mimes:jpg,jpeg,png|max:2048',
+            'identity_card' => 'mimes:jpg,jpeg,png,pdf|max:2048',
+            'business_permit' => 'nullable|mimes:jpg,jpeg,png,pdf|max:2048',
+            'theme' => 'required',
+            'item_acara' => 'required',
         ];
     }
 }
