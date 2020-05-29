@@ -10,6 +10,7 @@ use App\Models\SelectedVendor;
 use App\Models\Survey;
 use Auth;
 use PDF;
+use App\Events\SendOfferCompleteNotification;
 
 class QuotationController extends Controller
 {
@@ -62,7 +63,7 @@ class QuotationController extends Controller
     {
         $nama_file = $this->photoUploaded($request->file, 'quotation', 0);
 
-        Quotation::create([
+        $quotation = Quotation::create([
             'package_name' => $request->package_name,
             'description' => $request->description,
             'file' => $nama_file,
@@ -70,6 +71,8 @@ class QuotationController extends Controller
             'customer_id' => $request->customer_id,
             'creator_id' => Auth::user()->id
         ]);
+
+        event(new SendOfferCompleteNotification($request->customer_id, $quotation));
         
         $this->message('Sukses mengirim penawaran');
 

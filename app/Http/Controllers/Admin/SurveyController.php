@@ -164,9 +164,7 @@ class SurveyController extends Controller
             DB::rollBack();
 
             throw $e;
-        }
-
-      
+        }      
 
         return redirect('home');
     }

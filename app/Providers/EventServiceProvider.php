@@ -5,9 +5,11 @@ namespace App\Providers;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use App\Listeners\SendOfferNotification as SendOfferNotificationListener;
+use App\Listeners\SendOfferCompleteNotification as SendOfferCompleteNotificationListener;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 use App\Events\SendOfferNotification as SendOfferNotificationEvent;
+use App\Events\SendOfferCompleteNotification as SendOfferCompleteNotificationEvent;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -22,7 +24,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         SendOfferNotificationEvent::class => [
             SendOfferNotificationListener::class
-        ]
+        ],
+        SendOfferCompleteNotificationEvent::class => [
+            SendOfferCompleteNotificationListener::class
+        ],
     ];
 
     /**

@@ -6,9 +6,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Models\User;
+use App\Models\Quotation;
 
-class OfferNotification extends Notification
+class OfferCompleteNotification extends Notification
 {
     use Queueable;
 
@@ -17,9 +17,9 @@ class OfferNotification extends Notification
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(Quotation $quotation)
     {
-        $this->user = $user;
+        $this->quotation = $quotation;
     }
 
     /**
@@ -42,11 +42,13 @@ class OfferNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => 'Anda Mendapatkan Penawaran Dari Client',
-            'user_id' => $this->user->id,
-            'user_name' => $this->user->name,
-            'from' => 'customer',
-            'next_route' => route('quotation.index')
+            'message' => 'Vendor ' . $this->quotation->vendor->name . ' Memberikan Penawaran Terhadap Permintaan Anda Yaitu ' . $this->quotation->package_name,
+            'user_id' => $this->quotation->vendor->id,
+            'user_name' => $this->quotation->vendor->name,
+            'quotation_id' => $this->quotation->id,
+            'quotation_package_name' => $this->quotation->package_name,
+            'from' => 'vendor',
+            'next_route' => ''
         ];
     }
 }
