@@ -58,7 +58,7 @@
                               <div class="controls">
                                 <div class="input-prepend input-group">
                                   <span class="add-on input-group-addon"><i class="fa fa-calendar" style="margin-top:5px"></i></span>
-                                  {!! Form::text('event_date_range', old('event_date_range'), ['id' => 'event_date_range', 'class' => 'form-control adjust']) !!}
+                                  {!! Form::text('event_date_range', old('event_date_range'), ['id' => 'event_date', 'class' => 'form-control adjust']) !!}
                                 </div>
                               </div>
                             </div>

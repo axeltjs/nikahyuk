@@ -8,15 +8,23 @@ use App\Models\Survey;
 use Auth;
 use App\Http\Requests\SurveyCustomerRequest;
 use DB;
-
+use App\Models\Company;
+use App\Models\User;
+use Exception;
+use App\Models\SelectedVendor;
+use App\Events\SendOfferNotification;
 class SurveyController extends Controller
 {
     use \App\Http\Controllers\Traits\TraitMessage;
     use \App\Http\Controllers\Traits\TraitDate;
 
-    public function __construct(Survey $survey)
+    public function __construct(Survey $survey,
+                                Company $company,
+                                User $user)
     {
         $this->survey = $survey;
+        $this->company = $company;
+        $this->user = $user;
     }
 
     public function index()
@@ -61,42 +69,104 @@ class SurveyController extends Controller
 
     public function updateSurvey(SurveyCustomerRequest $request)
     {
-        $surveyClass = get_class($this->survey);
-        $date = $this->rangeToSql($request->get('event_date_range'));
-        // Update or Create the survey (1 person 1 survey)
-        $survey = $this->survey->updateOrCreate(
-            ['user_id' => Auth::user()->id],
-            [
-                'budget' => $request->get('budget'),
-                'event_date' => $date['start'],
-                'event_date_end' => $date['end'],
-                'city_id' => $request->get('city_id'),
-                'province_id' => $request->get('province_id'),
-                'invitation_qty' => $request->get('invitation_qty'),
-                'theme' => $request->get('theme'),
-            ]
-        );
+        DB::beginTransaction();
 
-        $item_acara = $request->get('item_acara');
-        $array_item_acara = [];
-        foreach($item_acara as $item){
-            $array_item_acara[] = [
+        try {
+              // dd($request->all());
+
+            $company = $this->company->where(function ($query) use ($request) {
+                // Penyesuaian Budget
+                $query->where('budget_max', '>=', $request->budget)
+                        ->where('budget_min', '<=', $request->budget);
+            })
+            ->where(function ($query) use ($request) {
+                // Penyesuaian Kota
+
+                $query->whereHas('vendorSetup', function ($query) use ($request) {
+                    $query->where('name', 'city_id')
+                        ->where('value', $request->city_id);
+                });
+            })
+            ->where(function ($query) use ($request) {
+                // Penyesuaian Tema
+
+                $query->whereHas('vendorSetup', function ($query) use ($request) {
+                    $query->where('name', 'theme')
+                        ->where('value', $request->theme);
+                });
+            })
+            ->where(function ($query) use ($request) {
+                // Penyesuaian Item Acara
+
+                $query->whereHas('vendorSetup', function ($query) use ($request) {
+                    $query->where('name', 'item_acara')
+                        ->whereIn('value', $request->item_acara);
+                });
+            })
+            ->withCount(['vendorSetup as item_acara_count' => function ($query) use ($request) {
+                $query->where('name', 'item_acara')
+                        ->whereIn('value', $request->item_acara);
+            }])
+            ->orderBy('item_acara_count', 'desc')
+            ->get();
+
+            $user = Auth::user();
+
+            $user->selectedClient()->saveMany(
+                $company->map(function ($item) {
+                    return new SelectedVendor([
+                        'vendor_id' => $item->user_id
+                    ]);
+                })
+            );
+
+            $date = $this->rangeToSql($request->get('event_date_range'));
+            // Update or Create the survey (1 person 1 survey)
+            $survey = $this->survey->updateOrCreate(
+                ['user_id' => Auth::user()->id],
+                [
+                    'budget' => $request->get('budget'),
+                    'event_date' => $date['start'],
+                    'event_date_end' => $date['end'],
+                    'city_id' => $request->get('city_id'),
+                    'province_id' => $request->get('province_id'),
+                    'invitation_qty' => $request->get('invitation_qty'),
+                    'theme' => $request->get('theme'),
+                ]
+            );
+
+            $item_acara = $request->get('item_acara');
+            $array_item_acara = [];
+            foreach($item_acara as $item){
+                $array_item_acara[] = [
+                    'model_id' => $survey->id,
+                    'name' => $item,
+                    'model_type' => Survey::class
+                ];
+            }
+
+            // Delete the event item if exist
+            DB::table('event_item')->where([
                 'model_id' => $survey->id,
-                'name' => $item,
-                'model_type' => $surveyClass
-            ];
+                'model_type' => Survey::class
+            ])->delete();
+
+            // Insert again
+            DB::table('event_item')->insert($array_item_acara);
+
+            DB::commit();
+            
+            event(new SendOfferNotification($user, $company));
+
+            $this->message('Sukses menyimpan survey');
+        } catch (Exception $e) {
+
+            DB::rollBack();
+
+            throw $e;
         }
 
-        // Delete the event item if exist
-        DB::table('event_item')->where([
-            'model_id' => $survey->id,
-            'model_type' => $surveyClass
-        ])->delete();
-
-        // Insert again
-        DB::table('event_item')->insert($array_item_acara);
-
-        $this->message('Sukses menyimpan survey');
+      
 
         return redirect('home');
     }

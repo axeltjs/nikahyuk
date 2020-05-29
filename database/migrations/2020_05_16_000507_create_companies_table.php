@@ -18,7 +18,7 @@ class CreateCompaniesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('name');
             $table->text('address');
-            $table->string('idendity_card',);
+            $table->string('idendity_card');
             $table->string('business_permit');
             $table->string('photo');
 

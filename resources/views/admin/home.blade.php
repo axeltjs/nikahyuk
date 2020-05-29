@@ -24,6 +24,16 @@
                   {{-- <span class="alert alert-warning col-sm-12" style="width:100%;" role="alert"> <i class="fa fa-exclamation-triangle"></i> Kamu belum melakukan survey, ayo <a style="color:#fff; text-decoration:underline;" href="{{ route('customer.survey') }}">survey sekarang!</a></span> --}}
                 {{-- @endif --}}
             @endisset
+
+
+            @foreach (auth()->user()->unreadNotifications as $unreadNotifications)
+              <div class="alert alert-info" role="alert">
+                <h4 class="alert-heading">Penawaran!</h4>
+                <p>Anda mendapatkan penawaran dari client {{ $unreadNotifications->data['user_name'] ?? '-' }}</p>
+                <hr>
+                Klik <a href="{{ route('quotation.index') }}">Menuju penawaran</a> untuk melanjutkan
+              </div>
+            @endforeach
         </div>
     </div>
 </div>
