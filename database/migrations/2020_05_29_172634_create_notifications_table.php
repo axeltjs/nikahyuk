@@ -18,7 +18,7 @@ class CreateNotificationsTable extends Migration
             $table->string('type');
             $table->morphs('notifiable');
             $table->text('data');
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->string('link')->default('-');
             $table->timestamp('read_at')->nullable();
             $table->timestamps();
