@@ -18,7 +18,7 @@ class AddApprovedOnCompaniesTable extends Migration
         });
 
         Schema::table('notifications', function (Blueprint $table) {
-            $table->string('link')->after('status')->default('-');
+            // $table->string('link')->after('status')->default('-');
         });
     }
 
