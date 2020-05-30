@@ -11,6 +11,9 @@ use App\Models\Survey;
 use Auth;
 use PDF;
 use App\Events\SendOfferCompleteNotification;
+use App\Events\DeleteSendOfferCompleteNotification;
+use DB;
+use Exception;
 
 class QuotationController extends Controller
 {
@@ -131,25 +134,36 @@ class QuotationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $item = Quotation::findOrFail($id);
-        $nama_file = $this->photoUploaded($request->file, 'quotation', 0, $item->file);
+        DB::beginTransaction();
 
-        $data = [
-            'package_name' => $request->package_name,
-            'description' => $request->description,
-            'file' => $nama_file,
-            'price' => $request->price,
-            'customer_id' => $request->customer_id,
-            'creator_id' => Auth::user()->id
-        ];
+        try {
+            $item = Quotation::findOrFail($id);
+            $nama_file = $this->photoUploaded($request->file, 'quotation', 0, $item->file);
 
-        if (isset($nama_file)) {
-            $data['file'] = $nama_file;
+            $data = [
+                'package_name' => $request->package_name,
+                'description' => $request->description,
+                'file' => $nama_file,
+                'price' => $request->price,
+                'customer_id' => $request->customer_id,
+                'creator_id' => Auth::user()->id
+            ];
+
+            if (isset($nama_file)) {
+                $data['file'] = $nama_file;
+            }
+
+            $item->update($data);
+
+            event(new DeleteSendOfferCompleteNotification($id));
+            event(new SendOfferCompleteNotification($request->customer_id, $item));
+
+            DB::commit();
+
+            $this->message('Sukses mengubah penawaran');
+        } catch (Exception $e) {
+            throw $e;
         }
-
-        $item = $item->update($data);
-
-        $this->message('Sukses mengubah penawaran');
 
         return redirect('vendor/quotation');
     }
@@ -162,11 +176,21 @@ class QuotationController extends Controller
      */
     public function destroy($id)
     {
-        $data = Quotation::findOrFail($id);
-        $this->deletePhoto('quotation', $data->file);
-        $data = $data->delete();
+        DB::beginTransaction();
 
-        $this->message('Berhaisl menghapus penawaran');
+        try {
+            $data = Quotation::findOrFail($id);
+
+            event(new DeleteSendOfferCompleteNotification($id));
+
+            $this->deletePhoto('quotation', $data->file);
+            $data->delete();
+            DB::commit();
+
+            $this->message('Berhaisl menghapus penawaran');
+        } catch (Exception $e) {
+            throw $e;
+        }
 
         return redirect()->back();
     }

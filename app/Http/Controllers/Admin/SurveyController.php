@@ -155,7 +155,7 @@ class SurveyController extends Controller
             DB::table('event_item')->insert($array_item_acara);
 
             DB::commit();
-            
+        
             event(new SendOfferNotification($user, $company));
 
             $this->message('Sukses menyimpan survey');

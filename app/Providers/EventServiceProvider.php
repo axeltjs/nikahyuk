@@ -10,6 +10,8 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Illuminate\Support\Facades\Event;
 use App\Events\SendOfferNotification as SendOfferNotificationEvent;
 use App\Events\SendOfferCompleteNotification as SendOfferCompleteNotificationEvent;
+use App\Events\DeleteSendOfferCompleteNotification as DeleteSendOfferCompleteNotificationEvent;
+use App\Listeners\DeleteSendOfferCompleteNotification as DEleteSendOfferCompleteNotificationListener;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -27,6 +29,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         SendOfferCompleteNotificationEvent::class => [
             SendOfferCompleteNotificationListener::class
+        ],
+        DeleteSendOfferCompleteNotificationEvent::class => [
+            DeleteSendOfferCompleteNotificationListener::class
         ],
     ];
 
