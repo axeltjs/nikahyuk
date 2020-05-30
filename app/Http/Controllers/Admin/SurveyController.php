@@ -14,6 +14,7 @@ use Exception;
 use App\Models\SelectedVendor;
 use App\Events\SendOfferNotification;
 use App\Events\DeleteSendOfferNotification;
+use Illuminate\Http\Request;
 class SurveyController extends Controller
 {
     use \App\Http\Controllers\Traits\TraitMessage;
@@ -73,8 +74,6 @@ class SurveyController extends Controller
         DB::beginTransaction();
 
         try {
-              // dd($request->all());
-
             $company = $this->company->where(function ($query) use ($request) {
                 // Penyesuaian Budget
                 $query->where('budget_max', '>=', $request->budget)
@@ -108,8 +107,16 @@ class SurveyController extends Controller
                 $query->where('name', 'item_acara')
                         ->whereIn('value', $request->item_acara);
             }])
-            ->orderBy('item_acara_count', 'desc')
-            ->get();
+            ->orderBy('item_acara_count', 'desc');
+
+            if ($company->count() <= 0) {
+
+                $this->message('Vendor Tidak Ditemukan', 'danger');
+
+                return redirect()->back()->withInput();
+            }
+
+            $company = $company->get();
 
             $user = Auth::user();
 
@@ -169,5 +176,60 @@ class SurveyController extends Controller
         }      
 
         return redirect('home');
+    }
+
+    public function searchVendor(Request $request) 
+    {
+        try {
+            $company = $this->company->with('user')->where(function ($query) use ($request) {
+                // Penyesuaian Budget
+                $query->where('budget_max', '>=', $request->budget)
+                        ->where('budget_min', '<=', $request->budget);
+            })
+            ->where(function ($query) use ($request) {
+                // Penyesuaian Kota
+
+                $query->whereHas('vendorSetup', function ($query) use ($request) {
+                    $query->where('name', 'city_id')
+                        ->where('value', $request->city_id);
+                });
+            })
+            ->where(function ($query) use ($request) {
+                // Penyesuaian Tema
+
+                $query->whereHas('vendorSetup', function ($query) use ($request) {
+                    $query->where('name', 'theme')
+                        ->where('value', $request->theme);
+                });
+            })
+            ->where(function ($query) use ($request) {
+                // Penyesuaian Item Acara
+
+                $query->whereHas('vendorSetup', function ($query) use ($request) {
+                    $query->where('name', 'item_acara')
+                        ->whereIn('value', $request->item_acara);
+                });
+            })
+            ->withCount(['vendorSetup as item_acara_count' => function ($query) use ($request) {
+                $query->where('name', 'item_acara')
+                        ->whereIn('value', $request->item_acara);
+            }])
+            ->orderBy('item_acara_count', 'desc')
+            ->get();
+
+            $view = view('admin.survey.search_vendor', [
+                'company' => $company
+            ])->render();
+
+            $is_available = true;
+
+        } catch (Exception $e) {
+            
+        }
+
+        return [
+            'is_available' => $is_available ?? false,
+            'view' => $view ?? null
+        ];
     }
 }

@@ -1,6 +1,6 @@
 <div class="x_content">
     <!-- Smart Wizard -->
-    <div id="wizard" class="form_wizard wizard_horizontal">
+    <div id="wizard-survey" class="form_wizard wizard_horizontal">
         <ul class="wizard_steps">
             <li>
                 <a href="#step-1">
@@ -21,8 +21,7 @@
                 </a>
             </li>
         </ul>
-        {!! Form::open(['url' => route("customer.survey.update"), 'method' => 'post']) !!}
-        {{ csrf_field() }}
+        {!! Form::open(['url' => route("customer.survey.update"), 'method' => 'post', 'id' => 'form-survey']) !!}
         <div id="step-1">
                 <div class="form-group row">
                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="budget">Budget 
@@ -119,4 +118,26 @@
         </div>
         {!! Form::close() !!}
     </div>
+
+
+    <div class="modal" id="modal-vendor" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Daftar Vendor Yang Sesuai Dengan Survey</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modal-vendor-body">    
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+                    <button type="button" class="btn btn-primary" id="button-complete-survey">Lanjutkan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

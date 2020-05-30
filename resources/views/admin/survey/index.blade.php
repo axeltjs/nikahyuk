@@ -65,13 +65,56 @@ $('document').ready(function(){
         getProvince();
     @endif
 
-    console.log(clicked);
-
     $('.select2').select2();
-    
-    $('.buttonFinish').on('click', function(){
-        $('form').submit();
+
+    function onFinishCallback(objs, context){
+
+        var buttonFinish =  $(this);
+
+        buttonFinish.attr('disabled', 'disabled');
+        buttonFinish.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Finish')
+
+        var form = $('#form-survey').serializeArray();
+
+        $('#modal-vendor-body').empty();
+
+        $.ajax({
+            url: '{{ route("customer.survey.search-vendor") }}',
+            type: 'GET',
+            data: form,
+            success: function (response) {
+
+                $('#modal-vendor-body').html(response.view);
+
+                buttonFinish.removeAttr('disabled');
+                buttonFinish.html('Finish');
+
+                $('#modal-vendor').modal('show');
+            },
+            error: function () {
+
+                alert('Terjadi Kesalahan Request');
+
+                buttonFinish.removeAttr('disabled');
+                buttonFinish.html('Finish');
+            }
+        });
+    }
+
+    $('#button-complete-survey').on('click', function (e) {
+        e.preventDefault();
+
+        $('#form-survey').submit();
     });
+
+    
+    $('#wizard-survey').smartWizard({
+        onFinish: onFinishCallback
+    });
+
+    $('.buttonNext').addClass('btn btn-success');
+    $('.buttonPrevious').addClass('btn btn-primary');
+    $('.buttonFinish').addClass('btn btn-default');
     
     $('#event_date').daterangepicker({
         locale: {
