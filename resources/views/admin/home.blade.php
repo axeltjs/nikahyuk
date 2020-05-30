@@ -31,7 +31,7 @@
             @foreach (auth()->user()->unreadNotifications as $unreadNotifications)
               <div class="alert alert-info" role="alert">
                 <h4 class="alert-heading">Penawaran!</h4>
-                <p>{{ $unreadNotifications->data['user_name'] ?? '-' }} {{ $unreadNotifications->data['message'] }} </p>
+                <p>{{ $unreadNotifications->data['message'] }} </p>
                 <hr>
                 @if (isset($unreadNotifications->data['from']))
                   Klik <a href="{{ $unreadNotifications->data['next_route'] }}">Menuju penawaran</a> untuk melanjutkan

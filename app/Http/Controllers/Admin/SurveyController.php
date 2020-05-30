@@ -13,6 +13,7 @@ use App\Models\User;
 use Exception;
 use App\Models\SelectedVendor;
 use App\Events\SendOfferNotification;
+use App\Events\DeleteSendOfferNotification;
 class SurveyController extends Controller
 {
     use \App\Http\Controllers\Traits\TraitMessage;
@@ -153,10 +154,11 @@ class SurveyController extends Controller
 
             // Insert again
             DB::table('event_item')->insert($array_item_acara);
+            
+            event(new DeleteSendOfferNotification($user));
+            event(new SendOfferNotification($user, $company));
 
             DB::commit();
-        
-            event(new SendOfferNotification($user, $company));
 
             $this->message('Sukses menyimpan survey');
         } catch (Exception $e) {

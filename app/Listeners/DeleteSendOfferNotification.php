@@ -4,10 +4,8 @@ namespace App\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Notifications\DatabaseNotification;
-use App\Models\User;
 
-class DeleteSendOfferCompleteNotification
+class DeleteSendOfferNotification
 {
     /**
      * Create the event listener.
@@ -27,10 +25,7 @@ class DeleteSendOfferCompleteNotification
      */
     public function handle($event)
     {
-        $notification = DatabaseNotification::where('type', SendOfferCompleteNotification::class)->whereJsonContains('data->quotation_id', $event->quotation_id)
-                            ->first();
-        if ($notification !== null) {
-            $notification->delete();
-        }
+        $notification = DatabaseNotification::where('type', SendOfferNotification::class)->whereJsonContains('data->quotation_id', $event->quotation_id)
+                            ->delete();
     }
 }
