@@ -68,37 +68,37 @@ $('document').ready(function(){
     $('.select2').select2();
 
     function onFinishCallback(objs, context){
+        $('#form-survey').submit();
+        // var buttonFinish =  $(this);
 
-        var buttonFinish =  $(this);
+        // buttonFinish.attr('disabled', 'disabled');
+        // buttonFinish.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Finish')
 
-        buttonFinish.attr('disabled', 'disabled');
-        buttonFinish.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Finish')
+        // var form = $('#form-survey').serializeArray();
 
-        var form = $('#form-survey').serializeArray();
+        // $('#modal-vendor-body').empty();
 
-        $('#modal-vendor-body').empty();
+        // $.ajax({
+        //     url: '{{ route("customer.survey.search-vendor") }}',
+        //     type: 'GET',
+        //     data: form,
+        //     success: function (response) {
 
-        $.ajax({
-            url: '{{ route("customer.survey.search-vendor") }}',
-            type: 'GET',
-            data: form,
-            success: function (response) {
+        //         $('#modal-vendor-body').html(response.view);
 
-                $('#modal-vendor-body').html(response.view);
+        //         buttonFinish.removeAttr('disabled');
+        //         buttonFinish.html('Finish');
 
-                buttonFinish.removeAttr('disabled');
-                buttonFinish.html('Finish');
+        //         $('#modal-vendor').modal('show');
+        //     },
+        //     error: function () {
 
-                $('#modal-vendor').modal('show');
-            },
-            error: function () {
+        //         alert('Terjadi Kesalahan Request');
 
-                alert('Terjadi Kesalahan Request');
-
-                buttonFinish.removeAttr('disabled');
-                buttonFinish.html('Finish');
-            }
-        });
+        //         buttonFinish.removeAttr('disabled');
+        //         buttonFinish.html('Finish');
+        //     }
+        // });
     }
 
     $('#button-complete-survey').on('click', function (e) {

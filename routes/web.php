@@ -28,6 +28,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('customer/survey', 'Admin\SurveyController@index')->name('customer.survey');
         Route::post('customer/survey/update', 'Admin\SurveyController@updateSurvey')->name('customer.survey.update');
         Route::get('customer/survey/search-vendor', 'Admin\SurveyController@searchVendor')->name('customer.survey.search-vendor');
+
+        Route::get('customer/chat', 'Admin\ChatController@index')->name('customer.chat.index');
     });
 
     Route::group(['middleware' => 'role:Vendor'], function () {
@@ -35,6 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('vendor/setup/update', 'Admin\SetupController@updateSetup')->name('vendor.setup.update');
         Route::resource('vendor/quotation', 'Admin\QuotationController');
         Route::get('vendor/get/client/budget','Admin\QuotationController@getClientBudget')->name('vendor.get.client.budget');
+
+        Route::get('vendor/chat', 'Admin\ChatVendorController@index')->name('vendor.chat.index');
     });
 
     Route::group(['middleware' => 'role:Admin'], function () {

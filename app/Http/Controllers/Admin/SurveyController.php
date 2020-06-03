@@ -107,26 +107,29 @@ class SurveyController extends Controller
                 $query->where('name', 'item_acara')
                         ->whereIn('value', $request->item_acara);
             }])
+            ->where('approved', 1)
             ->orderBy('item_acara_count', 'desc');
 
-            if ($company->count() <= 0) {
+            // if ($company->count() <= 0) {
 
-                $this->message('Vendor Tidak Ditemukan', 'danger');
+            //     $this->message('Vendor Tidak Ditemukan', 'danger');
 
-                return redirect()->back()->withInput();
-            }
+            //     return redirect()->back()->withInput();
+            // }
 
             $company = $company->get();
 
             $user = Auth::user();
 
-            $user->selectedClient()->saveMany(
-                $company->map(function ($item) {
-                    return new SelectedVendor([
-                        'vendor_id' => $item->user_id
-                    ]);
-                })
-            );
+            if ($company->isNotEmpty()) {
+                $user->selectedClient()->saveMany(
+                    $company->map(function ($item) {
+                        return new SelectedVendor([
+                            'vendor_id' => $item->user_id
+                        ]);
+                    })
+                );
+            }
 
             $date = $this->rangeToSql($request->get('event_date_range'));
             // Update or Create the survey (1 person 1 survey)
@@ -163,7 +166,10 @@ class SurveyController extends Controller
             DB::table('event_item')->insert($array_item_acara);
             
             event(new DeleteSendOfferNotification($user));
-            event(new SendOfferNotification($user, $company));
+
+            if ($company->isNotEmpty()) {
+                event(new SendOfferNotification($user, $company));
+            }
 
             DB::commit();
 

@@ -16,10 +16,6 @@ class AddApprovedOnCompaniesTable extends Migration
         Schema::table('companies', function (Blueprint $table) {
             $table->tinyInteger('approved')->after('photo')->default(0);
         });
-
-        Schema::table('notifications', function (Blueprint $table) {
-            $table->string('link')->after('status')->default('-');
-        });
     }
 
     /**

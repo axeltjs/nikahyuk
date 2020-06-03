@@ -48,7 +48,7 @@ class OfferCompleteNotification extends Notification
             'quotation_id' => $this->quotation->id,
             'quotation_package_name' => $this->quotation->package_name,
             'from' => 'vendor',
-            'next_route' => ''
+            'next_route' => route('customer.chat.index')
         ];
     }
 }

@@ -34,7 +34,11 @@
                 <p>{{ $unreadNotifications->data['message'] }} </p>
                 <hr>
                 @if (isset($unreadNotifications->data['from']))
-                  Klik <a href="{{ $unreadNotifications->data['next_route'] }}">Menuju penawaran</a> untuk melanjutkan
+                  @if ($unreadNotifications->data['from'] == 'vendor')
+                    Klik <a href="{{ $unreadNotifications->data['next_route'] }}">Menuju chat</a> untuk melanjutkan
+                  @elseif ($unreadNotifications->data['from'] == 'customer')
+                    Klik <a href="{{ $unreadNotifications->data['next_route'] }}">Menuju penawaran</a> untuk melanjutkan
+                  @endif
                 @endif
               </div>
             @endforeach
