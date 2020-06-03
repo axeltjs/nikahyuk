@@ -14,11 +14,17 @@ class ChatMessage extends Model
         'message'
     ];
 
+    protected $appends = ['send_date'];
+
     public function chat() {
         return $this->belongsTo(Chat::class, 'chat_id');
     }
 
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
+    }
+    
+    public function getSendDateAttribute() {
+        return $this->created_at->format('Y-m-d H:i');
     }
 }

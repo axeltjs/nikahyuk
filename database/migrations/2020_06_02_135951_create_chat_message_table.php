@@ -22,7 +22,7 @@ class CreateChatMessageTable extends Migration
 
             $table->foreign('chat_id')
                     ->references('id')
-                    ->on('users');
+                    ->on('chat');
 
             $table->foreign('user_id')
                     ->references('id')

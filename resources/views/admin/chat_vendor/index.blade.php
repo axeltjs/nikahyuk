@@ -17,7 +17,7 @@
                 <div class="bg-white">
 
                     <div class="bg-gray px-4 py-2 bg-light">
-                        <p class="h5 mb-0 py-1">Daftar Vendor</p>
+                        <p class="h5 mb-0 py-1">Daftar Customer</p>
                     </div>
 
                     <div class="messages-box">
@@ -41,7 +41,7 @@
                                         <img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50" class="rounded-circle">
                                         <div class="media-body ml-4">
                                             <div class="d-flex align-items-center justify-content-between mb-1">
-                                                <h6 class="mb-0">{{ $chatItem->vendor->name }}</h6>
+                                                <h6 class="mb-0">{{ $chatItem->customer->name }}</h6>
                                                 <!-- <small class="small font-weight-bold">14 Dec</small> -->
                                             </div>
                                             <!-- <p class="font-italic text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur. incididunt ut labore.</p> -->
@@ -147,7 +147,7 @@
             var id = chat_active.data('id');
 
             $.ajax({
-                url: '{{ route("customer.chat.send-message") }}',
+                url: '{{ route("vendor.chat.send-message") }}',
                 type: 'POST',
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -198,7 +198,7 @@
 
             if (id) {
                 $.ajax({
-                    url: '{{ route("customer.chat.get-all-message") }}',
+                    url: '{{ route("vendor.chat.get-all-message") }}',
                     type: 'GET',
                     data: {
                         id: id
