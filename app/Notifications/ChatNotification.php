@@ -8,18 +8,20 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use App\Models\User;
 
-class OfferNotification extends Notification
+class ChatNotification extends Notification
 {
     use Queueable;
 
+   
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $to_user, User $from_user)
     {
-        $this->user = $user;
+        $this->to_user = $to_user;
+        $this->from_user = $from_user;
     }
 
     /**
@@ -42,12 +44,12 @@ class OfferNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'type' => 'penawaran',
-            'message' => 'Customer Atas Nama ' . $this->user->name . ' Sedang Mencari Vendor, Segera Tawarkan Penawaran Terbaikmu!',
-            'user_id' => $this->user->id,
-            'user_name' => $this->user->name,
-            'from' => 'customer',
-            'next_route' => route('quotation.index')
+            'type' => 'chat',
+            'message' => 'Pesan Baru Belum Dibaca Dari ' . $this->from_user->name, 
+            'from_user_id' => $this->from_user->id,
+            'from_user_name' => $this->from_user->name,
+            'to_user_id' => $this->to_user->id,
+            'to_user_name' => $this->to_user->name,
         ];
     }
 }

@@ -95,7 +95,6 @@
 @endsection
 
 @section('js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script>
         const socket = io('http://localhost:3000');
 
@@ -168,6 +167,11 @@
                             user_id: response.data.user_id,
                             chat_id: response.data.chat_id,
                             data_view: response.data_receive_view
+                        });
+
+                        socket.emit('send-chat-notif', {
+                            user_id: response.data.user_id,
+                            chat_id: response.data.chat_id,
                         });
 
                     } else {

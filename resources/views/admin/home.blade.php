@@ -28,7 +28,7 @@
               
             </div>
             
-            @foreach (auth()->user()->unreadNotifications as $unreadNotifications)
+            @foreach (auth()->user()->unreadNotificationOffer as $unreadNotifications)
               <div class="alert alert-info" role="alert">
                 <h4 class="alert-heading">Penawaran!</h4>
                 <p>{{ $unreadNotifications->data['message'] }} </p>

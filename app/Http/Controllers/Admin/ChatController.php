@@ -8,6 +8,7 @@ use App\Models\Chat;
 use App\Models\ChatMessage;
 use Exception;
 use DB;
+use App\Events\SendChatNotification;
 
 class ChatController extends Controller
 {
@@ -57,6 +58,8 @@ class ChatController extends Controller
                 $status = true;
 
                 DB::commit();
+
+                event(new SendChatNotification($chat->vendor, $chat->customer));
             }
         } catch (Exception $e) {
             $message = $e->getMessage();
@@ -94,5 +97,24 @@ class ChatController extends Controller
                 'user_id' => auth()->user()->id
             ])->render()
         ];
+    }
+
+    public function getUnreadNotification()
+    {
+        try {
+            $notifications = auth()->user()->unreadNotificationChat;
+
+            return [
+                'status' => true,
+                'data_view_count' => $notifications->count(),
+                'data_view_message' => view('admin.chat.all_chat_notif')->with([
+                    'notifications' => $notifications
+                ])->render()
+            ];
+        } catch (Exception $e) {
+            return [
+                'status' => false
+            ];
+        }
     }
 }

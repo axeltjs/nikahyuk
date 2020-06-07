@@ -24,6 +24,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/profile', 'Admin\UserController@profileView')->name('profile');
     Route::post('/profile/update', 'Admin\UserController@profilePost')->name('profile.update');
 
+    Route::get('chat/unread-notification', 'Admin\ChatController@getUnreadNotification')->name('chat.unread-notification');
+
     Route::group(['middleware' => 'role:Customer'], function () {
         Route::get('customer/survey', 'Admin\SurveyController@index')->name('customer.survey');
         Route::post('customer/survey/update', 'Admin\SurveyController@updateSurvey')->name('customer.survey.update');

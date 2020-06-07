@@ -8,6 +8,7 @@ use App\Models\Chat;
 use App\Models\ChatMessage;
 use Exception;
 use DB;
+use App\Events\SendChatNotification;
 
 class ChatVendorController extends Controller
 {
@@ -57,6 +58,8 @@ class ChatVendorController extends Controller
                 $status = true;
 
                 DB::commit();
+
+                event(new SendChatNotification($chat->customer, $chat->vendor));
             }
         } catch (Exception $e) {
             $message = $e->getMessage();
