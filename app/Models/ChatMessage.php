@@ -25,7 +25,7 @@ class ChatMessage extends Model
     }
     
     public function getSendDateAttribute() {
-        if ($this->getOriginal('created_at') !== null) return null;
+        if ($this->getOriginal('created_at') === null) return null;
 
         return $this->created_at->format('Y-m-d H:i');
     }
