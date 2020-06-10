@@ -6,20 +6,22 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Models\Quotation;
+use App\Models\User;
 
-class OfferCompleteNotification extends Notification
+class ChatNotification extends Notification
 {
     use Queueable;
 
+   
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Quotation $quotation)
+    public function __construct(User $to_user, User $from_user)
     {
-        $this->quotation = $quotation;
+        $this->to_user = $to_user;
+        $this->from_user = $from_user;
     }
 
     /**
@@ -42,13 +44,12 @@ class OfferCompleteNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => 'Vendor ' . $this->quotation->vendor->name . ' Memberikan Penawaran Terhadap Permintaan Anda Yaitu ' . $this->quotation->package_name,
-            'user_id' => $this->quotation->vendor->id,
-            'user_name' => $this->quotation->vendor->name,
-            'quotation_id' => $this->quotation->id,
-            'quotation_package_name' => $this->quotation->package_name,
-            'from' => 'vendor',
-            'next_route' => route('customer.chat.index')
+            'type' => 'chat',
+            'message' => 'Pesan Baru Belum Dibaca Dari ' . $this->from_user->name, 
+            'from_user_id' => $this->from_user->id,
+            'from_user_name' => $this->from_user->name,
+            'to_user_id' => $this->to_user->id,
+            'to_user_name' => $this->to_user->name,
         ];
     }
 }

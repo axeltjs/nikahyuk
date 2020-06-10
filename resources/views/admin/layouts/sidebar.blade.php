@@ -4,10 +4,12 @@
         <li><a href="{{ route('home') }}"><i class="fa fa-home"></i> Home</a></li>
         @hasrole('Customer')
             <li><a href="{{ route('customer.survey') }}"><i class="fa fa-edit"></i> Survey</a></li>
+            <li><a href="{{ route('customer.chat.index') }}"><i class="fa fa-envelope"></i> Chat</a></li>
         @endhasrole
         @hasrole('Vendor')
             <li><a href="{{ url('vendor/quotation') }}"><i class="fa fa-file"></i> Penawaran</a></li>
             <li><a href="{{ route('vendor.setup') }}"><i class="fa fa-gear"></i> Konfigurasi Usaha</a></li>
+            <li><a href="{{ route('vendor.chat.index') }}"><i class="fa fa-envelope"></i> Chat</a></li>
         @endhasrole
         @hasrole('Admin')
             <li><a href="{{ url('admin/payment/validation') }}"><i class="fa fa-money"></i> Validasi Pembayaran</a></li>

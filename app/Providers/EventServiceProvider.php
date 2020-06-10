@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\Event;
 use App\Events\SendOfferNotification as SendOfferNotificationEvent;
 use App\Events\SendOfferCompleteNotification as SendOfferCompleteNotificationEvent;
 use App\Events\DeleteSendOfferCompleteNotification as DeleteSendOfferCompleteNotificationEvent;
-use App\Listeners\DeleteSendOfferCompleteNotification as DEleteSendOfferCompleteNotificationListener;
+use App\Listeners\DeleteSendOfferCompleteNotification as DeleteSendOfferCompleteNotificationListener;
+use App\Events\SendChatNotification as SendChatNotificationEvent;
+use App\Listeners\SendChatNotification as SendChatNotificationListener;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -32,6 +34,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         DeleteSendOfferCompleteNotificationEvent::class => [
             DeleteSendOfferCompleteNotificationListener::class
+        ],
+        SendChatNotificationEvent::class => [
+            SendChatNotificationListener::class
         ],
     ];
 

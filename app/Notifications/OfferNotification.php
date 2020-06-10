@@ -42,7 +42,8 @@ class OfferNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => 'Anda Mendapatkan Penawaran Dari Client',
+            'type' => 'penawaran',
+            'message' => 'Customer Atas Nama ' . $this->user->name . ' Sedang Mencari Vendor, Segera Tawarkan Penawaran Terbaikmu!',
             'user_id' => $this->user->id,
             'user_name' => $this->user->name,
             'from' => 'customer',

@@ -14,6 +14,7 @@ use App\Events\SendOfferCompleteNotification;
 use App\Events\DeleteSendOfferCompleteNotification;
 use DB;
 use Exception;
+use App\Models\Chat;
 
 class QuotationController extends Controller
 {
@@ -73,6 +74,11 @@ class QuotationController extends Controller
             'price' => $request->price,
             'customer_id' => $request->customer_id,
             'creator_id' => Auth::user()->id
+        ]);
+
+        Chat::firstOrCreate([
+            'customer_id' => $request->customer_id,
+            'vendor_id' => Auth::user()->id
         ]);
 
         event(new SendOfferCompleteNotification($request->customer_id, $quotation));
@@ -154,6 +160,11 @@ class QuotationController extends Controller
             }
 
             $item->update($data);
+
+            Chat::firstOrCreate([
+                'customer_id' => $request->customer_id,
+                'vendor_id' => Auth::user()->id
+            ]);
 
             event(new DeleteSendOfferCompleteNotification($id));
             event(new SendOfferCompleteNotification($request->customer_id, $item));

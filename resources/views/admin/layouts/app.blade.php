@@ -129,6 +129,8 @@
     <!-- Custom Theme Scripts -->
     <script src="{{ asset('admin/build/js/custom.min.js') }}"></script>
     <script src="{{ asset('js/laravel.js') }}"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 
     @yield('js')
     
@@ -158,5 +160,25 @@
           });
       </script>
     @endif
+
+    <script>
+        const socketChat = io('http://localhost:3000');
+
+        socketChat.on('receive-chat-notif', function (item) {
+            if (item.user_id == "{{ auth()->user()->id }}") {
+                $.ajax({
+                  url: '{{ route("chat.unread-notification") }}',
+                  type: 'GET',
+                  data: {},
+                  success: function (response) {
+                    if (response.status) {
+                      $('#unread-notification-chat-count').html(response.data_view_count);
+                      $('#unread-notification-chat-message').html(response.data_view_message);
+                    }
+                  }
+                });
+            }
+        });
+    </script>
   </body>
 </html>

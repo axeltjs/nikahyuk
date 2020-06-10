@@ -7,6 +7,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Auth;
+use App\Notifications\ChatNotification;
+use App\Notifications\OfferCompleteNotification;
+use App\Notifications\OfferNotification;
 
 class User extends Authenticatable
 {
@@ -88,6 +91,21 @@ class User extends Authenticatable
         return $this->hasMany(Notification::class, 'user_id');
     }
 
+    public function unreadNotificationChat()
+    {
+        return $this->notifications()
+                    ->whereNull('read_at')
+                    ->where('type', ChatNotification::class)
+                    ->latest()
+                    ->limit(10);
+    }
+
+    public function unreadNotificationOffer() 
+    {
+        return $this->notifications()
+                    ->whereNull('read_at')
+                    ->whereIn('type', [OfferCompleteNotification::class, OfferNotification::class]);
+    }
 
     public function scopeFilter($query, $request)
     {

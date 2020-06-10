@@ -25,65 +25,33 @@
           <li role="presentation" class="nav-item dropdown open">
             <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
               <i class="fa fa-envelope-o"></i>
-              <span class="badge bg-green">6</span>
+              <span class="badge bg-green" id="unread-notification-chat-count">{{ auth()->user()->unreadNotificationChat->count() }}</span>
             </a>
-            <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
+            <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1" id="unread-notification-chat-message">
+              @foreach (auth()->user()->unreadNotificationChat as $unreadNotificationChat)
+                <li class="nav-item">
+                  <a class="dropdown-item">
+                    <span class="image"><img src="{{ asset('admin/images/img.jpg') }}" alt="Profile Image" /></span>
+                    <span>
+                      <span>{{ $unreadNotificationChat->data['from_user_name'] }}</span>
+                      <!-- <span class="time">3 mins ago</span> -->
+                    </span>
+                    <span class="message">
+                      {{ $unreadNotificationChat->data['message'] }}
+                    </span>
+                  </a>
+                </li>
+              @endforeach
+
               <li class="nav-item">
-                <a class="dropdown-item">
-                  <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                  <span>
-                    <span>John Smith</span>
-                    <span class="time">3 mins ago</span>
-                  </span>
-                  <span class="message">
-                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                  </span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="dropdown-item">
-                  <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                  <span>
-                    <span>John Smith</span>
-                    <span class="time">3 mins ago</span>
-                  </span>
-                  <span class="message">
-                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                  </span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="dropdown-item">
-                  <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                  <span>
-                    <span>John Smith</span>
-                    <span class="time">3 mins ago</span>
-                  </span>
-                  <span class="message">
-                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                  </span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="dropdown-item">
-                  <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                  <span>
-                    <span>John Smith</span>
-                    <span class="time">3 mins ago</span>
-                  </span>
-                  <span class="message">
-                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                  </span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <div class="text-center">
+                <!-- <div class="text-center">
                   <a class="dropdown-item">
                     <strong>See All Alerts</strong>
                     <i class="fa fa-angle-right"></i>
                   </a>
-                </div>
+                </div> -->
               </li>
+              
             </ul>
           </li>
         </ul>
