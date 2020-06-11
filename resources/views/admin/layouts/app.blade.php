@@ -57,6 +57,23 @@
           background:#0abde3;
           color:#fff;
         }
+
+        .btn-chat{
+          margin-top: 12px;
+          font-size: 25px;
+        }
+
+        .text-chat{
+          margin-top:10px;
+        }
+
+        .btn-select{
+          color: #27ae60;
+        }
+
+        .btn-select:hover{
+          color: #1a7a43;
+        }
     </style>
     
     @yield('css')

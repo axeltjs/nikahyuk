@@ -179,7 +179,7 @@ class QuotationController extends Controller
             ]);
 
             event(new DeleteSendOfferCompleteNotification($id));
-            event(new SendOfferCompleteNotification($request->customer_id, $item));
+            // event(new SendOfferCompleteNotification($request->customer_id, $item));
 
             ChatMessage::create([
                 'user_id' => auth()->user()->id,

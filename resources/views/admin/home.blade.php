@@ -15,7 +15,7 @@
 <br>
 <br>
 <div class="row">
-    <div class="col-md-12 col-sm-12">
+    <div class="col-md-4 col-sm-6 col-xs-12">
         <div class="x_content">
             <div class="bs-example-popovers mb-4">
                 @isset($has_survey)
@@ -25,24 +25,45 @@
                         <br>Terima kasih telah memilih Nikahyuk sebagai partner acara pernikahanmu!</p>
                   </div>
                 @endisset
-              
             </div>
-            
-            @foreach (auth()->user()->unreadNotificationOffer as $unreadNotifications)
-              <div class="alert alert-info" role="alert">
-                <h4 class="alert-heading">Penawaran!</h4>
-                <p>{{ $unreadNotifications->data['message'] }} </p>
-                <hr>
-                @if (isset($unreadNotifications->data['from']))
-                  @if ($unreadNotifications->data['from'] == 'vendor')
-                    Klik <a href="{{ $unreadNotifications->data['next_route'] }}">Menuju chat</a> untuk melanjutkan
-                  @elseif ($unreadNotifications->data['from'] == 'customer')
-                    Klik <a href="{{ $unreadNotifications->data['next_route'] }}">Menuju penawaran</a> untuk melanjutkan
-                  @endif
-                @endif
-              </div>
-            @endforeach
         </div>
+    </div>
+
+    <div class="col-md-8 col-sm-6 col-xs-12">
+      <div class="x_panel">
+        <hr>
+        <div class="x_content">
+          <ul class="list-unstyled timeline">
+            @foreach (auth()->user()->unreadNotificationOffer as $unreadNotifications)
+            <li>
+              <div class="block">
+                <div class="tags">
+                  <a href="" class="tag">
+                    <span>Notifikasi!</span>
+                  </a>
+                </div>
+                <div class="block_content">
+                  <div class="byline">
+                    <span>{{ $unreadNotifications->created_at->diffForHumans() }}</span>
+                  </div>
+                  {{ $unreadNotifications->data['message'] }}
+                  <br>
+                  @if (isset($unreadNotifications->data['from']))
+                    @if ($unreadNotifications->data['from'] == 'vendor')
+                      Klik <a style="color: red" href="{{ $unreadNotifications->data['next_route'] }}">Menuju chat</a> untuk melanjutkan
+                    @elseif ($unreadNotifications->data['from'] == 'customer')
+                      Klik <a style="color: red" href="{{ $unreadNotifications->data['next_route'] }}">Menuju penawaran</a> untuk melanjutkan
+                    @endif
+                  @endif
+                  </p>
+                </div>
+              </div>
+            </li>
+            @endforeach
+          </ul>
+
+        </div>
+      </div>
     </div>
 </div>
       
