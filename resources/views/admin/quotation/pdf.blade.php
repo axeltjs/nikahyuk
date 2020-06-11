@@ -12,7 +12,11 @@
     </style>
 </head>
 <body>
-    <h3>NikahYuk!</h3>
+    <div style="text-align: center">
+        <h2>{{ $data->package_name }}</h2>
+        <h3>Mulai dari {{ $data->price_format }}</h3>
+        
+    </div>
     {!! $data->description !!}
 </body>
 </html>

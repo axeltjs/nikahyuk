@@ -42,7 +42,7 @@ class OfferCompleteNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => 'Vendor ' . $this->quotation->vendor->name . ' Memberikan Penawaran Terhadap Permintaan Anda Yaitu ' . $this->quotation->package_name,
+            'message' => 'Vendor ' . $this->quotation->vendor->company->name . ' Memberikan Penawaran Terhadap Permintaan Anda Yaitu ' . $this->quotation->package_name,
             'user_id' => $this->quotation->vendor->id,
             'user_name' => $this->quotation->vendor->name,
             'quotation_id' => $this->quotation->id,

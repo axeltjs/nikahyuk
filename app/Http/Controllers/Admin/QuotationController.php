@@ -15,6 +15,8 @@ use App\Events\DeleteSendOfferCompleteNotification;
 use DB;
 use Exception;
 use App\Models\Chat;
+use App\Models\ChatMessage;
+use App\Models\User;
 
 class QuotationController extends Controller
 {
@@ -76,9 +78,17 @@ class QuotationController extends Controller
             'creator_id' => Auth::user()->id
         ]);
 
-        Chat::firstOrCreate([
+        $cust = User::find($request->customer_id);
+
+        $chat = Chat::firstOrCreate([
             'customer_id' => $request->customer_id,
             'vendor_id' => Auth::user()->id
+        ]);
+
+        ChatMessage::create([
+            'user_id' => auth()->user()->id,
+            'chat_id' => $chat->id,
+            'message' => 'Hai '.$cust->name.', kami memiliki penawaran yang cocok buat kamu! <br> kamu bisa cek link dibawah ini ya. <br><br> <a target="__blank" href="'.url('customer/quotation/'.$quotation->id).'">'.$request->package_name.'</a>'
         ]);
 
         event(new SendOfferCompleteNotification($request->customer_id, $quotation));
@@ -159,15 +169,23 @@ class QuotationController extends Controller
                 $data['file'] = $nama_file;
             }
 
+            $cust = User::find($request->customer_id);
+
             $item->update($data);
 
-            Chat::firstOrCreate([
+            $chat = Chat::firstOrCreate([
                 'customer_id' => $request->customer_id,
                 'vendor_id' => Auth::user()->id
             ]);
 
             event(new DeleteSendOfferCompleteNotification($id));
             event(new SendOfferCompleteNotification($request->customer_id, $item));
+
+            ChatMessage::create([
+                'user_id' => auth()->user()->id,
+                'chat_id' => $chat->id,
+                'message' => 'Hai '.$cust->name.', kami baru saja memperbarui penawaran kami hanya untukmu! <br> kamu bisa cek link dibawah ini ya. <br><br> <a target="__blank" href="'.url('customer/quotation/'.$id).'">'.$request->package_name.'</a>'
+            ]);
 
             DB::commit();
 

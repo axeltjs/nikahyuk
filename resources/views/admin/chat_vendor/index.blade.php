@@ -57,6 +57,7 @@
             <!-- Chat Box-->
             <div class="col-7 px-0">
                 <div class="px-4 py-5 chat-box bg-white" id="chat-box">
+                    <p style="text-align: center;">Pilih lawan bicaramu di kotak sebelah kiri ya..</p>
                     <!-- Sender Message-->
                     <!-- <div class="media w-50 mb-3"><img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50" class="rounded-circle">
                         <div class="media-body ml-3">
