@@ -36,6 +36,27 @@
             padding: 2px;
             font-size: 11px;
         }
+
+        .label {
+          padding:7px;
+          border-radius: 5px;
+          margin: 0;
+        }
+
+        .label-danger{
+          background:#e74c3c;
+          color:#fff;
+        }
+
+        .label-success{
+          background:#27ae60;
+          color:#fff;
+        }
+
+        .label-info{
+          background:#0abde3;
+          color:#fff;
+        }
     </style>
     
     @yield('css')
