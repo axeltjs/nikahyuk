@@ -58,6 +58,11 @@
           color:#fff;
         }
 
+        .label-primary{
+          background:#0984e3;
+          color:#fff;
+        }
+
         .btn-chat{
           margin-top: 12px;
           font-size: 25px;

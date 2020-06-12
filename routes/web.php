@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/profile/update', 'Admin\UserController@profilePost')->name('profile.update');
 
     Route::get('chat/unread-notification', 'Admin\ChatController@getUnreadNotification')->name('chat.unread-notification');
+    Route::resource('transaction', 'Admin\TransactionController');
 
     Route::group(['middleware' => 'role:Customer'], function () {
         Route::get('customer/survey', 'Admin\SurveyController@index')->name('customer.survey');
@@ -36,6 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('customer/chat', 'Admin\ChatController@index')->name('customer.chat.index');
         Route::get('customer/chat/get-all-message', 'Admin\ChatController@getAllMessage')->name('customer.chat.get-all-message');
         Route::post('customer/chat/send-message', 'Admin\ChatController@sendMessage')->name('customer.chat.send-message');
+
+        Route::post('customer/deal','Admin\TransactionController@dealTransaction')->name('customer.deal');
     });
 
     Route::group(['middleware' => 'role:Vendor'], function () {

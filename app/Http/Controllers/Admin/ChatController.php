@@ -79,12 +79,18 @@ class ChatController extends Controller
 
     public function getAllMessage(Request $request) {
         $data = collect();
+        $transaction = 0;
 
         try {
             $chat = $this->chat->find($request->id);
 
             if ($chat !== null) {
                 $data = $chat->chatMessage;
+
+                $transaction = $this->transaction->where(['vendor_id' => $chat->vendor_id, 'customer_id' => $chat->customer_id])
+                    ->where('status', 1)
+                    ->orWhere('status', 0)
+                    ->count();
             }
         } catch (Exception $e) {
 
@@ -92,6 +98,7 @@ class ChatController extends Controller
 
         return [
             'data' => $data,
+            'transaksi' => $transaction,
             'data_view' => view('admin.chat.all_message')->with([
                 'data' => $data,
                 'user_id' => auth()->user()->id

@@ -42,6 +42,7 @@
                                         <div class="media-body ml-4">
                                             <div class="d-flex align-items-center justify-content-between mb-1">
                                                 <h6 class="mb-0">{{ $chatItem->vendor->company->name }}</h6>
+                                                <input type="hidden" id="chatbox-vendor-id" value="{{ $chatItem->vendor->id }}">
                                                 {{-- <small class="small font-weight-bold"></small> --}}
                                                 <!-- <small >14 Dec</small> -->
                                             </div>
@@ -87,7 +88,7 @@
                     <div class="input-group">
                         <input type="text" placeholder="Type a message" aria-describedby="button-send-message" class="text-chat form-control rounded-0 border-0 py-4 bg-light" id="form-typing-message">
                         <div class="input-group-append">
-                            <button id="button-select-vendor" type="button" class="btn btn-chat btn-select" data-toggle="modal" data-target="#deModal" data-show="tip" title="Pilih vendor ini"> <i class="fa fa-check-circle"></i></button>
+                            <button id="button-select-vendor" type="button" class="btn btn-chat btn-select" data-show="tip" title="Pilih vendor ini"> <i class="fa fa-check-circle"></i></button>
                             <button id="button-send-message" type="button" class="btn btn-chat btn-link"> <i class="fa fa-paper-plane"></i></button>
                         </div>
                     </div>
@@ -96,6 +97,33 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div id="confirmModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+    <form action="{{ route('customer.deal') }}" method="post">
+        {{ csrf_field() }}
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <h5>Apakah anda yakin memilih Vendor ini?</h5>
+          <input type="hidden" name="vendor_id" id="confirm-vendor-id">
+          <input type="number" name="amount" class="form-control" placeholder="Masukkan harga kesepakan (Rp)" required>
+          <br>
+          {!! Form::select('payment_method', ['cash' => 'cash', '2' => 'cicilan 2x', '3' => 'cicilan 3x'], old('payment_method'), ['class' => 'form-control', 'placeholder' => 'Pilih metode pembayaran', 'required']) !!}
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
 @endsection
 
 @section('js')
@@ -137,6 +165,12 @@
                 $('#form-typing').toggleClass('d-none');
             }
         }
+
+        $('#button-select-vendor').on('click', function (e) {
+            e.preventDefault();
+
+            $('#confirmModal').modal('show');
+        });
 
         $('#button-send-message').on('click', function (e) {
             e.preventDefault();
@@ -204,6 +238,8 @@
 
             $('#chat-box').empty();
             $('#form-typing-message').val('');
+            $('#confirm-vendor-id').val($('#chatbox-vendor-id').val());
+            $('.btn-select').prop('disabled', false);
 
             if (id) {
                 $.ajax({
@@ -216,7 +252,10 @@
                         $('#chat-box').html(
                             response.data_view
                         );
-
+                        console.log('transaksi adalah = '+response.transaksi);
+                        if(response.transaksi){
+                            $('.btn-select').prop('disabled', true);
+                        }
                         scrollChatBox();
 
                         formTypingToggle(1);
