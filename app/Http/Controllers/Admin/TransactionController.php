@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\Invoice;
-use App\Events\SendCreateTransactionNotification;
+use App\Events\SendCreateTransactionNotificationEvent;
 use Auth;
 use Carbon\Carbon;
 use Exception;
@@ -65,7 +65,7 @@ class TransactionController extends Controller
             'quotation_id' => $request->get('quotation_id'),
         ]);
 
-        event(new SendCreateTransactionNotification(Auth::user()->id, $request->get('vendor_id'), $transaksi));
+        event(new SendCreateTransactionNotificationEvent('customer', Auth::user()->id, $request->get('vendor_id'), $transaksi));
 
         $this->message('Transaksi berhasil dibuat!');
 
@@ -101,6 +101,7 @@ class TransactionController extends Controller
                     for ($i=1; $i <= $transaction->payment_method; $i++) { 
                         $date = Carbon::now()->addMonths($i);
                         $newInvoices[] = [
+                            'number' => $this->getInvoiceCode($transaction, $i, $date),
                             'amount' => $amount,
                             'jatuh_tempo' => $date,
                             'status' => 0,
@@ -115,6 +116,7 @@ class TransactionController extends Controller
                     $amount = $transaction->amount;
     
                     $invoice->create([
+                        'number' => $this->getInvoiceCode($transaction, 0, $date),
                         'amount' => $amount,
                         'jatuh_tempo' => null,
                         'status' => 0,
@@ -126,6 +128,8 @@ class TransactionController extends Controller
             }else{ // vendor menolak
                 $transaction->update(['status' => 2]);
             }
+        
+            event(new SendCreateTransactionNotificationEvent('vendor', $transaction->customer_id, Auth::user()->id, $transaction));
 
             DB::commit();
 

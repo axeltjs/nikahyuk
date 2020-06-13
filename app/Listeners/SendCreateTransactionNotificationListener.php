@@ -7,15 +7,16 @@ use Illuminate\Queue\InteractsWithQueue;
 use App\Notifications\CreateTransactionNotication;
 use App\Models\Transaction;
 
-class SendCreateTransactionNotification
+class SendCreateTransactionNotificationListener
 {
     /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct($to_user, $from_user, Transaction $transaction)
+    public function __construct($role, $to_user, $from_user, Transaction $transaction)
     {
+        $this->role = $role;
         $this->transaction = $transaction;
         $this->to_user = $to_user;
         $this->from_user = $from_user;
@@ -29,6 +30,6 @@ class SendCreateTransactionNotification
      */
     public function handle($event)
     {
-        Notification::send($event->to_user, new CreateTransactionNotication($event->to_user, $event->from_user, $event->transaction));
+        Notification::send($event->to_user, new CreateTransactionNotication($event->role, $event->to_user, $event->from_user, $event->transaction));
     }
 }

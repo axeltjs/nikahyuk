@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('chat/unread-notification', 'Admin\ChatController@getUnreadNotification')->name('chat.unread-notification');
     Route::resource('transaction', 'Admin\TransactionController');
     Route::get('quotation/{id}', 'Admin\QuotationController@show');
+    Route::get('invoice/{id}', 'Admin\InvoiceController@show');
     
     Route::group(['middleware' => 'role:Customer'], function () {
         Route::get('customer/survey', 'Admin\SurveyController@index')->name('customer.survey');

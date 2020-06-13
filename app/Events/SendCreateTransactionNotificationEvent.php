@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 use App\Models\Transaction;
 use App\Models\User;
 
-class SendCreateTransactionNotification
+class SendCreateTransactionNotificationEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -21,8 +21,9 @@ class SendCreateTransactionNotification
      *
      * @return void
      */
-    public function __construct($to_user, $from_user, Transaction $transaction)
+    public function __construct($role, $to_user, $from_user, Transaction $transaction)
     {
+        $this->role = $role;
         $this->transaction = $transaction;
         $this->to_user = $to_user;
         $this->from_user = $from_user;

@@ -41,14 +41,20 @@ class CreateTransactionNotication extends Notification
      */
     public function toArray($notifiable)
     {
+        if($this->role == 'vendor'){
+            $message = 'Transaksi Anda telah di '.$this->transaction->status_format.'! dengan nomor transaksi: '.$this->transaction->number;
+        }else{
+            $message = 'Transaksi Anda telah dibuat! dengan nomor transaksi: '.$this->transaction->number;
+        }
+
         return [
-            'message' => 'Transaksi Anda telah dibuat! dengan nomor transaksi: '.$this->transaction->number,
+            'type' => 'transaction_notif',
+            'message' => $message,
             'vendor_id' => $this->from_user,
             'customer_id' => $this->to_user,
             'user_name' => $this->transaction->vendor->company->name,
             'transaction_id' => $this->transaction->id,
             'transaction_number' => $this->transaction->number,
-            // 'from' => 'vendor',
             'next_route' => url('transaction/'.$this->transaction->id)
         ];
     }
