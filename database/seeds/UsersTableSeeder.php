@@ -23,7 +23,7 @@ class UsersTableSeeder extends Seeder
         ];
 
         $user[] = [
-            'name' => 'Adel',
+            'name' => 'Adel Anggraini',
             'email' => 'vendor@gmail.com',
             'phone' => '082154981442',
             'email_verified_at' => now(),
@@ -33,7 +33,7 @@ class UsersTableSeeder extends Seeder
         ];
 
         $user[] = [
-            'name' => 'Suja',
+            'name' => 'Rohit Vaswani',
             'email' => 'vendor1@gmail.com',
             'phone' => '082154981442',
             'email_verified_at' => now(),
@@ -43,7 +43,7 @@ class UsersTableSeeder extends Seeder
         ];
 
         $user[] = [
-            'name' => 'Kald',
+            'name' => 'Mudit Trivendi',
             'email' => 'vendor2@gmail.com',
             'phone' => '082154981442',
             'email_verified_at' => now(),
@@ -53,7 +53,7 @@ class UsersTableSeeder extends Seeder
         ];
 
         $user[] = [
-            'name' => 'Jiw',
+            'name' => 'Nadine Putri',
             'email' => 'vendor3@gmail.com',
             'phone' => '082154981442',
             'email_verified_at' => now(),
@@ -63,9 +63,19 @@ class UsersTableSeeder extends Seeder
         ];
 
         $user[] = [
-            'name' => 'Customer',
+            'name' => 'Muzib',
             'email' => 'customer@gmail.com',
             'phone' => '082154981443',
+            'email_verified_at' => now(),
+            'password' => bcrypt('123123'),
+            'remember_token' => Str::random(10),
+            'role' => 'Customer'
+        ];
+
+        $user[] = [
+            'name' => 'Wawan',
+            'email' => 'customer2@gmail.com',
+            'phone' => '082154981100',
             'email_verified_at' => now(),
             'password' => bcrypt('123123'),
             'remember_token' => Str::random(10),

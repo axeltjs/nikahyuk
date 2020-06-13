@@ -107,7 +107,6 @@ class QuotationController extends Controller
     public function show($id)
     {
         $data = Quotation::find($id);
-
         if($data->file){
             return response()->download(storage_path("app/public/quotation/{$data->file}"));
         }

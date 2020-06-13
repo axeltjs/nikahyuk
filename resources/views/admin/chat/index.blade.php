@@ -98,8 +98,8 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    <div id="confirmModal" class="modal fade" role="dialog">
+<!-- Modal -->
+<div id="confirmModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
   
       <!-- Modal content-->
@@ -112,9 +112,16 @@
         <div class="modal-body">
           <h5>Apakah anda yakin memilih Vendor ini?</h5>
           <input type="hidden" name="vendor_id" id="confirm-vendor-id">
+          <br>
+          <small>Harga kesepakatan:</small>
           <input type="number" name="amount" class="form-control" placeholder="Masukkan harga kesepakan (Rp)" required>
           <br>
-          {!! Form::select('payment_method', ['cash' => 'cash', '2' => 'cicilan 2x', '3' => 'cicilan 3x'], old('payment_method'), ['class' => 'form-control', 'placeholder' => 'Pilih metode pembayaran', 'required']) !!}
+          <small>Metode pembayaran:</small>
+          {!! Form::select('payment_method', ['cash' => 'cash', '2' => 'cicilan 2x', '3' => 'cicilan 3x', '4' => 'cicilan 4x'], old('payment_method'), ['class' => 'form-control', 'placeholder' => 'Pilih metode pembayaran', 'required']) !!}
+          <br>
+          <small>Paket yang dipilih:</small>
+          <select name="quotation_id" class="form-control" id="quotation_id" placeholder="Pilih Penawaran yang sesuai" required></select>
+
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -237,6 +244,7 @@
             el.removeClass('list-group-item-light list-group-item-chat').addClass('active text-white');
 
             $('#chat-box').empty();
+            $('#quotation_id').empty();
             $('#form-typing-message').val('');
             $('#confirm-vendor-id').val($('#chatbox-vendor-id').val());
             $('.btn-select').prop('disabled', false);
@@ -252,10 +260,14 @@
                         $('#chat-box').html(
                             response.data_view
                         );
-                        console.log('transaksi adalah = '+response.transaksi);
+                        
                         if(response.transaksi){
                             $('.btn-select').prop('disabled', true);
                         }
+
+                        $.each(response.penawaran, function(id, name){
+                            $('#quotation_id').append('<option value="'+id+'">'+name+'</option>');
+                        });
                         scrollChatBox();
 
                         formTypingToggle(1);

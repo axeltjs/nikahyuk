@@ -11,9 +11,15 @@ class Transaction extends Model
         'customer_id',
         'vendor_id',
         'amount',
-        'status',
-        'payment_method'
+        'status', // proses transaksi
+        'payment_method',
+        'quotation_id'
     ];
+
+    public function quotation()
+    {
+        return $this->belongsTo(Quotation::class, 'quotation_id');        
+    }
 
     public function invoice()
     {
@@ -59,7 +65,7 @@ class Transaction extends Model
         if($this->getAttribute('payment_method') === 'cash'){
             return "Cash";
         }else{
-            return $this->getAttribute('payment_method')."x Cicilan";
+            return "Kredit ".$this->getAttribute('payment_method')."x Cicilan";
         }
     }
 

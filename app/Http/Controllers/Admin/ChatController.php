@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
+use App\Models\Transaction;
+use App\Models\Quotation;
 use App\Models\ChatMessage;
 use Exception;
 use DB;
@@ -12,8 +14,10 @@ use App\Events\SendChatNotification;
 
 class ChatController extends Controller
 {
-    public function __construct(Chat $chat) {
+    public function __construct(Chat $chat, Transaction $transaction, Quotation $quotation) {
         $this->chat = $chat;
+        $this->transaction = $transaction;
+        $this->quotation = $quotation;
     }
 
     public function index() {
@@ -79,6 +83,7 @@ class ChatController extends Controller
 
     public function getAllMessage(Request $request) {
         $data = collect();
+        $quotations = collect();
         $transaction = 0;
 
         try {
@@ -91,6 +96,9 @@ class ChatController extends Controller
                     ->where('status', 1)
                     ->orWhere('status', 0)
                     ->count();
+
+                $quotations = $this->quotation->where(['creator_id' => $chat->vendor_id, 'customer_id' => $chat->customer_id])
+                    ->pluck('package_name', 'id');
             }
         } catch (Exception $e) {
 
@@ -99,6 +107,7 @@ class ChatController extends Controller
         return [
             'data' => $data,
             'transaksi' => $transaction,
+            'penawaran' => $quotations,
             'data_view' => view('admin.chat.all_message')->with([
                 'data' => $data,
                 'user_id' => auth()->user()->id

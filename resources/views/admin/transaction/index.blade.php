@@ -62,8 +62,9 @@
                     <td>{{ $item->created_at_format }}</td>
                     <td>{!! $item->status_format_html !!}</td>
                     <td>
-                        <a data-confirm="Are you sure?" data-token="{{ csrf_token() }}" data-method="DELETE" href="{{ url('admin/user/'.$item->id) }}" class="btn btn-danger"> Delete</a>
-                        <a href="{{ url('admin/user/'.$item->id.'/edit') }}" class="btn btn-warning">Edit</a>
+                        <a href="{{ url('transaction/'.$item->id) }}" class="btn btn-info"> Detail</a>
+                        {{-- <a data-confirm="Are you sure?" data-token="{{ csrf_token() }}" data-method="DELETE" href="{{ url('admin/user/'.$item->id) }}" class="btn btn-danger"> Delete</a> --}}
+                        {{-- <a href="{{ url('admin/user/'.$item->id.'/edit') }}" class="btn btn-warning">Edit</a> --}}
                     </td>
                 </tr>
                 @endforeach
