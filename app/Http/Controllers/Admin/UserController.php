@@ -63,6 +63,7 @@ class UserController extends Controller
         $user = User::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
+            'address' => $request->get('address'),
             'phone' => $request->get('phone'),
             'password' => bcrypt($request->get('new_password')),
         ]);
@@ -130,6 +131,7 @@ class UserController extends Controller
         $data = [
             'name' => $request->get('name'),
             'email' => $request->get('email'),
+            'address' => $request->get('address'),
             'phone' => $request->get('phone'),
         ];
 
@@ -180,6 +182,7 @@ class UserController extends Controller
         
         $data = [
             'name' => $request->get('name'),
+            'address' => $request->get('address'),
             'email' => $request->get('email'),
             'phone' => $request->get('phone'),
         ];

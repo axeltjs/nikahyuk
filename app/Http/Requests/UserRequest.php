@@ -28,6 +28,7 @@ class UserRequest extends FormRequest
             'email' => 'required|string|email|max:255',
             'password' => 'string',
             'role_id' => 'required',
+            'address' => 'string|required',
             'phone' => 'string|min:11|max:15',
             'new_password' => 'nullable',
             'new_password2' => 'nullable',

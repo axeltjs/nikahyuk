@@ -43,6 +43,14 @@
                     {!! Form::text('phone', Auth::user()->phone, ['class'=>'form-control','id' => 'phone','autofocus', 'tabindex' => '3' ,'required']) !!}
                 </div>
             </div>
+
+            <div class="item form-group">
+                <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Alamat  <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 ">
+                    {!! Form::textarea('address', Auth::user()->address, ['class'=>'form-control','id' => 'address','autofocus', 'tabindex' => '4']) !!}
+                </div>
+            </div>
             
             <div class="item form-group">
                 <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Password Baru (kosongkan bila tidak diubah)
