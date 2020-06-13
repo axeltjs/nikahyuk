@@ -4,13 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Invoice;
+use App\Models\Invoice;
+use App\Models\Transaction;
+
 class InvoiceController extends Controller
 {
     public function show($id)
     {
-        $invoice = Invoice::where('transaction_id', $id)->get();
+        $invoices = Invoice::where('transaction_id', $id)->get();
+        $transaction_num = $invoices->first()->transaction->number;
 
-        return view('admin.invoice.show', compact($invoice));
+        return view('admin.invoice.show', compact('invoices', 'transaction_num'));
     }
 }

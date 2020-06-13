@@ -58,7 +58,7 @@
             <tr>
                 <th>Lihat Informasi Pembayaran</th>
                 <td>
-                    <a target="__blank" href="{{ url('quotation/'.$item->quotation_id) }}" class="btn btn-primary"> <i class="fa fa-newspaper-o"></i> Pembayaran</a>
+                    <a target="__blank" href="{{ url('invoice/'.$item->id) }}" class="btn btn-primary"> <i class="fa fa-newspaper-o"></i> Pembayaran</a>
                 </td>
             </tr>
             @endif
