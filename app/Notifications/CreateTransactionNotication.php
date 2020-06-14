@@ -17,9 +17,12 @@ class CreateTransactionNotication extends Notification
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($role, $to_user, $from_user, Transaction $transaction)
     {
-        //
+        $this->role = $role;
+        $this->transaction = $transaction;
+        $this->to_user = $to_user;
+        $this->from_user = $from_user;
     }
 
     /**

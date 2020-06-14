@@ -6,6 +6,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use App\Notifications\CreateTransactionNotication;
 use App\Models\Transaction;
+use App\Models\User;
 
 class SendCreateTransactionNotificationListener
 {
@@ -30,6 +31,8 @@ class SendCreateTransactionNotificationListener
      */
     public function handle($event)
     {
-        Notification::send($event->to_user, new CreateTransactionNotication($event->role, $event->to_user, $event->from_user, $event->transaction));
+        $user = User::where('id', $event->to_user)->first();
+        
+        Notification::send($user, new CreateTransactionNotication($event->role, $event->to_user, $event->from_user, $event->transaction));
     }
 }

@@ -58,7 +58,7 @@
             <tr>
                 <th>Lihat Informasi Pembayaran</th>
                 <td>
-                    <a target="__blank" href="{{ url('invoice/'.$item->id) }}" class="btn btn-primary"> <i class="fa fa-newspaper-o"></i> Pembayaran</a>
+                    <a href="{{ url('invoice/'.$item->id) }}" class="btn btn-primary"> <i class="fa fa-newspaper-o"></i> Pembayaran</a>
                 </td>
             </tr>
             @endif
@@ -88,7 +88,7 @@
   
       <!-- Modal content-->
     <form action="{{ route('vendor.transaction.deal') }}" method="post">
-        {{ csrf_field() }}
+    {{ csrf_field() }}
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>

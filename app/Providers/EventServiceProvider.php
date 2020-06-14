@@ -15,8 +15,8 @@ use App\Listeners\DeleteSendOfferCompleteNotification as DeleteSendOfferComplete
 use App\Events\SendChatNotification as SendChatNotificationEvent;
 use App\Listeners\SendChatNotification as SendChatNotificationListener;
 
-use App\Events\SendChatNotification as SendCreateTransactionNotificationEvent;
-use App\Listeners\SendChatNotification as SendCreateTransactionNotificationListener;
+use App\Events\SendCreateTransactionNotificationEvent;
+use App\Listeners\SendCreateTransactionNotificationListener;
 
 class EventServiceProvider extends ServiceProvider
 {

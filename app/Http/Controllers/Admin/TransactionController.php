@@ -134,7 +134,10 @@ class TransactionController extends Controller
             DB::commit();
 
         }catch(Exception $e){
-            $this->message($e->getMessage());
+            throw $e;
+            $this->message($e->getMessage(), 'danger');
+        
+            return redirect()->back();
         }
 
         $this->message('Transaksi berhasil diperbarui!');

@@ -28,6 +28,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('transaction', 'Admin\TransactionController');
     Route::get('quotation/{id}', 'Admin\QuotationController@show');
     Route::get('invoice/{id}', 'Admin\InvoiceController@show');
+    Route::get('invoice/cetak/{id}', 'Admin\InvoiceController@cetakInvoice');
+    Route::post('invoice/upload-pembayaran', 'Admin\InvoiceController@uploadPembayaran');
     
     Route::group(['middleware' => 'role:Customer'], function () {
         Route::get('customer/survey', 'Admin\SurveyController@index')->name('customer.survey');

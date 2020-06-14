@@ -12,7 +12,8 @@ class Invoice extends Model
         'amount',
         'status',
         'jatuh_tempo',
-        'transaction_id'
+        'transaction_id',
+        'bukti_bayar'
     ];
 
     public function transaction()
@@ -25,13 +26,44 @@ class Invoice extends Model
         return "Rp. ".number_format($this->getAttribute('amount'));
     }
 
+    public function scopeFilter($query, $request)
+    {
+        if($request->has('q') || $request->get('q') != null){
+            $query = $query->whereHas('transaction', function($query) use ($request){
+                return $query->whereHas('customer', function($query) use ($request){
+                    return $query->where('name', 'LIKE', '%'.$request->get('q').'%');
+                });
+            });
+        }
+
+        return $query;
+    }
+
+    /**
+     * 
+     * Mutator
+     * 
+     */
+
     public function getStatusFormatAttribute()
     {
-        if($this->getAttribute('status')){
+        if($this->getAttribute('status') == 1){
             return "<span class='label label-success'>Terbayar</span>";
+        }elseif($this->getAttribute('status') == 2){
+            return "<span class='label label-primary'>Dalam Proses Verifikasi</span>";
         }else{
-            return "<span class='label label-danger'>Belum Terbayar</span>";
+            return "<span class='label label-danger'>Belum Dibayar</span>";
+        }
+    }
 
+    public function getStatusFormatTextAttribute()
+    {
+        if($this->getAttribute('status') == 1){
+            return "<span style='color:green'>Terbayar</span>";
+        }elseif($this->getAttribute('status') == 2){
+            return "<span class='label label-primary'>Dalam Proses Verifikasi</span>";
+        }else{
+            return "<span style='color:red'>Belum Dibayar</span>";
         }
     }
 

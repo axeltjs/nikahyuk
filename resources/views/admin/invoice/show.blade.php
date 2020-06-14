@@ -45,6 +45,7 @@
       </a>
       <div id="collapseThree1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
         <div class="panel-body" style="padding-left:20px; padding-top:10px; padding-bottom:10px;">
+            <h4>a.n. Axel Saputra</h4>
             <img src="{{ asset('admin/images/ovo.jpeg') }}" alt="Gopay" style="max-width: 350px; height:auto;">
         </div>
       </div>
@@ -60,8 +61,9 @@
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-            <form action="#" method="post" enctype="multipart/form-data">
-                <table class="table table-bordered">
+          <form action="{{ url('invoice/upload-pembayaran') }}" method="post" enctype="multipart/form-data">
+					  {{ csrf_field() }}
+              <table class="table table-bordered">
                     <tr>
                         <th width="15%">Nominal</th>
                         <td>{{ $invoice->amount_format }}</td>
@@ -74,6 +76,16 @@
                         <th>Jatuh Tempo</th>
                         <td>{!! $invoice->jatuh_tempo_format." ".$invoice->deadline_count_html !!}</td>
                     </tr>
+                    @if(isset($invoice->bukti_bayar))
+                    <tr>
+                      <th>Bukti Pembayaran</th>
+                      <td>
+                        <a target="__blank" href="{{ url('storage/invoice/'.$invoice->bukti_bayar) }}">
+                          <img src="{{ url('storage/invoice/'.$invoice->bukti_bayar) }}" alt="Bukti Pembayran" style="max-width: 300px; height:auto;">
+                        </a>
+                      </td>
+                    </tr>
+                    @endif
                     @hasrole('Customer')
                     <tr>
                         <th>Upload Bukti Bayar</th>
@@ -81,10 +93,18 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <button type="submit" class="btn btn-sm btn-primary"> Kirim </button>
-                            <a href="#" class="btn btn-sm btn-success">Cetak Receipt</a>
+                            {!! Form::hidden('invoice_id', $invoice->id) !!}
+                            <button type="submit" class="btn btn-sm btn-primary"> <i class="fa fa-upload"></i> Kirim </button>
+                            <a href="{{ url('invoice/cetak/'.$invoice->id) }}" class="btn btn-sm btn-success"><i class="fa fa-upload"></i> Download Receipt</a>
                         </td>
                     </tr>
+                    @endhasrole
+                    @hasrole('Admin|Vendor')
+                    <tr>
+                      <td colspan="2">
+                          <a href="{{ url('invoice/cetak/'.$invoice->id) }}" class="btn btn-sm btn-success"><i class="fa fa-upload"></i> Download Receipt</a>
+                      </td>
+                  </tr>
                     @endhasrole
                 </table>
             </form>
