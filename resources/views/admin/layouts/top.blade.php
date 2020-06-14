@@ -25,9 +25,23 @@
           <li role="presentation" class="nav-item dropdown open">
             <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
               <i class="fa fa-envelope-o"></i>
-              <span class="badge bg-green" id="unread-notification-chat-count">{{ auth()->user()->unreadNotificationChat->count() }}</span>
+              <span class="badge bg-green" id="unread-notification-chat-count">{{ auth()->user()->unreadNotificationChat->count() + auth()->user()->unreadTransactionNotification->count() }}</span>
             </a>
             <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1" id="unread-notification-chat-message">
+              @foreach(auth()->user()->unreadTransactionNotification as $notif)
+              <li class="nav-item">
+                <a class="dropdown-item" href="{{ $notif->data['next_route'] }}">
+                  <span class="image"><img src="{{ asset('admin/images/img.jpg') }}" alt="Profile Image" /></span>
+                  <span>
+                    <span>{{ $notif->data['user_name'] }}</span>
+                    <!-- <span class="time">3 mins ago</span> -->
+                  </span>
+                  <span class="message">
+                    {{ $notif->data['message'] }}
+                  </span>
+                </a>
+              </li>
+            @endforeach
               @foreach (auth()->user()->unreadNotificationChat as $unreadNotificationChat)
                 <li class="nav-item">
                   <a class="dropdown-item">
@@ -43,14 +57,14 @@
                 </li>
               @endforeach
 
-              <li class="nav-item">
-                <!-- <div class="text-center">
+              {{-- <li class="nav-item">
+                 <div class="text-center">
                   <a class="dropdown-item">
-                    <strong>See All Alerts</strong>
-                    <i class="fa fa-angle-right"></i>
+                    <strong>Hapus semua</strong>
+                    <i class="fa fa-trash"></i>
                   </a>
-                </div> -->
-              </li>
+                </div> 
+              </li> --}}
               
             </ul>
           </li>

@@ -20,8 +20,7 @@
 </div>
 <div class="x_panel">
     <div class="x_title">
-        <h2>Daftar User</h2>
-        <a href="{{ url('admin/user/create') }}" class="btn btn-primary btn-sm pull-right"> <i class="fa fa-plus"></i> Tambah User</a>
+        <h2>Daftar Pembayaran</h2>
         <div class="clearfix"></div>
     </div>
     <div class="x_content">
@@ -31,22 +30,29 @@
             <table class="table table-bordered">
                 <tr>
                     <th width="1%">No</th>
-                    <th>Nama</th>
-                    <th>Email</th>
-                    <th>No. Telepon</th>
-                    <th>Peran</th>
+                    <th>No. Invoice</th>
+                    <th>Nama Customer</th>
+                    <th>Nama Vendor</th>
+                    <th>Jatuh Tempo</th>
+                    <th>Total</th>
+                    <th>Foto</th>
                     <th width="15%">Aksi</th>
                 </tr>
                 @foreach($items as $item)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $item->name }}</td>
-                    <td>{{ $item->email }}</td>
-                    <td>{{ $item->phone }}</td>
-                    <td>{{ $item->roles->first()->name }}</td>
+                    <td>{{ $item->number }}</td>
+                    <td>{{ $item->transaction->customer->name }}</td>
+                    <td>{{ $item->transaction->vendor->company->name }}</td>
+                    <td>{{ $item->amount_format }}</td>
                     <td>
-                        <a data-confirm="Are you sure?" data-token="{{ csrf_token() }}" data-method="DELETE" href="{{ url('admin/user/'.$item->id) }}" class="btn btn-danger"> Delete</a>
-                        <a href="{{ url('admin/user/'.$item->id.'/edit') }}" class="btn btn-warning">Edit</a>
+                        <a target="__blank" href="{{ url('storage/invoice/'.$invoice->bukti_bayar) }}">
+                            <img src="{{ url('storage/invoice/'.$invoice->bukti_bayar) }}" alt="Bukti Pembayran" style="max-width: 200px; height:auto;">
+                        </a>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-success" onclick="approve(1)">Terima</button>
+                        <button type="button" class="btn btn-danger" onclick="approve(0)">Tolak</button>
                     </td>
                 </tr>
                 @endforeach

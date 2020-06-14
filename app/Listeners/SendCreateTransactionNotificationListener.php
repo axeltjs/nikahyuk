@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Notification;
 use App\Notifications\CreateTransactionNotication;
 use App\Models\Transaction;
 use App\Models\User;
@@ -15,13 +16,13 @@ class SendCreateTransactionNotificationListener
      *
      * @return void
      */
-    public function __construct($role, $to_user, $from_user, Transaction $transaction)
-    {
-        $this->role = $role;
-        $this->transaction = $transaction;
-        $this->to_user = $to_user;
-        $this->from_user = $from_user;
-    }
+    // public function __construct($role, $to_user, $from_user, Transaction $transaction)
+    // {
+    //     $this->role = $role;
+    //     $this->transaction = $transaction;
+    //     $this->to_user = $to_user;
+    //     $this->from_user = $from_user;
+    // }
 
     /**
      * Handle the event.

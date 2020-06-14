@@ -17,6 +17,7 @@
 </head>
 <body>
     <h3>Invoice: {{ $item->number }}</h3>
+    <p><b/>Dicetak pada tanggal: {{ date('d-m-Y')." dan jam ".date('H:i') }}</b></p>
     <table width="100%" border="0">
         <tr>
             <td width="50%">

@@ -100,6 +100,15 @@ class User extends Authenticatable
                     ->limit(10);
     }
 
+    public function unreadTransactionNotification()
+    {
+        return $this->notifications()
+                    ->whereNull('read_at')
+                    ->where('type', 'App\Notifications\CreateTransactionNotication')
+                    ->latest()
+                    ->limit(10);
+    }
+
     public function unreadNotificationOffer() 
     {
         return $this->notifications()
