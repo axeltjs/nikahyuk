@@ -11,6 +11,7 @@
             <li><a href="{{ url('vendor/quotation') }}"><i class="fa fa-file"></i> Penawaran</a></li>
             <li><a href="{{ route('vendor.setup') }}"><i class="fa fa-gear"></i> Konfigurasi Usaha</a></li>
             <li><a href="{{ route('vendor.chat.index') }}"><i class="fa fa-envelope"></i> Chat</a></li>
+            <li><a href="{{ url('vendor/promotion') }}"><i class="fa fa-newspaper-o"></i> Promosi</a></li>
         @endhasrole
         @hasrole('Admin')
             <li><a href="{{ url('admin/payment/validation') }}"><i class="fa fa-money"></i> Validasi Pembayaran</a></li>

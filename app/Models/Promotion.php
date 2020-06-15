@@ -11,6 +11,14 @@ class Promotion extends Model
         'description',
         'image',
         'company_id',
+        'approved',
          //nullable,
     ];
+
+    public function scopeFilter($query, $request)
+    {
+        return $query->where('title', 'LIKE', '%'.$request->get('q').'%')
+            ->orWhere('description', 'LIKE', '%'.$request->get('q').'%');
+    }
+
 }

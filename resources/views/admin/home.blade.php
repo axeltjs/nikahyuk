@@ -83,6 +83,7 @@
               <li>Setelah selesai mengatur usaha Anda, Anda dapat menunggu notifikasi penawaran dikotak sebelah kiri dashboard Anda.</li>
               <li>Berikanlah penawaran terbaik Anda kepada calon pengantin</li>
               <li>Anda dapat melakukan negosiasi pada menu <b style="color:red">Chat</b> pada navigasi disebelah kiri Anda.</li>
+              <li>Anda juga dapat mengajukan promosi untuk ditampilkan dihalaman depan website melalui menu <b style="color:red">Promosi</b> pada navigasi disebelah kiri Anda.</li>
             </ol>
           </div>
         </div>

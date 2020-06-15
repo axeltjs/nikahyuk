@@ -57,6 +57,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('vendor/chat/get-all-message', 'Admin\ChatVendorController@getAllMessage')->name('vendor.chat.get-all-message');
         Route::post('vendor/chat/send-message', 'Admin\ChatVendorController@sendMessage')->name('vendor.chat.send-message');
         Route::post('vendor/transaction/deal', 'Admin\TransactionController@dealFromVendor')->name('vendor.transaction.deal');
+
+        Route::resource('vendor/promotion', 'Admin\PromotionController');
     });
 
     Route::group(['middleware' => 'role:Admin'], function () {
