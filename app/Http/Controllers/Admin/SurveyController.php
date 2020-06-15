@@ -69,6 +69,28 @@ class SurveyController extends Controller
         return view('admin.survey.index', compact('tema','item_acara','has_survey'));
     }
 
+    public function show($id)
+    {
+        $survey = $this->survey->findOrFail($id);
+
+        if($survey){
+            $item_acara_cust = DB::table('event_item')->where([
+                'model_id' => $survey->id,
+                'model_type' => get_class($this->survey)
+            ])->pluck('name');
+
+            $user = $survey->user->toArray();
+            
+            $survey->toArray();
+            $survey = collect($survey)->union([
+                'item_acara' => $item_acara_cust->toArray(),
+                'user' => $user
+            ]);
+        }
+
+        return view('admin.survey.show', compact('survey'));
+    }
+
     public function updateSurvey(SurveyCustomerRequest $request)
     {
         DB::beginTransaction();

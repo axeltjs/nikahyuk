@@ -36,6 +36,12 @@ class Transaction extends Model
         return $this->belongsTo(User::class, 'vendor_id');        
     }
 
+    public function scopeHasProcessedTransaction($query)
+    {
+        // diproses atau disetujui
+        return $query->where('status', 0)->orWhere('status', 1);
+    }
+
     /**
      * 
      * Mutator

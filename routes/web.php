@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('quotation/{id}', 'Admin\QuotationController@show');
     Route::get('invoice/{id}', 'Admin\InvoiceController@show');
     Route::get('invoice/cetak/{id}', 'Admin\InvoiceController@cetakInvoice');
+    Route::get('customer/survey/{id}', 'Admin\SurveyController@show');
     
     Route::group(['middleware' => 'role:Customer'], function () {
         Route::get('customer/survey', 'Admin\SurveyController@index')->name('customer.survey');

@@ -38,9 +38,11 @@
                 <br>
                 @if (isset($unreadNotifications->data['from']))
                   @if ($unreadNotifications->data['from'] == 'vendor')
-                    Klik <a style="color: red" href="{{ $unreadNotifications->data['next_route'] }}">Menuju chat</a> untuk melanjutkan
+                    Klik <a target="__blank" style="color: red" href="{{ $unreadNotifications->data['next_route'] }}">menuju chat</a> untuk melanjutkan
                   @elseif ($unreadNotifications->data['from'] == 'customer')
-                    Klik <a style="color: red" href="{{ $unreadNotifications->data['next_route'] }}">Menuju penawaran</a> untuk melanjutkan
+                    Klik <a target="__blank" style="color: red" href="{{ $unreadNotifications->data['next_route'] }}">buat penawaran</a> untuk melanjutkan.
+                    <br> 
+                    Atau baca kebutuhan calon pengantin <a target="__blank" style="color: red" href="{{ $unreadNotifications->data['survey'] ?? '#' }}">di sini.</a>
                   @endif
                 @endif
                 </p>
@@ -55,17 +57,36 @@
     @endhasanyrole
   </div>
     <div class="col-md-4 col-sm-6 col-xs-12">
-        <div class="x_content">
-            <div class="bs-example-popovers mb-4">
-                @isset($has_survey)
-                  <div class="alert alert-success" role="alert">
-                    <h4 class="alert-heading"><i class="fa fa-thumbs-up"></i></h4>
-                    <p>Survey kamu sudah kami rekam, kamu akan diberikan notifikasi apabila ada vendor yang cocok dengan survey kamu!
-                        <br>Terima kasih telah memilih Nikahyuk sebagai partner acara pernikahanmu!</p>
-                  </div>
-                @endisset
+        @hasrole('Customer')
+          @if(auth()->user()->transaction()->hasProcessedTransaction()->count()) @else
+            @isset($has_survey)
+            <div class="x_content">
+              <div class="bs-example-popovers mb-4">
+              <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading"><i class="fa fa-thumbs-up"></i></h4>
+                <p>Survey kamu sudah kami rekam, kamu akan diberikan notifikasi apabila ada vendor yang cocok dengan survey kamu!
+                    <br>Terima kasih telah memilih Nikahyuk sebagai partner acara pernikahanmu!</p>
+              </div>
             </div>
+          </div>
+            @endisset
+          @endif
+        @endhasrole
+            
+        @hasrole('Vendor')
+        <div class="x_panel">
+          <h2>Arahan Vendor</h2>
+          <hr>
+          <div class="x_content">
+            <ol style="font-size: 16px">
+              <li>Setelah berhasil login, Anda dapat mengatur konfigurasi usaha Anda di menu <b style="color:red">Konfigurasi Usaha</b> pada navigasi disebelah kiri Anda.</li>
+              <li>Setelah selesai mengatur usaha Anda, Anda dapat menunggu notifikasi penawaran dikotak sebelah kiri dashboard Anda.</li>
+              <li>Berikanlah penawaran terbaik Anda kepada calon pengantin</li>
+              <li>Anda dapat melakukan negosiasi pada menu <b style="color:red">Chat</b> pada navigasi disebelah kiri Anda.</li>
+            </ol>
+          </div>
         </div>
+        @endhasrole
     </div>
 
 </div>

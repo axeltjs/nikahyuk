@@ -73,6 +73,11 @@ class User extends Authenticatable
         return $this->hasMany(SelectedVendor::class, 'vendor_id');
     }
 
+    public function transaction()
+    {
+        return $this->hasMany(Transaction::class, 'customer_id');
+    }
+
     public function selectedClient()
     {
         return $this->hasMany(SelectedVendor::class, 'customer_id');

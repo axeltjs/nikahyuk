@@ -43,11 +43,12 @@ class OfferNotification extends Notification
     {
         return [
             'type' => 'penawaran',
-            'message' => 'Customer Atas Nama ' . $this->user->name . ' Sedang Mencari Vendor, Segera Tawarkan Penawaran Terbaikmu!',
+            'message' => 'Customer atas nama ' . $this->user->name . ' sedang mencari vendor, segera tawarkan penawaran terbaikmu!',
             'user_id' => $this->user->id,
             'user_name' => $this->user->name,
             'from' => 'customer',
-            'next_route' => route('quotation.index')
+            'next_route' => route('quotation.index'),
+            'survey' => url('customer/survey/'.$this->user->survey->id)
         ];
     }
 }

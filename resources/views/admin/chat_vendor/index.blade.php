@@ -43,8 +43,7 @@
                                             <div class="d-flex align-items-center justify-content-between mb-1">
                                                 <h6 class="mb-0">{{ $chatItem->customer->name }}</h6>
                                                 <!-- <small class="small font-weight-bold">14 Dec</small> -->
-                                            </div>
-                                            <!-- <p class="font-italic text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur. incididunt ut labore.</p> -->
+                                            </div> 
                                         </div>
                                     </div>
                                 </a>
@@ -85,6 +84,7 @@
                     <div class="input-group">
                         <input type="text" placeholder="Type a message" aria-describedby="button-send-message" class="form-control text-chat rounded-0 border-0 py-4 bg-light" id="form-typing-message">
                         <div class="input-group-append">
+                            <a target="__blank" href="{{ url('customer/survey/'.$chatItem->customer->survey->id ) }}" data-show="tip" title="lihat kebutuhan calon pengantin" class="btn btn-look btn-link" style="margin-top:20px; color:green; font-size:17px;"> <i class="fa fa-search"></i> </a href="{{ url('customer/survey/'.$chatItem->customer->survey->id ) }}">
                             <button id="button-send-message" type="button" class="btn btn-chat btn-link"> <i class="fa fa-paper-plane"></i></button>
                         </div>
                     </div>
