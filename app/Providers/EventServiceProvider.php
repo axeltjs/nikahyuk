@@ -18,6 +18,9 @@ use App\Listeners\SendChatNotification as SendChatNotificationListener;
 use App\Events\SendCreateTransactionNotificationEvent;
 use App\Listeners\SendCreateTransactionNotificationListener;
 
+use App\Events\PaymentConfirmEvent;
+use App\Listeners\PaymentConfirmListener;
+
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -43,6 +46,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         SendCreateTransactionNotificationEvent::class => [
             SendCreateTransactionNotificationListener::class
+        ],
+        PaymentConfirmEvent::class => [
+            PaymentConfirmListener::class
         ],
     ];
 

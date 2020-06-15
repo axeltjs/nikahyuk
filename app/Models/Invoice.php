@@ -36,6 +36,10 @@ class Invoice extends Model
             });
         }
 
+        if($request->has('id')){
+            $query = $query->where('id', $request->get('id'));
+        }
+
         return $query;
     }
 
@@ -64,6 +68,15 @@ class Invoice extends Model
             return "<span class='label label-primary'>Dalam Proses Verifikasi</span>";
         }else{
             return "<span style='color:red'>Belum Dibayar</span>";
+        }
+    }
+
+    public function getStatusFormatNotifAttribute()
+    {
+        if($this->getAttribute('status') == 1){
+            return "diterima";
+        }else{
+            return "ditolak";
         }
     }
 

@@ -38,6 +38,7 @@
                     <th>Nama Customer</th>
                     <th>Nama Vendor</th>
                     @endhasrole
+                    <th>Nama Paket</th>
                     <th>Harga Kesepakatan</th>
                     <th>Metode Pembayaran</th>
                     <th>Tgl. Transaksi</th>
@@ -57,6 +58,7 @@
                     <td>{{ $item->customer->name }}</td>
                     <td>{{ $item->vendor->name }}</td>
                     @endhasrole
+                    <td>{{ $item->quotation->package_name ?? '-' }}</td>
                     <td>{{ $item->amount_format }}</td>
                     <td>{{ $item->payment_method_format }}</td>
                     <td>{{ $item->created_at_format }}</td>

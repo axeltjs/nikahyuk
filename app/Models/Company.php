@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
+    use \App\Http\Controllers\Traits\TraitStars;
+
     protected $fillable = [
-        'user_id',
+        'user_id', //owner
         'name', //nama usaha
         'address', //alamat usaha
         'identity_card', //ktp/sim
@@ -32,6 +34,29 @@ class Company extends Model
     public function eventItem()
     {
         return $this->morphMany(eventItem::class, 'model');        
+    }
+
+    public function rating()
+    {
+        return $this->hasMany(Rating::class, 'company_id');        
+    }
+
+    public function getOverallScoreAttribute()
+    {
+        $rate = Rating::where('company_id', $this->getAttribute('id'));
+
+        $sum = $rate->sum('score');
+        $count = $rate->count();
+        $score = 0;
+
+        if($count){
+            $score = $sum / $count;
+            $html = $this->getScoreHtml($score);
+
+            return sprintf("%.1f", $score)." ".$html;
+        }
+
+        return 'Belum memiliki nilai';
     }
 
     public function getApprovedFormatAttribute()

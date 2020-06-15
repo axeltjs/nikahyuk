@@ -43,7 +43,7 @@ trait TraitCode
         $vend_id = $transaction->vendor_id;
         $id = $transaction->id;
 
-        $code = 'INV-'.$date.'/0'.$cust_id.'0'.$vend_id.'/'.$nomor.'/'.$id;
+        $code = 'INV-'.$date.'/0'.$cust_id.'0'.$vend_id.'/'.$id.'/'.$nomor;
         return $code;
     }
     

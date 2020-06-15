@@ -38,7 +38,7 @@
             </tr>    
             <tr>
                 <th>Customer</th>
-                <td>{{ $item->customer->name }}</td>
+                <td> {{ $item->customer->name }}</td>
             </tr>
             <tr>
                 <th>Status</th>    

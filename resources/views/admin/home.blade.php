@@ -16,7 +16,9 @@
 <br>
 <div class="row">
   <div class="col-md-8 col-sm-6 col-xs-12">
+    @hasanyrole('Vendor|Customer')
     <div class="x_panel">
+      <h2>Notifikasi Penawaran</h2>
       <hr>
       <div class="x_content">
         <ul class="list-unstyled timeline">
@@ -25,7 +27,7 @@
             <div class="block">
               <div class="tags">
                 <a href="" class="tag">
-                  <span>Notifikasi!</span>
+                  <span>Tawaran!</span>
                 </a>
               </div>
               <div class="block_content">
@@ -50,6 +52,7 @@
 
       </div>
     </div>
+    @endhasanyrole
   </div>
     <div class="col-md-4 col-sm-6 col-xs-12">
         <div class="x_content">

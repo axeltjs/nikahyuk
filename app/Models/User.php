@@ -10,6 +10,8 @@ use Auth;
 use App\Notifications\ChatNotification;
 use App\Notifications\OfferCompleteNotification;
 use App\Notifications\OfferNotification;
+use App\Notifications\PaymentConfirmNotification;
+use App\Notifications\CreateTransactionNotication;
 
 class User extends Authenticatable
 {
@@ -104,7 +106,8 @@ class User extends Authenticatable
     {
         return $this->notifications()
                     ->whereNull('read_at')
-                    ->where('type', 'App\Notifications\CreateTransactionNotication')
+                    ->where('type', PaymentConfirmNotification::class)
+                    ->orWhere('type', CreateTransactionNotication::class)
                     ->latest()
                     ->limit(10);
     }

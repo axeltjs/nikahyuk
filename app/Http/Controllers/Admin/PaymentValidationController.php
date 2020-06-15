@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Events\PaymentConfirmEvent;
 use App\Models\Invoice;
 
 class PaymentValidationController extends Controller
@@ -19,7 +20,15 @@ class PaymentValidationController extends Controller
 
     public function confirm(Request $request)
     {
-        
+        $id = $request->get('invoice_id');
+        $status = $request->get('status');
+
+        $invoice = Invoice::findOrFail($id);
+        $invoice->update(['status' => $status]);
+
+        //notif
+        event(new PaymentConfirmEvent('admin', $invoice->transaction->customer_id, auth()->user()->id, $invoice));
+
         $this->message('Berhasil konfirmasi pembayaran!');
 
         return redirect()->back();

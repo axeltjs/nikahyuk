@@ -43,7 +43,9 @@
                                             <div class="d-flex align-items-center justify-content-between mb-1">
                                                 <h6 class="mb-0">{{ $chatItem->vendor->company->name }}</h6>
                                                 <input type="hidden" id="chatbox-vendor-id" value="{{ $chatItem->vendor->id }}">
-                                                {{-- <small class="small font-weight-bold"></small> --}}
+                                                <small class="small font-weight-bold">
+                                                    {!! $chatItem->vendor->company->overall_score !!}
+                                                </small>
                                                 <!-- <small >14 Dec</small> -->
                                             </div>
                                              <p class="font-italic text-muted mb-0 text-small">{{ $chatItem->vendor->name }}</p> 
@@ -60,7 +62,7 @@
             <!-- Chat Box-->
             <div class="col-7 px-0">
                 <div class="px-4 py-5 chat-box bg-white" id="chat-box">
-                    <p style="text-align: center;">Pilih lawan bicaramu di kotak sebelah kiri ya..</p>
+                    <p style="text-align: center;">Pilih vendor di kotak sebelah kiri ya..</p>
                     <!-- Sender Message-->
                     <!-- <div class="media w-50 mb-3"><img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50" class="rounded-circle">
                         <div class="media-body ml-3">
@@ -88,6 +90,7 @@
                     <div class="input-group">
                         <input type="text" placeholder="Type a message" aria-describedby="button-send-message" class="text-chat form-control rounded-0 border-0 py-4 bg-light" id="form-typing-message">
                         <div class="input-group-append">
+                            <button id="button-rate-vendor" type="button" class="btn btn-chat btn-rate" data-show="tip" title="Beri ulasan vendor ini" style="color:#f1c40f"> <i class="fa fa-star"></i></button>
                             <button id="button-select-vendor" type="button" class="btn btn-chat btn-select" data-show="tip" title="Pilih vendor ini"> <i class="fa fa-check-circle"></i></button>
                             <button id="button-send-message" type="button" class="btn btn-chat btn-link"> <i class="fa fa-paper-plane"></i></button>
                         </div>
@@ -111,7 +114,7 @@
         </div>
         <div class="modal-body">
           <h5>Apakah anda yakin memilih Vendor ini?</h5>
-          <input type="hidden" name="vendor_id" id="confirm-vendor-id">
+          <input type="hidden" name="vendor_id" class="confirm-vendor-id">
           <br>
           <small>Harga kesepakatan:</small>
           <input type="number" name="amount" class="form-control" placeholder="Masukkan harga kesepakan (Rp)" required>
@@ -131,6 +134,43 @@
     </form>
     </div>
   </div>
+
+  <!-- Modal -->
+<div id="rateModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+    <form action="{{ route('customer.rate.vendor') }}" method="post">
+        {{ csrf_field() }}
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <h5>Berikan ulasanmu terhadap vendor ini!</h5>
+          <input type="hidden" name="vendor_id" class="confirm-vendor-id">
+          <br>
+          <p>Tulis ulasanmu:</p>
+          <textarea type="text" name="review" class="form-control" placeholder="Tulis ulasanmu" required></textarea>
+          <br>
+          <p>Nilai:</p>
+          <p class="ratings" style="font-size: 25px">
+            <a onclick="setNilai(1)"><span id="score-star1" class="fa fa-star-o"></span></a>
+            <a onclick="setNilai(2)"><span id="score-star2" class="fa fa-star-o"></span></a>
+            <a onclick="setNilai(3)"><span id="score-star3" class="fa fa-star-o"></span></a>
+            <a onclick="setNilai(4)"><span id="score-star4" class="fa fa-star-o"></span></a>
+            <a onclick="setNilai(5)"><span id="score-star5" class="fa fa-star-o"></span></a>
+          </p>
+          <input type="hidden" name="score" id="score">
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+
 @endsection
 
 @section('js')
@@ -178,6 +218,26 @@
 
             $('#confirmModal').modal('show');
         });
+
+        $('#button-rate-vendor').on('click', function (e) {
+            e.preventDefault();
+
+            $('#rateModal').modal('show');
+        });
+
+        let setNilai = (nilai) => {
+            $('#score').val(nilai);
+            for (let index = 1; index <= nilai; index++) {
+                $('#score-star' + index).addClass('fa-star').removeClass('fa-star-o');
+                
+                // sisa
+                if(index == nilai){
+                    for(let idx = nilai + 1; idx <= 5; idx++){
+                        $('#score-star' + idx).addClass('fa-star-o').removeClass('fa-star');
+                    }
+                }
+            }
+        }
 
         $('#button-send-message').on('click', function (e) {
             e.preventDefault();
@@ -246,8 +306,9 @@
             $('#chat-box').empty();
             $('#quotation_id').empty();
             $('#form-typing-message').val('');
-            $('#confirm-vendor-id').val($('#chatbox-vendor-id').val());
+            $('.confirm-vendor-id').val($('#chatbox-vendor-id').val());
             $('.btn-select').prop('disabled', false);
+            $('.btn-rate').prop('disabled', true);
 
             if (id) {
                 $.ajax({
@@ -263,6 +324,7 @@
                         
                         if(response.transaksi){
                             $('.btn-select').prop('disabled', true);
+                            $('.btn-rate').prop('disabled', false);
                         }
 
                         $.each(response.penawaran, function(id, name){

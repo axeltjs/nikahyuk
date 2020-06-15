@@ -29,7 +29,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('quotation/{id}', 'Admin\QuotationController@show');
     Route::get('invoice/{id}', 'Admin\InvoiceController@show');
     Route::get('invoice/cetak/{id}', 'Admin\InvoiceController@cetakInvoice');
-    Route::post('invoice/upload-pembayaran', 'Admin\InvoiceController@uploadPembayaran');
     
     Route::group(['middleware' => 'role:Customer'], function () {
         Route::get('customer/survey', 'Admin\SurveyController@index')->name('customer.survey');
@@ -41,7 +40,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('customer/chat', 'Admin\ChatController@index')->name('customer.chat.index');
         Route::get('customer/chat/get-all-message', 'Admin\ChatController@getAllMessage')->name('customer.chat.get-all-message');
         Route::post('customer/chat/send-message', 'Admin\ChatController@sendMessage')->name('customer.chat.send-message');
-
+       
+        Route::post('invoice/upload-pembayaran', 'Admin\InvoiceController@uploadPembayaran');
+        Route::post('customer/rate/vendor', 'Admin\RatingController@postReview')->name('customer.rate.vendor');
         Route::post('customer/deal','Admin\TransactionController@dealTransaction')->name('customer.deal');
     });
 
@@ -61,6 +62,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('admin/user', 'Admin\UserController');
         Route::resource('admin/vendor/validation', 'Admin\VendorValidationController')->only(['index', 'show', 'update']);
         Route::resource('admin/payment/validation', 'Admin\PaymentValidationController')->only(['index']);
-        Route::post('admin/payment/validation/confirmation', 'Admin\PaymentValidationController@confirm');
+        Route::post('admin/payment/validation/confirmation', 'Admin\PaymentValidationController@confirm')->name('admin.payment.validation.confirmation');
     });
 });

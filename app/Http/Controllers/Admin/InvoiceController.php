@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
 use App\Models\Transaction;
+use App\Events\PaymentConfirmEvent;
 use PDF;
 use App\Http\Requests\UploadPembayaranInvoiceRequest;
 
@@ -37,6 +38,8 @@ class InvoiceController extends Controller
 
         $invoice = Invoice::findOrFail($id);
         $photo = $this->photoUploaded($request->bukti_pembayaran, 'invoice', 1);
+
+        event(new PaymentConfirmEvent('customer', 1, auth()->user()->id, $invoice)); //statis ke admin no.1
 
         $invoice->update([
             'bukti_bayar' => $photo,
