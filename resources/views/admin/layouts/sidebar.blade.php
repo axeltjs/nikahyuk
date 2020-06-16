@@ -16,6 +16,7 @@
         @hasrole('Admin')
             <li><a href="{{ url('admin/payment/validation') }}"><i class="fa fa-money"></i> Validasi Pembayaran</a></li>
             <li><a href="{{ url('admin/vendor/validation') }}"><i class="fa fa-check-square"></i> Validasi Vendor</a></li>
+            <li><a href="{{ route('admin.promotion') }}"><i class="fa fa-check"></i> Validasi Posting Promosi</a></li>
             <li><a href="{{ url('admin/user') }}"><i class="fa fa-users"></i> Users</a></li>
         @endhasrole
 

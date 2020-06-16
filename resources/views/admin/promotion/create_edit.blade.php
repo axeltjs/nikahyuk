@@ -6,7 +6,8 @@
         .warning-pass{
             color:red;
         }
-    </style>
+	</style>
+	<link rel="stylesheet" href="{{ asset('admin/summernote/summernote-lite.min.css') }}">
 @endsection
 @section('content')
 
@@ -40,12 +41,14 @@
 @endsection
 
 @section('js')
-<script src="{{ asset('js/passwordChecker.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-<script src="{{ asset('admin/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js') }}"></script>
-<script src="{{ asset('admin/vendors/jquery.hotkeys/jquery.hotkeys.js') }}"></script>
 <script src="{{ asset('admin/vendors/google-code-prettify/src/prettify.js') }}"></script>
+<script src="{{ asset('admin/summernote/summernote-lite.min.js') }}"></script>
 <script>
+	$(document).ready(function() {
+		$('#summernote').summernote({
+			height: 300,
+		});
+	});
 </script>
 
 @endsection

@@ -21,6 +21,9 @@ use App\Listeners\SendCreateTransactionNotificationListener;
 use App\Events\PaymentConfirmEvent;
 use App\Listeners\PaymentConfirmListener;
 
+use App\Events\PromotionVendorNotifEvent;
+use App\Listeners\PromotionVendorNotifListener;
+
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -49,6 +52,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         PaymentConfirmEvent::class => [
             PaymentConfirmListener::class
+        ],
+        PromotionVendorNotifEvent::class => [
+            PromotionVendorNotifListener::class
         ],
     ];
 

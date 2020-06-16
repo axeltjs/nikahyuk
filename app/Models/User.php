@@ -12,6 +12,7 @@ use App\Notifications\OfferCompleteNotification;
 use App\Notifications\OfferNotification;
 use App\Notifications\PaymentConfirmNotification;
 use App\Notifications\CreateTransactionNotication;
+use App\Notifications\PromotionVendorNotif;
 
 class User extends Authenticatable
 {
@@ -113,6 +114,7 @@ class User extends Authenticatable
                     ->whereNull('read_at')
                     ->where('type', PaymentConfirmNotification::class)
                     ->orWhere('type', CreateTransactionNotication::class)
+                    ->orWhere('type', PromotionVendorNotif::class)
                     ->latest()
                     ->limit(10);
     }

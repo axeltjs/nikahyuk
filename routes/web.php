@@ -66,5 +66,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('admin/vendor/validation', 'Admin\VendorValidationController')->only(['index', 'show', 'update']);
         Route::resource('admin/payment/validation', 'Admin\PaymentValidationController')->only(['index']);
         Route::post('admin/payment/validation/confirmation', 'Admin\PaymentValidationController@confirm')->name('admin.payment.validation.confirmation');
+        
+        Route::post('admin/promotion/approval', 'Admin\PromotionController@approval')->name('admin.promotion.approval');
+        Route::get('admin/promotion', 'Admin\PromotionController@approvalList')->name('admin.promotion');
     });
 });

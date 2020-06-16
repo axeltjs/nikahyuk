@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PromotionRequest;
 use App\Models\Promotion;
+use App\Events\PromotionVendorNotifEvent;
 
 class PromotionController extends Controller
 {
@@ -17,7 +19,9 @@ class PromotionController extends Controller
      */
     public function index(Request $request)
     {
-        $data = Promotion::filter($request)->paginate(10);
+        $company_id = auth()->user()->company->id;
+
+        $data = Promotion::where('company_id', $company_id)->filter($request)->paginate(10);
         $view = [
             'items' => $data,
         ];
@@ -50,16 +54,18 @@ class PromotionController extends Controller
     {
         $image = $this->photoUploaded($request->gambar, 'promotion');
         
-        $user = Promotion::create([
+        $promo = Promotion::create([
             'title' => $request->get('title'),
             'description' => $request->get('description'),
             'image' => $image,
             'company_id' => auth()->user()->company->id,
         ]);
 
+        event(new PromotionVendorNotifEvent('vendor', 1, auth()->user()->id, $promo->id));
+
         $this->message('Artikel berhasil dibuat!');
 
-        return redirect('admin/promotion');
+        return redirect('vendor/promotion');
     }
 
     /**
@@ -71,6 +77,9 @@ class PromotionController extends Controller
      */
     public function show($id)
     {
+        $item = Promotion::findOrFail($id);
+
+        return view('admin.promotion.show', compact('item'));
     }
 
     /**
@@ -109,18 +118,21 @@ class PromotionController extends Controller
         $data = [
             'title' => $request->get('title'),
             'description' => $request->get('description'),
+            'approved' => 0,
         ];
 
-        if ($request->get('gambar') != null ) {
+        if (isset($request->gambar)) {
             $image = $this->photoUploaded($request->gambar, 'promotion', 1, $promotion->image ?? null);
             $data['image'] = $image;
         }
+
+        event(new PromotionVendorNotifEvent('vendor', 1, auth()->user()->id, $promotion->id));
 
         $promotion->update($data);
 
         $this->message('Artikel berhasil diubah!');
 
-        return redirect('admin/promotion');
+        return redirect('vendor/promotion');
     }
 
     /**
@@ -133,10 +145,54 @@ class PromotionController extends Controller
     public function destroy($id)
     {
         $data = Promotion::findOrFail($id);
+
+        $this->deletePhoto('promotion', $data->image);
         $data = $data->delete();
 
         $this->message('Artikel berhasil dihapus!');
 
         return redirect()->back();
+    }
+
+    /**
+     * 
+     * Admin
+     * 
+     */
+
+    public function approvalList(Request $request)
+    {
+        $data = Promotion::filter($request)->orderBy('approved')->paginate(10);
+     
+        $view = [
+            'items' => $data,
+        ];
+
+        return view('admin.promotion.index')->with($view);
+    }
+
+    public function approval(Request $request)
+    {
+        // dd($request->all());
+        $id = $request->get('promotion_id');
+        $status = $request->get('status');
+
+        $data = Promotion::findOrFail($id);
+
+        event(new PromotionVendorNotifEvent('admin', auth()->user()->id, $data->company->user->id, $id));
+
+        $data = $data->update(['approved' => $status]);
+
+        // notif
+        if($data){
+            $this->message('Artikel berhasil diupdate!');
+
+            return redirect()->back();
+        }
+
+        $this->message('Artikel gagal diupdate!','danger');
+
+        return redirect()->back();
+        
     }
 }
