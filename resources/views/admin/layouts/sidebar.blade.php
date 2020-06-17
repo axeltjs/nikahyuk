@@ -14,19 +14,18 @@
             <li><a href="{{ url('vendor/promotion') }}"><i class="fa fa-newspaper-o"></i> Promosi</a></li>
         @endhasrole
         @hasrole('Admin')
-            <li><a href="{{ url('admin/payment/validation') }}"><i class="fa fa-money"></i> Validasi Pembayaran</a></li>
-            <li><a href="{{ url('admin/vendor/validation') }}"><i class="fa fa-check-square"></i> Validasi Vendor</a></li>
-            <li><a href="{{ route('admin.promotion') }}"><i class="fa fa-check"></i> Validasi Posting Promosi</a></li>
+            <li><a><i class="fa fa-check-square-o"></i> Validasi <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                <li><a href="{{ url('admin/payment/validation') }}">Pembayaran</a></li>
+                <li><a href="{{ url('admin/vendor/validation') }}">Vendor</a></li>
+                <li><a href="{{ route('admin.promotion') }}">Posting Promosi</a></li>
+                </ul>
+            </li>   
+            <li><a href="{{ url('admin/banner') }}"><i class="fa fa-image"></i> Banner Image</a></li>
             <li><a href="{{ url('admin/user') }}"><i class="fa fa-users"></i> Users</a></li>
         @endhasrole
 
-        <li><a><i class="fa fa-laptop"></i> Example <span class="fa fa-chevron-down"></span></a>
-            <ul class="nav child_menu">
-            <li><a href="index.html">Dashboard</a></li>
-            <li><a href="index2.html">Dashboard2</a></li>
-            <li><a href="index3.html">Dashboard3</a></li>
-            </ul>
-        </li>                
+                     
         </ul>
     </div>
 </div>
