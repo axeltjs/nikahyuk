@@ -46,6 +46,13 @@ class Promotion extends Model
         return "<a target='__blank' href='".$url."'><img class='banner-img' src='".$url."' style='max-width:150px; height:auto;'></a>";
     }
 
+    public function getImageFormatUrlAttribute()
+    {
+        $url = url('storage/promotion/'.$this->getAttribute('image'));
+
+        return $url;
+    }
+
     public function getStatusFormatAttribute()
     {
         if($this->getAttribute('approved') == 0){

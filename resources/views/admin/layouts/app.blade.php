@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>{{ config('app.name', 'Nikahyuk') }}</title>
+    <link rel="icon" href="{{ asset('img/icon.png') }}">
 
     <!-- Bootstrap -->
     <link href="{{ asset('admin/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -91,7 +92,7 @@
         <div class="col-md-3 left_col menu_fixed">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-heart"></i> <span>Nikahyuk!</span></a>
+              <a href="index.html" class="site_title"><img style="width:160px; margin-left:20px; height:auto;" src="{{ asset('img/nikahyuk-logo.png') }}" alt="logo"></a>
             </div>
 
             <div class="clearfix"></div>

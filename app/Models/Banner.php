@@ -30,4 +30,9 @@ class Banner extends Model
 
         return "<a target='__blank' href='".$url."'><img class='banner-img' src='".$url."' style='max-width:150px; height:auto;'></a>";
     }
+
+    public function getImageUrlAttribute()
+    {
+        return url('storage/banner/'.$this->getAttribute('image'));
+    }
 }

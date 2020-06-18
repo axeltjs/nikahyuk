@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{{ asset('img/icon.png') }}">
 
     <title>{{ config('app.name', 'Nikahyuk Login') }} </title>
 
@@ -84,7 +85,9 @@
                 <br />
 
                 <div>
-                  <h1><i class="fa fa-heart"></i> Nikahyuk!</h1>
+                  <a href="{{ url('/') }}">
+                    <img style="width:150px; height:auto;" src="{{ asset('img/nikahyuk-logo.png') }}" alt="logo">
+                  </a>
                   <p>©2020 All Rights Reserved.</p>
                 </div>
               </div>
@@ -152,12 +155,15 @@
                   </div>
                   <div class="radio pull-left">
                     <label>
-                      <input type="radio" class="flat" value="Vendor" name="role"> I want to sign in as a <b style="color:#8e44ad">Vendor</b>
+                      <input type="radio" class="flat" value="Vendor" name="role"> I want to sign in as a <b style="color:#8e44ad">Vendor (Mitra Nikahyuk)</b>
                     </label>
                   </div>
               </div>
               <div class="clearfix"></div>
               <br>
+              <label style="text-align:left;">
+              {!! Form::checkbox('privacy_policy', 1, true) !!} Saya setuju dengan <b><a target="__blank" href="https://www.privacypolicygenerator.info/live.php?token=cNYS5WUvLqgtImjTGWc5E8uSfqSeZDgE">Syarat & Ketentuan</a></b> yang berlaku.
+              </label>
               <div>
                 <button type="submit" class="btn btn-block btn-primary">
                     {{ __('Register') }}
@@ -175,8 +181,10 @@
                 <br />
 
                 <div>
-                    <h1><i class="fa fa-heart"></i> Nikahyuk!</h1>
-                    <p>©2020 All Rights Reserved.</p>
+                  <a href="{{ url('/') }}">
+                    <img style="width:150px; height:auto;" src="{{ asset('img/nikahyuk-logo.png') }}" alt="logo">
+                  </a>
+                  <p>©2020 All Rights Reserved.</p>
                 </div>
               </div>
             </form>
