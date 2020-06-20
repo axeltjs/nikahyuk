@@ -121,14 +121,17 @@
                 <div class="col-md-4 popular-grid">
                     <img src="{{ $promo->image_format_url }}" class="img-responsive" alt="">
                         <div class="popular-text">
-                            <h5><a href="{{ url('promo/'.$promo->id) }}">{{ $promo->company->name }}</a></h5>
+                            <h5><a href="{{ url('promo/'.$promo->id) }}">{{ $promo->title }}</a></h5>
                             <div class="detail-bottom">
                                 <small>{!! $promo->company->overall_score !!}</small>
                                 <br>
                                 <br>
                                 <h4>
-                                    {{ $promo->title }}
+                                    By: {{ $promo->company->name }}
                                 </h4>
+                                <p style="text-align: left">
+                                    {{ $promo->description_format }}
+                                </p>
                                 <br>
                             </div>
                         </div>

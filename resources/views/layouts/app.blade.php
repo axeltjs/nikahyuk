@@ -25,6 +25,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!-- web-fonts -->  
 <link href="//fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700" rel="stylesheet">
 <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+@if(Request::segment(1) != 'promo')
 @foreach($banners as $i => $item)
 <style>
     .banner-{{ $i }}{
@@ -41,11 +42,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	}
 </style>
 @endforeach
+	@endif
 <!-- //web-fonts -->
 </head>
 
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">  
 	<!-- banner -->
+	@if(Request::segment(1) != 'promo')
 	<div id="home" class="w3ls-banner"> 
 		<!-- banner-text -->
 		<div class="slider">
@@ -76,6 +79,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		 
  
 	</div>	
+	@endif
 	<!-- //banner --> 
 			<!-- header -->
 		<div class="header-w3layouts"> 

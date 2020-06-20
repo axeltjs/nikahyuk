@@ -1,4 +1,8 @@
 @extends('admin.layouts.app')
+@section('css')
+    <link rel="stylesheet" href="{{ asset('admin/build/css/custom.min.css') }}">
+    <link href="{{ asset('admin/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet">
+@endsection
 @section('content')
 <div class="page-title">
     <div class="title_left" style="width:100%;">
@@ -12,11 +16,73 @@
     </div>
 </div>
 <div class="clearfix"></div>
-<br>
-<br>
 <div class="row">
+    @hasrole('Admin')
+      <div class="col-md-12">
+      <h1>Dashboard</h1>
+      <div class="top_tiles">
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+          <div class="tile-stats">
+            <div class="icon"><i class="fa fa-users"></i></div>
+            <div class="count">{{ $counted['customer'] }}</div>
+            <h3>Total Customer</h3>
+          </div>
+        </div>
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+          <div class="tile-stats">
+            <div class="icon"><i class="fa fa-bank"></i></div>
+            <div class="count">{{ $counted['vendor'] }}</div>
+            <h3>Total Vendor</h3>
+          </div>
+        </div>
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+          <div class="tile-stats">
+            <div class="icon"><i class="fa fa-money"></i></div>
+            <div class="count">{{ $counted['transaction'] }}</div>
+            <h3>Total Transaksi</h3>
+          </div>
+        </div>
+     </div>
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Grafik Transaksi <small>Bulanan</small></h2>
+          <div class="filter">
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content row">
+          <div class="col-10">
+            <div id="area-chart" style="width:100%; height:300px;"></div>
+          </div>
+          <div class="col-2">
+            <h2>Metode Pembayaran</h2>
+            @foreach($paymentMethod as $name => $val)
+            <div class="widget_summary">
+              <div class="w_left w_25">
+                <span>{{ $name }}</span>
+              </div>
+              <div class="w_center w_55">
+                <div class="progress">
+                  <div class="progress-bar bg-green" role="progressbar" aria-valuenow="{{ $val }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $val }}%;">
+                    <span class="sr-only">Total: {{ $val }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="w_right w_20">
+                <span>{{ $val }}</span>
+              </div>
+            </div>
+           
+            @endforeach
+          </div>
+        </div>
+      </div>
+    </div>
+    @endhasrole
   <div class="col-md-8 col-sm-6 col-xs-12">
     @hasanyrole('Vendor|Customer')
+    <br>
+    <br>
     <div class="x_panel">
       <h2>Notifikasi Penawaran</h2>
       <hr>
@@ -92,4 +158,35 @@
 
 </div>
       
+@endsection
+@section('js')
+<script src="{{ asset('admin/vendors/raphael/raphael.min.js') }}"></script>
+<script src="{{ asset('admin/vendors/morris.js/morris.min.js') }}"></script>
+<script src="{{ asset('admin/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js') }}"></script>
+<script>
+  var transaction = {!! $transactionChart !!};
+  var data = [];
+  
+  $.each(transaction, function(index, item){
+    data.push({'y':index, 'a':item.amount});
+  });
+
+  console.log(data);
+    config = {
+      data: data,
+      xkey: 'y',
+      ykeys: ['a'],
+      labels: ['Total Pendapatan'],
+      fillOpacity: 0.6,
+      hideHover: 'auto',
+      parseTime: false,
+      behaveLikeLine: true,
+      resize: true,
+      pointFillColors:['#ffffff'],
+      pointStrokeColors: ['black'],
+      lineColors:['#1ABB9C']
+  };
+config.element = 'area-chart';
+Morris.Area(config);
+</script>
 @endsection

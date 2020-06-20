@@ -18,6 +18,10 @@ class HomePageController extends Controller
         $rating = Rating::where('score', '>=', 4)->limit(10)->get();
         $promo = Promotion::where('approved', 1)->get();
         $vendor = Company::where('approved', 1);
+        
+        if($banner->count() == 0){
+            return redirect('login');
+        }
 
         $numbers = [
             'client' => User::whereHas("roles", function($q){ $q->where("name", "Customer"); })->count(),
@@ -38,10 +42,8 @@ class HomePageController extends Controller
     public function promo($id)
     {
         $promo = Promotion::findOrFail($id);
-        $banner = Banner::get();
 
         $data = [
-            'banners' => $banner,
             'promo' => $promo,
         ];
 
