@@ -23,6 +23,13 @@
             </li>   
             <li><a href="{{ url('admin/banner') }}"><i class="fa fa-image"></i> Banner Image</a></li>
             <li><a href="{{ url('admin/user') }}"><i class="fa fa-users"></i> Users</a></li>
+            <li><a><i class="fa fa-check-square-o"></i> Laporan <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                <li><a href="{{ url('admin/payment/validation') }}">Pembayaran</a></li>
+                <li><a href="{{ url('admin/vendor/validation') }}">Vendor</a></li>
+                <li><a href="{{ route('admin.promotion') }}">Posting Promosi</a></li>
+                </ul>
+            </li>  
         @endhasrole
 
                      

@@ -38,7 +38,7 @@
                             @foreach ($chatItems as $chatItem)
                                 <a href="#" class="list-group-item list-group-item-action list-group-item-chat list-group-item-light rounded-0" data-id="{{ $chatItem->id }}">
                                     <div class="media">
-                                        <img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50" class="rounded-circle">
+                                        <img src="{{ $chatItem->vendor->photo_format_url }}" alt="user" width="50" class="rounded-circle">
                                         <div class="media-body ml-4">
                                             <div class="d-flex align-items-center justify-content-between mb-1">
                                                 <h6 class="mb-0">{{ $chatItem->vendor->company->name }}</h6>

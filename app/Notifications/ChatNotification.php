@@ -48,6 +48,7 @@ class ChatNotification extends Notification
             'message' => 'Pesan Baru Belum Dibaca Dari ' . $this->from_user->name, 
             'from_user_id' => $this->from_user->id,
             'from_user_name' => $this->from_user->name,
+            'photo_profile' => $this->from_user->photo_format_url,
             'to_user_id' => $this->to_user->id,
             'to_user_name' => $this->to_user->name,
         ];

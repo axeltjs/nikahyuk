@@ -25,6 +25,22 @@ class HomeController extends Controller
             return view('admin.home', compact('has_survey'));
         }
 
+        if($user->hasRole('Vendor')){
+            $transModel = new Transaction;
+            $counted = [
+                'transaction' => $transModel->where('vendor_id', $user->id)->count()
+            ];
+
+            $transaksi = $transModel->where('vendor_id', $user->id)->get();
+            $paymentMethod = $transaksi->countBy(function ($item) {
+                return $item->payment_method_format;
+            });
+
+            $transactionChart = json_encode($this->getTransactionPerMonth());
+            
+            return view('admin.home', compact('transactionChart', 'paymentMethod', 'counted'));
+        }
+
         if($user->hasRole('Admin'))
         {
             $transactionChart = json_encode($this->getTransactionPerMonth());

@@ -38,7 +38,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'phone', 'address', 'password',
+        'name', 'email', 'phone', 'address', 'password', 'photo'
     ];
 
     /**
@@ -135,5 +135,16 @@ class User extends Authenticatable
     public function scopeExceptMe($query)
     {
         return $query->where('id', '!=', Auth::user()->id);
+    }
+
+    public function getPhotoFormatUrlAttribute()
+    {
+        $url = asset('admin/images/img.jpg');
+        
+        if($this->getAttribute('photo') !== null){
+            $url = url('storage/user/'.$this->getAttribute('photo'));
+        }
+
+        return $url;
     }
 }

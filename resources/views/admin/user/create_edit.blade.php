@@ -22,9 +22,9 @@
     </div>
     <div class="x_content">
 		@if($method == 'create')
-			<form method="post" action="{{ url('admin/user/') }}" >
+			<form method="post" action="{{ url('admin/user/') }}" enctype="multipart/form-data">
 		@else 
-			{!! Form::model($item,['url' => [url('admin/user')."/".$item->id],'method' => 'Put']) !!}			
+			{!! Form::model($item,['url' => [url('admin/user')."/".$item->id],'method' => 'Put','files' => 'true']) !!}			
 		@endif
 			<div class="panel panel-default">
 				<div class="panel-body form-horizontal tasi-form" id="form-utama">

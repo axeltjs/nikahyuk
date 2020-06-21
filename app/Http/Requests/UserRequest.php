@@ -29,6 +29,7 @@ class UserRequest extends FormRequest
             'password' => 'string',
             'role_id' => 'required',
             'address' => 'string|required',
+            'photo' => 'nullable|mimes:jpg,jpeg,png,gif|max:2048',
             'phone' => 'string|min:11|max:15',
             'new_password' => 'nullable',
             'new_password2' => 'nullable',

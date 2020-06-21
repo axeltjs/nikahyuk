@@ -18,7 +18,7 @@
         <h2>Data Profile</h2>
     </div>
     <div class="x_content">
-        <form method="post" action="{{ route('profile.update') }}">
+        <form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="item form-group">
                 <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Nama  <span class="required">*</span>
@@ -49,6 +49,13 @@
                 </label>
                 <div class="col-md-6 col-sm-6 ">
                     {!! Form::textarea('address', Auth::user()->address, ['class'=>'form-control','id' => 'address','autofocus', 'tabindex' => '4']) !!}
+                </div>
+            </div>
+
+            <div class="item form-group">
+                <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Photo Profile</label>
+                <div class="col-md-6 col-sm-6 ">
+                    <input type="file" name="photo">
                 </div>
             </div>
             

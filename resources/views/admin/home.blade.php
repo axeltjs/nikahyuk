@@ -43,46 +43,12 @@
           </div>
         </div>
      </div>
-      <div class="x_panel">
-        <div class="x_title">
-          <h2>Grafik Transaksi <small>Bulanan</small></h2>
-          <div class="filter">
-          </div>
-          <div class="clearfix"></div>
-        </div>
-        <div class="x_content row">
-          <div class="col-10">
-            <div id="area-chart" style="width:100%; height:300px;"></div>
-          </div>
-          <div class="col-2">
-            <h2>Metode Pembayaran</h2>
-            @foreach($paymentMethod as $name => $val)
-            <div class="widget_summary">
-              <div class="w_left w_25">
-                <span>{{ $name }}</span>
-              </div>
-              <div class="w_center w_55">
-                <div class="progress">
-                  <div class="progress-bar bg-green" role="progressbar" aria-valuenow="{{ $val }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $val }}%;">
-                    <span class="sr-only">Total: {{ $val }}</span>
-                  </div>
-                </div>
-              </div>
-              <div class="w_right w_20">
-                <span>{{ $val }}</span>
-              </div>
-            </div>
-           
-            @endforeach
-          </div>
-        </div>
-      </div>
+     @include('admin.layouts.transaction_chart')
     </div>
     @endhasrole
-  <div class="col-md-8 col-sm-6 col-xs-12">
     @hasanyrole('Vendor|Customer')
-    <br>
-    <br>
+    <div class="col-md-8 col-sm-6 col-xs-12">
+      
     <div class="x_panel">
       <h2>Notifikasi Penawaran</h2>
       <hr>
@@ -120,8 +86,8 @@
 
       </div>
     </div>
-    @endhasanyrole
   </div>
+    @endhasanyrole
     <div class="col-md-4 col-sm-6 col-xs-12">
         @hasrole('Customer')
           @if(auth()->user()->transaction()->hasProcessedTransaction()->count()) @else
@@ -155,7 +121,11 @@
         </div>
         @endhasrole
     </div>
-
+    @hasrole('Vendor')
+    <div class="col-md-12 col-sm-12 col-xs-12">
+     @include('admin.layouts.transaction_chart')
+    </div>
+    @endhasrole
 </div>
       
 @endsection
@@ -164,6 +134,7 @@
 <script src="{{ asset('admin/vendors/morris.js/morris.min.js') }}"></script>
 <script src="{{ asset('admin/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js') }}"></script>
 <script>
+  @hasanyrole('Admin|Vendor')
   var transaction = {!! $transactionChart !!};
   var data = [];
   
@@ -186,7 +157,8 @@
       pointStrokeColors: ['black'],
       lineColors:['#1ABB9C']
   };
-config.element = 'area-chart';
-Morris.Area(config);
+  config.element = 'area-chart';
+  Morris.Area(config);
+  @endhasanyrole
 </script>
 @endsection

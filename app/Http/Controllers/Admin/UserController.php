@@ -16,6 +16,7 @@ use Exception;
 class UserController extends Controller
 {
     use \App\Http\Controllers\Traits\TraitMessage;
+    use \App\Http\Controllers\Traits\TraitUpload;
     /**
      * Display a listing of the resource.
      *
@@ -60,11 +61,14 @@ class UserController extends Controller
             return $this->passwordNotCorrect();
         }
 
+        $photo = $this->photoUploaded($request->photo, 'user');
+
         $user = User::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'address' => $request->get('address'),
             'phone' => $request->get('phone'),
+            'photo' => $photo,
             'password' => bcrypt($request->get('new_password')),
         ]);
 
@@ -128,6 +132,8 @@ class UserController extends Controller
             return $this->passwordNotCorrect();
         }
 
+        $user = User::findOrFail($id);
+
         $data = [
             'name' => $request->get('name'),
             'email' => $request->get('email'),
@@ -135,11 +141,15 @@ class UserController extends Controller
             'phone' => $request->get('phone'),
         ];
 
+        if (isset($request->photo)) {
+            $photo = $this->photoUploaded($request->photo, 'user', 1, $user->photo ?? null);
+            $data['photo'] = $photo;
+        }
+
         if ($request->get('new_password') != null && strlen($request->get('new_password')) >= 6) {
             $data['password'] = bcrypt($request->get('new_password'));
         }
 
-        $user = User::findOrFail($id);
         $user->syncRoles($request->get('role_id'));
         $user->update($data);
 
@@ -158,6 +168,8 @@ class UserController extends Controller
     public function destroy($id)
     {
         $data = User::findOrFail($id);
+
+        $this->deletePhoto('user', $data->photo);
         $data = $data->delete();
 
         $this->message('User berhasil dihapus!');
@@ -179,6 +191,7 @@ class UserController extends Controller
         if ($this->checkIfPasswordMatch($request, Auth::user()->id)) {
             return $this->passwordNotCorrect();
         }
+        $user = User::findOrFail(Auth::user()->id);
         
         $data = [
             'name' => $request->get('name'),
@@ -187,11 +200,16 @@ class UserController extends Controller
             'phone' => $request->get('phone'),
         ];
 
+        if (isset($request->photo)) {
+            $photo = $this->photoUploaded($request->photo, 'user', 1, $user->photo ?? null);
+            $data['photo'] = $photo;
+        }
+
         if ($request->get('new_password') != null && strlen($request->get('new_password')) >= 6) {
             $data['password'] = bcrypt($request->get('new_password'));
         }
 
-        User::findOrFail(Auth::user()->id)->update($data);
+        $user->update($data);
 
         $this->message('Profile berhasil diubah!');
 

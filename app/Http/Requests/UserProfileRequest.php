@@ -28,6 +28,7 @@ class UserProfileRequest extends FormRequest
             'email' => 'required|string|email|max:255',
             'password' => 'string|required',
             'address' => 'string|required',
+            'photo' => 'nullable|mimes:jpg,jpeg,png,gif|max:2048',
             'phone' => 'string|min:11|max:15',
             'new_password' => 'nullable',
             'new_password2' => 'nullable|required_with:new_password',
