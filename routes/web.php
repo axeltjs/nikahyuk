@@ -70,5 +70,13 @@ Route::group(['middleware' => 'auth'], function () {
         
         Route::post('admin/promotion/approval', 'Admin\PromotionController@approval')->name('admin.promotion.approval');
         Route::get('admin/promotion', 'Admin\PromotionController@approvalList')->name('admin.promotion');
+
+        // Laporan
+
+        Route::get('/admin/laporan/user', 'Admin\LaporanController@user')->name('admin.laporan.user');
+        Route::get('/admin/laporan/vendor', 'Admin\LaporanController@vendor')->name('admin.laporan.vendor');
+        
+        Route::get('/admin/laporan/user/cetak/{id}', 'Admin\LaporanController@userCetak')->name('admin.laporan.user.cetak');
+        Route::get('/admin/laporan/vendor/cetak/{id}', 'Admin\LaporanController@vendorCetak')->name('admin.laporan.vendor.cetak');
     });
 });

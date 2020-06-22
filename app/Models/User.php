@@ -79,6 +79,11 @@ class User extends Authenticatable
         return $this->hasMany(Transaction::class, 'customer_id');
     }
 
+    public function transactionVendor()
+    {
+        return $this->hasMany(Transaction::class, 'vendor_id');
+    }
+
     public function selectedClient()
     {
         return $this->hasMany(SelectedVendor::class, 'customer_id');
@@ -139,7 +144,7 @@ class User extends Authenticatable
 
     public function getPhotoFormatUrlAttribute()
     {
-        $url = asset('admin/images/img.jpg');
+        $url = asset('admin/images/user.png');
         
         if($this->getAttribute('photo') !== null){
             $url = url('storage/user/'.$this->getAttribute('photo'));
