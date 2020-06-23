@@ -67,7 +67,7 @@ class HomeController extends Controller
         $transactionChart = DB::table('transactions')
         ->get()
         ->groupBy(function ($item) {
-        return Carbon::parse($item->created_at)->format('F Y');
+            return Carbon::parse($item->created_at)->format('F Y');
         })
         ->map(function ($group) {
         $group = $group->toArray();

@@ -174,6 +174,8 @@ class SurveyController extends Controller
                 $array_item_acara[] = [
                     'model_id' => $survey->id,
                     'name' => $item,
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
                     'model_type' => Survey::class
                 ];
             }

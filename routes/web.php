@@ -78,5 +78,7 @@ Route::group(['middleware' => 'auth'], function () {
         
         Route::get('/admin/laporan/user/cetak/{id}', 'Admin\LaporanController@userCetak')->name('admin.laporan.user.cetak');
         Route::get('/admin/laporan/vendor/cetak/{id}', 'Admin\LaporanController@vendorCetak')->name('admin.laporan.vendor.cetak');
+        Route::get('admin/laporan/item-acara','Admin\LaporanController@itemAcara')->name('admin.laporan.item-acara');
+        Route::get('admin/laporan/item-acara/cetak','Admin\LaporanController@itemAcaraCetak');
     });
 });

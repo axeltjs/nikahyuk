@@ -27,7 +27,7 @@
                 <ul class="nav child_menu">
                 <li><a href="{{ route('admin.laporan.user') }}">Customer</a></li>
                 <li><a href="{{ route('admin.laporan.vendor') }}">Vendor</a></li>
-                <li><a href="{{ route('admin.promotion') }}">Transaksi</a></li>
+                <li><a href="{{ route('admin.laporan.item-acara') }}">Item Acara</a></li>
                 </ul>
             </li>  
         @endhasrole
