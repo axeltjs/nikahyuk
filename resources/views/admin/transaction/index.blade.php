@@ -50,14 +50,14 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     @hasrole('Customer')
-                    <td>{{ $item->vendor->name }}</td>
+                    <td>{{ $item->vendor->company->name }}</td>
                     @endhasrole
                     @hasrole('Vendor')
                     <td>{{ $item->customer->name }}</td>
                     @endhasrole
                     @hasrole('Admin')
                     <td>{{ $item->customer->name }}</td>
-                    <td>{{ $item->vendor->name }}</td>
+                    <td>{{ $item->vendor->company->name }}</td>
                     @endhasrole
                     <td>{{ $item->quotation->package_name ?? '-' }}</td>
                     <td>{{ $item->amount_format }}</td>

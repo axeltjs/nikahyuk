@@ -75,6 +75,21 @@
                 </div>
             </div>
             <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 label-align" for="budget">NPWP 
+                    <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 ">
+                    <div class="col-md-12 xdisplay_inputx form-group row has-feedback">
+                        {!! Form::file('npwp', ['class' => 'form-control']) !!}
+                        @if(isset($has_company))
+                            @if($has_company['npwp'])
+                                <a target="__blank" href="{{ url('storage/company/'.$has_company['npwp']) }}" style="color:#3498db; margin-top:3px;">Lihat File</a>
+                            @endif
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
                 <label class="col-form-label col-md-3 col-sm-3 label-align" for="budget">Surat Izin Usaha 
                 </label>
                 <div class="col-md-6 col-sm-6 ">
@@ -83,6 +98,21 @@
                         @if(isset($has_company))
                             @if($has_company['business_permit'])
                                 <a target="__blank" href="{{ url('storage/company/'.$has_company['business_permit']) }}" style="color:#3498db; margin-top:3px;">Lihat File</a>
+                            @endif
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 label-align" for="budget">Bukti persetujuan <br>
+                    <a target="__blank" href="{{ asset('doc/Syarat-dan-ketentuan-nikahyuk-printable-vendor.docx') }}" style="color:red; margin-top:3px;">Download format disini</a>
+                </label>
+                <div class="col-md-6 col-sm-6 ">
+                    <div class="col-md-12 xdisplay_inputx form-group row has-feedback">
+                        {!! Form::file('sk_photo', ['class' => 'form-control']) !!}
+                       @if(isset($has_company))
+                            @if($has_company['sk'])
+                                <a target="__blank" href="{{ url('storage/user/'.$has_company['sk']) }}" style="color:#3498db; margin-top:3px;">Lihat File</a>
                             @endif
                         @endif
                     </div>

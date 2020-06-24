@@ -18,7 +18,7 @@
     <div class="x_content">
 		<table class="table table-bordered">
 			<tr>
-				<th>Status Usaha</th>
+				<th width="20%">Status Usaha</th>
 				<td>{!! $item->approved_format !!}</td>
 			</tr>
 			@if($item->reject_reason != null && $item->approved == 2)
@@ -48,9 +48,12 @@
 				<td>{{ $item->min_max_budget }}</td>
 			</tr>
 			<tr>
-				<th>Kelengkapan berkas</th>
+				<th>Kelengkapan berkas <br>(KTP, NPWP, Izin Usaha, Tempat Usaha)</th>
 				<td>
 					{!! $item->ktp_format !!} 
+					<br>
+					<br>
+					{!! $item->npwp_format !!} 
 					<br>
 					<br>
 					{!! $item->izin_usaha_format !!} 

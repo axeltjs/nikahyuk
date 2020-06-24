@@ -28,6 +28,8 @@ class VendorSetupRequest extends FormRequest
             'budget_min' => 'required_with:budget_max|numeric',
             'photo' => 'mimes:jpg,jpeg,png|max:2048',
             'identity_card' => 'mimes:jpg,jpeg,png,pdf|max:2048',
+            'npwp' => 'mimes:jpg,jpeg,png,pdf|max:2048',
+            'sk_photo' => 'mimes:jpg,jpeg,png,pdf|max:2048',
             'business_permit' => 'nullable|mimes:jpg,jpeg,png,pdf|max:2048',
             'theme' => 'required',
             'item_acara' => 'required',

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\VendorSetup;
 use App\Models\Company;
 use Auth;
+use App\Models\User;
 use App\Http\Requests\VendorSetupRequest;
 use DB;
 use Exception;
@@ -50,7 +51,10 @@ class SetupController extends Controller
         ];
 
         $has_company = $this->company->with(['vendorSetup'])->where('user_id', Auth::user()->id)->first();
+
         if($has_company){
+            $sk = User::find(Auth::user()->id)->toArray()['sk_photo'];
+
             $citys = $has_company->vendorSetup->map(function($item){
                 return $item->where('name', 'city_id')->pluck('value');
             })->first();
@@ -64,7 +68,7 @@ class SetupController extends Controller
             })->first();
 
             $has_company->toArray();
-            $has_company = collect($has_company)->union(['city_id' => $citys, 'theme' => $themes, 'item_acara' => $event_items->toArray()]);
+            $has_company = collect($has_company)->union(['city_id' => $citys, 'theme' => $themes, 'item_acara' => $event_items->toArray(), 'sk' => $sk]);
             session()->flash('_old_input', $has_company);
         }
         return view('admin.vendor-setup.index', compact('tema','item_acara','has_company'));
@@ -74,13 +78,33 @@ class SetupController extends Controller
     {
         $setupClass = get_class($this->setup);
         if(!$this->checkTheUpload($request)){
-            $this->message('Harap upload KTP dan Foto tempat usaha', 'danger');
+            $this->message('Harap upload KTP, Foto tempat usaha, Scan Syarat & Ketentuan, dan NPWP Anda!', 'danger');
             return redirect()->back();
         }
         
         $ktp = $this->photoUploaded($request->identity_card, 'company', 0);
         $photo = $this->photoUploaded($request->photo, 'company', 0);
         $izin = $this->photoUploaded($request->business_permit, 'company', 0);
+        $npwp = $this->photoUploaded($request->npwp, 'company', 0);
+        $sk_photo = $this->photoUploaded($request->sk_photo, 'user', 0);
+
+        $currentUser = $this->company->where(['user_id' => Auth::user()->id])->first();
+        
+        if(isset($currentUser)){
+            if($ktp == null){
+                $ktp = $currentUser->identity_card;
+            }
+            if($npwp == null){
+                $npwp = $currentUser->npwp;
+            }
+            if($izin == null){
+                $izin = $currentUser->nidentity_cardpwp;
+            }
+            if($photo == null){
+                $photo = $currentUser->photo;
+            }
+        }
+        
 
         $company = $this->company->updateOrCreate(
         ['user_id' => Auth::user()->id],
@@ -90,9 +114,14 @@ class SetupController extends Controller
             'budget_min' => $request->get('budget_min'),
             'budget_max' => $request->get('budget_max'),
             'identity_card' => $ktp,
+            'npwp' => $npwp,
             'business_permit' => $izin,
             'photo' => $photo
         ]);
+
+        if($sk_photo){
+            User::find(Auth::user()->id)->update(['sk_photo' => $sk_photo]);
+        }
         
         $vendorSetup = [];
         foreach($request->get('city_id') as $item){
@@ -131,7 +160,8 @@ class SetupController extends Controller
         $checkCompany = $this->company->where(['user_id' => Auth::user()->id])->first();
         
         if($checkCompany == null){
-            if($request->identity_card == null || $request->photo == null){
+            if($request->identity_card == null || $request->photo == null || $request->npwp == null || $request->sk_photo ==
+            null){
                 return false;
             }
         }

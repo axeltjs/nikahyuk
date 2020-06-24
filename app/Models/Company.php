@@ -18,6 +18,7 @@ class Company extends Model
         'budget_min',
         'budget_max',
         'approved',
+        'npwp',
         'reject_reason'
     ];
 
@@ -78,31 +79,42 @@ class Company extends Model
     public function getKtpFormatAttribute()
     {
         $file_name = $this->getAttribute('identity_card');
-        if($file_name){
-            return "<img src='".url('storage/company/'.$file_name)."' class='img' style='max-width:450px; height:auto;'/>";
-        }
-
-        return null;
+        
+        return $this->htmlForm($file_name);
     }
 
     public function getIzinUsahaFormatAttribute()
     {
         $file_name = $this->getAttribute('business_permit');
-        if($file_name){
-            return "<img src='".url('storage/company/'.$file_name)."' class='img' style='max-width:450px; height:auto;'/>";
-        }
-
-        return null;
+        
+        return $this->htmlForm($file_name);
     }
 
     public function getTempatUsahaFormatAttribute()
     {
         $file_name = $this->getAttribute('photo');
+        
+        return $this->htmlForm($file_name);
+    }
+
+     public function getNpwpFormatAttribute()
+     {
+        $file_name = $this->getAttribute('npwp');
+
+        return $this->htmlForm($file_name);
+     }
+
+     private function htmlForm($file_name){
         if($file_name){
-            return "<img src='".url('storage/company/'.$file_name)."' class='img' style='max-width:450px; height:auto;'/>";
+            $array = explode('.',$file_name);
+            if($array[1] == 'pdf'){
+                return "<a target='__blank' href='".url('storage/company/'.$file_name)."' class='btn btn-info' />Lihat file</a>";
+            }else{
+                return "<img src='".url('storage/company/'.$file_name)."' class='img' style='max-width:450px; height:auto;'/>";
+            }
         }
 
         return null;
-    }
+     }
 
 }

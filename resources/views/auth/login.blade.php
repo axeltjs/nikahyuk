@@ -162,10 +162,10 @@
               <div class="clearfix"></div>
               <br>
               <label style="text-align:left;">
-              {!! Form::checkbox('privacy_policy', 1, true) !!} Saya setuju dengan <b><a target="__blank" href="https://www.privacypolicygenerator.info/live.php?token=cNYS5WUvLqgtImjTGWc5E8uSfqSeZDgE">Syarat & Ketentuan</a></b> yang berlaku.
+              {!! Form::checkbox('privacy_policy', 1, false, ['id' => 'sk']) !!} Saya setuju dengan <b><a target="__blank" href="{{ asset('doc/sk-nikahyuk.docx') }}">Syarat & Ketentuan</a></b> yang berlaku.
               </label>
               <div>
-                <button type="submit" class="btn btn-block btn-primary">
+                <button type="submit" id="btn-regis" disabled class="btn btn-block btn-primary">
                     {{ __('Register') }}
                 </button>
               </div>
@@ -195,4 +195,17 @@
   </body>
 </html>
 
-
+<script src="{{ asset('admin/vendors/jquery/dist/jquery.min.js') }}"></script>
+<script>
+  $(document).ready(function() {
+    //set initial state.
+    $('#sk').change(function() {
+        if(this.checked) {
+            $('#btn-regis').prop('disabled',false);
+            $(this).prop("checked", returnVal);
+        }else{
+          $('#btn-regis').prop('disabled',true);
+        }
+    });
+});
+</script>
