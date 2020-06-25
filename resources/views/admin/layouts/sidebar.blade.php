@@ -11,11 +11,12 @@
         <li><a><i class="fa fa-users"></i> Customer Related <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
                 <li><a href="{{ url('vendor/quotation') }}">Penawaran</a></li>
-            <li><a href="{{ route('vendor.setup') }}">Konfigurasi Usaha</a></li>
-            <li><a href="{{ route('vendor.chat.index') }}">Chat</a></li>
+                <li><a href="{{ route('vendor.chat.index') }}">Chat</a></li>
             </ul>
         </li>
             <li><a href="{{ url('vendor/promotion') }}"><i class="fa fa-newspaper-o"></i> Promosi</a></li>
+            <li><a href="{{ route('vendor.setup') }}">Konfigurasi Usaha</a></li>
+
         @endhasrole
         @hasrole('Admin')
             <li><a><i class="fa fa-check-square-o"></i> Validasi <span class="fa fa-chevron-down"></span></a>
