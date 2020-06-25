@@ -321,7 +321,6 @@
                         $('#chat-box').html(
                             response.data_view
                         );
-                        console.log(response);
                         if(response.transaksi){
                             $('.btn-select').prop('disabled', true);
                             $('.btn-rate').prop('disabled', false);
