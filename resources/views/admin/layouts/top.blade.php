@@ -34,11 +34,11 @@
                   <a class="dropdown-item">
                   <span class="image"><i class="fa fa-bell"></i></span>
                     <span>
-                      <span>{{ $unreadNotificationChat->data['from_user_name'] }}</span>
+                      <span>{{ $notif->data['from_user_name'] }}</span>
                       <!-- <span class="time">3 mins ago</span> -->
                     </span>
                     <span class="message">
-                      {{ $unreadNotificationChat->data['message'] }}
+                      {{ $notif->data['message'] }}
                     </span>
                   </a>
                 </li>
