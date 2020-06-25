@@ -116,12 +116,12 @@ class ChatController extends Controller
     public function getUnreadNotification()
     {
         try {
-            $notifications = auth()->user()->unreadNotificationChat;
+            $notifications = auth()->user()->unreadNotif;
 
             return [
                 'status' => true,
                 'data_view_count' => $notifications->count(),
-                'data_view_message' => view('admin.chat.all_chat_notif')->with([
+                'data_view_message' => view('admin.notif.all_notif')->with([
                     'notifications' => $notifications
                 ])->render()
             ];
