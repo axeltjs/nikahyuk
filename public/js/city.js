@@ -10,11 +10,7 @@ let getProvince = () => {
             let province = data.rajaongkir.results;
             $.each(province, function(i, item) {
                 $(".provinsi").append(
-                    "<option value='" +
-                        item.province_id +
-                        "'>" +
-                        item.province +
-                        "</option>"
+                    "<option value='"+item.province_id +"'>" +item.province + "</option>"
                 );
             });
         }
