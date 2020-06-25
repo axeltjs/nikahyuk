@@ -97,6 +97,10 @@ class Invoice extends Model
 
     public function getJatuhTempoFormatAttribute()
     {
-        return date('d F Y', strtotime($this->getAttribute('jatuh_tempo')));
+        if($this->getAttribute('jatuh_tempo')){
+            return date('d F Y', strtotime($this->getAttribute('jatuh_tempo')));
+        }
+
+        return "-";
     }
 }
