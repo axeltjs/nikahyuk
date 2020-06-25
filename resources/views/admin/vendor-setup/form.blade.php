@@ -20,15 +20,6 @@
                     </span>
                 </a>
             </li>
-             <li>
-                <a href="#step-2">
-                    <span class="step_no">2</span>
-                    <span class="step_descr">
-                        Step 2<br />
-                        <small>Layanan Item Acara</small>
-                    </span>
-                </a>
-            </li>
         </ul>
         {!! Form::open(['url' => route("vendor.setup.update"), 'method' => 'post', 'files' => 'true']) !!}
         {{ csrf_field() }}

@@ -40,6 +40,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	html {
 		scroll-behavior: smooth;
 	}
+
+	.img-responsive{
+		width:350px;
+		height:350px;
+	}
 </style>
 @endforeach
 	@endif
