@@ -45,6 +45,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		width:350px;
 		height:350px;
 	}
+	.img-review{
+		width: 200px;
+		height: 200px;
+	}
 </style>
 @endforeach
 	@endif
