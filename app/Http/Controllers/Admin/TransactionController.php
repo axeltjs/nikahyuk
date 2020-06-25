@@ -114,6 +114,7 @@ class TransactionController extends Controller
                 }else{
                     // by default if payment method is cash
                     $amount = $transaction->amount;
+                    $date = Carbon::now()->addMonths($i);
     
                     $invoice->create([
                         'number' => $this->getInvoiceCode($transaction, 0, $date),
