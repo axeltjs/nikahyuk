@@ -58,6 +58,33 @@
                     <input type="file" name="photo">
                 </div>
             </div>
+
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 label-align">Scan KTP</label>
+                <div class="col-md-6 col-sm-6">
+                    {!! Form::file('ktp_user', ['id' => 'ktp_user']) !!}
+                    <br><br>
+                    {!! Auth::user()->ktp_format !!}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 label-align">Foto Selfie dengan KTP</label>
+                <div class="col-md-6 col-sm-6">
+                    {!! Form::file('ktp_selfie', ['id' => 'ktp_selfie']) !!}
+                    <br><br>
+                    {!! Auth::user()->ktp_selfie_format !!}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 label-align">Scan dokumen tanda tangan syarat & ketentuan<br> 
+                <a target="__blank" href="{{ asset('doc/Syarat-dan-ketentuan-nikahyuk-printable-customer.docx') }}" style="color:red; margin-top:3px;">Download format disini</a>
+            </label>
+                <div class="col-md-6 col-sm-6">
+                    {!! Form::file('sk_photo', ['id' => 'sk_photo']) !!}
+                    <br><br>
+                    {!! Auth::user()->sk_format !!}
+                </div>
+            </div>
             
             <div class="item form-group">
                 <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Password Baru (kosongkan bila tidak diubah)

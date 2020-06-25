@@ -49,7 +49,7 @@
                         </tr>
                         <tr>
                             <th width="13%">Kota Acara</th>
-                            <td> <span class="city_text"></span></td>
+                            <td> <span class="city_text">Loading...</span></td>
                         </tr>
                         <tr>
                             <th width="13%">Tema Acara</th>

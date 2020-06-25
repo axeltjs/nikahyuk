@@ -19,6 +19,7 @@ class SurveyController extends Controller
 {
     use \App\Http\Controllers\Traits\TraitMessage;
     use \App\Http\Controllers\Traits\TraitDate;
+    use \App\Http\Controllers\Traits\TraitUpload;
 
     public function __construct(Survey $survey,
                                 Company $company,
@@ -132,17 +133,32 @@ class SurveyController extends Controller
             ->where('approved', 1)
             ->orderBy('item_acara_count', 'desc');
 
-            // if ($company->count() <= 0) {
-
-            //     $this->message('Vendor Tidak Ditemukan', 'danger');
-
-            //     return redirect()->back()->withInput();
-            // }
-
             $company = $company->get();
 
             $user = Auth::user();
 
+            $ktp = $this->photoUploaded($request->ktp_user, 'user', 0);
+            $selfie = $this->photoUploaded($request->ktp_selfie, 'user', 0);
+            $sk = $this->photoUploaded($request->sk_photo, 'user', 0);
+
+             if($ktp == null){
+                $ktp = $user->ktp_user;
+             }
+
+             if($selfie == null){
+                $selfie = $user->ktp_selfie;
+             }
+
+             if($sk == null){
+                $sk = $user->sk_photo;
+             }
+
+             User::find($user->id)->update([
+                 'ktp_user' => $ktp,
+                 'ktp_selfie' => $selfie,
+                 'sk_photo' => $sk
+             ]);
+             
             if ($company->isNotEmpty()) {
                 $user->selectedClient()->saveMany(
                     $company->map(function ($item) {

@@ -13,6 +13,40 @@
     </div>
     <div class="x_content">
         <table class="table table-bordered">
+            <tr class="alert-info">
+                <th colspan="2">Kelengkapan data customer</th>    
+            </tr>
+            <tr>
+                <th width="15%">Nama</th>    
+                <td>{{ $item->customer->name }}</td>
+            </tr>
+            <tr>
+                <th width="15%">Email</th>    
+                <td>{{ $item->customer->email }}</td>
+            </tr>
+            <tr>
+                <th width="15%">No. Telepon</th>    
+                <td>{{ $item->customer->phone }}</td>
+            </tr>
+            <tr>
+                <th width="15%">Alamat</th>    
+                <td>{{ $item->customer->address }}</td>
+            </tr>
+            <tr>
+                <th width="15%">KTP</th>    
+                <td>{!! $item->customer->ktp_format ?? '<span style="color:red">Customer ini belum mengupload KTP</span>' !!}</td>
+            </tr>
+            <tr>
+                <th width="15%">Selfie & KTP</th>    
+                <td>{!! $item->customer->ktp_selfie_format ?? '<span style="color:red">Customer ini belum mengupload Selfie & KTP</span>' !!}</td>
+            </tr>
+            <tr>
+                <th width="15%">Persetujuan S&K</th>    
+                <td>{!! $item->customer->sk_format ?? '<span style="color:red">Customer ini belum mengupload Persetujuan Syarat dan ketentuan</span>' !!}</td>
+            </tr>
+        </table>
+        <hr>
+        <table class="table table-bordered">
             <tr class="alert-success">
                 <th colspan="2">Data Transaksi</th>    
             </tr>
@@ -66,6 +100,9 @@
         @hasrole('Vendor')
         @if($item->status == 0)
         <hr>
+        <small style="color:red">* Peringatan: Harap untuk tidak menyetujui transaksi customer yang tidak melengkapi data</small>
+        <br>
+        <br>
         <div class="panel panel-default">
             <div class="panel-body form-horizontal tasi-form" id="form-utama">
                 <div class="item form-group">

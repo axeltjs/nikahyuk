@@ -31,6 +31,9 @@ class SurveyCustomerRequest extends FormRequest
             'city_id' => 'required|numeric',
             'theme' => 'required',
             'item_acara' => 'required',
+            'sk_photo' => 'mimes:jpg,jpeg,png,pdf|max:3048|nullable',
+            'ktp_user' => 'mimes:jpg,jpeg,png,pdf|max:3048|nullable',
+            'ktp_selfie' => 'mimes:jpg,jpeg,png,pdf|max:3048|nullable',
         ];
     }
 }

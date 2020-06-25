@@ -152,4 +152,39 @@ class User extends Authenticatable
 
         return $url;
     }
+
+    public function getKtpFormatAttribute()
+    {
+        $file_name = $this->getAttribute('ktp_user');
+
+        return $this->htmlForm($file_name);
+    }
+
+    public function getKtpSelfieFormatAttribute()
+    {
+        $file_name = $this->getAttribute('ktp_selfie');
+
+        return $this->htmlForm($file_name);
+    }
+
+    public function getSkFormatAttribute()
+    {
+        $file_name = $this->getAttribute('sk_photo');
+
+        return $this->htmlForm($file_name);
+    }
+
+    private function htmlForm($file_name){
+        if($file_name){
+            $array = explode('.',$file_name);
+            
+            if($array[1] == 'pdf'){
+                return "<a target='__blank' href='".url('storage/user/'.$file_name)."' class='btn btn-info' />Lihat file</a>";
+            }else{
+                return "<img src='".url('storage/user/'.$file_name)."' class='img' style='max-width:450px; height:auto;' />";
+            }
+        }
+
+        return null;
+    }
 }

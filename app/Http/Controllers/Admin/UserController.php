@@ -192,13 +192,38 @@ class UserController extends Controller
             return $this->passwordNotCorrect();
         }
         $user = User::findOrFail(Auth::user()->id);
-        
+
+        $ktp = $this->photoUploaded($request->ktp_user, 'user', 0);
+        $selfie = $this->photoUploaded($request->ktp_selfie, 'user', 0);
+        $sk = $this->photoUploaded($request->sk_photo, 'user', 0);
+
+        if($ktp == null){
+            $ktp = $user->ktp_user;
+        }
+
+        if($selfie == null){
+            $selfie = $user->ktp_selfie;
+        }
+
+        if($sk == null){
+            $sk = $user->sk_photo;
+        }
+
         $data = [
             'name' => $request->get('name'),
             'address' => $request->get('address'),
             'email' => $request->get('email'),
             'phone' => $request->get('phone'),
+            'ktp' => $ktp,
+            'selfie' => $selfie,
+            'sk' => $sk,
         ];
+
+        User::find($user->id)->update([
+        'ktp_user' => $ktp,
+        'ktp_selfie' => $selfie,
+        'sk_photo' => $sk
+        ]);
 
         if (isset($request->photo)) {
             $photo = $this->photoUploaded($request->photo, 'user', 1, $user->photo ?? null);

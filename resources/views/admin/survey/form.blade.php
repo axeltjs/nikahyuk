@@ -20,8 +20,17 @@
                     </span>
                 </a>
             </li>
+            <li>
+                <a href="#step-3">
+                    <span class="step_no">3</span>
+                    <span class="step_descr">
+                        Step 3<br />
+                        <small>Kelengkapan Berkas</small>
+                    </span>
+                </a>
+            </li>
         </ul>
-        {!! Form::open(['url' => route("customer.survey.update"), 'method' => 'post', 'id' => 'form-survey']) !!}
+        {!! Form::open(['url' => route("customer.survey.update"), 'method' => 'post', 'id' => 'form-survey', 'files' => 'true']) !!}
         <div id="step-1">
                 <div class="form-group row">
                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="budget">Budget 
@@ -116,6 +125,28 @@
                 </div>
             </div>
         </div>
+         <div id="step-3">
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 label-align">Scan KTP</label>
+                <div class="col-md-6 col-sm-6">
+                    {!! Form::file('ktp_user', ['id' => 'ktp_user' , 'required']) !!}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 label-align">Foto Selfie dengan KTP</label>
+                <div class="col-md-6 col-sm-6">
+                    {!! Form::file('ktp_selfie', ['id' => 'ktp_selfie', 'required']) !!}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 label-align">Scan dokumen tanda tangan syarat & ketentuan<br> 
+                <a target="__blank" href="{{ asset('doc/Syarat-dan-ketentuan-nikahyuk-printable-customer.docx') }}" style="color:red; margin-top:3px;">Download format disini</a>
+            </label>
+                <div class="col-md-6 col-sm-6">
+                    {!! Form::file('sk_photo', ['id' => 'sk_photo', 'required']) !!}
+                </div>
+            </div>
+         </div>
         {!! Form::close() !!}
     </div>
 

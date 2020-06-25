@@ -29,13 +29,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('invoice/{id}', 'Admin\InvoiceController@show');
     Route::get('invoice/cetak/{id}', 'Admin\InvoiceController@cetakInvoice');
     Route::get('customer/survey/{id}', 'Admin\SurveyController@show');
+
+    Route::get('customer/quotation/{id}', 'Admin\QuotationController@show');
     
     Route::group(['middleware' => 'role:Customer'], function () {
         Route::get('customer/survey', 'Admin\SurveyController@index')->name('customer.survey');
         Route::post('customer/survey/update', 'Admin\SurveyController@updateSurvey')->name('customer.survey.update');
         Route::get('customer/survey/search-vendor', 'Admin\SurveyController@searchVendor')->name('customer.survey.search-vendor');
-
-        Route::get('customer/quotation/{id}', 'Admin\QuotationController@show');
 
         Route::get('customer/chat', 'Admin\ChatController@index')->name('customer.chat.index');
         Route::get('customer/chat/get-all-message', 'Admin\ChatController@getAllMessage')->name('customer.chat.get-all-message');
