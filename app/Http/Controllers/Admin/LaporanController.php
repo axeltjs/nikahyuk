@@ -75,7 +75,7 @@ class LaporanController extends Controller
         $pdf = PDF::loadView('admin.laporan.event_item_cetak', compact('items', 'date'));
         return $pdf->download('laporan_item_'.date("dmYHis").'.pdf');
     }
-
+    
     public function convertDate($date)
     {
         if($date){
