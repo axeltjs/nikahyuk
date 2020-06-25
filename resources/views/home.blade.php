@@ -163,7 +163,7 @@
                             </div>
                         </div>
                         <div class="col-md-4 team-left">
-                            <img class="img-responsive" src="images/t1.jpg" alt=" " />
+                            <img class="img-responsive" src="{{ $rating->customer->photo_format_url }}" alt=" " />
                         </div>
                         <div class="clearfix"></div>
                     </div>

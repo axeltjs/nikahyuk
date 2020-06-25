@@ -18,7 +18,7 @@
               </div>
               <div class="w_center w_55">
                 <div class="progress">
-                  <div class="progress-bar bg-green" role="progressbar" aria-valuenow="{{ $val }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $val }}%;">
+                  <div class="progress-bar bg-green" role="progressbar" aria-valuenow="{{ $val }}" aria-valuemin="0" aria-valuemax="10" style="width: {{ $val }}%;">
                     <span class="sr-only">Total: {{ $val }}</span>
                   </div>
                 </div>
