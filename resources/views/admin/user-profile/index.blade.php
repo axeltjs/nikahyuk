@@ -58,7 +58,7 @@
                     <input type="file" name="photo">
                 </div>
             </div>
-
+            @hasrole('Customer')
             <div class="form-group row">
                 <label class="col-form-label col-md-3 col-sm-3 label-align">Scan KTP</label>
                 <div class="col-md-6 col-sm-6">
@@ -75,6 +75,7 @@
                     {!! Auth::user()->ktp_selfie_format !!}
                 </div>
             </div>
+            @endhasrole
             <div class="form-group row">
                 <label class="col-form-label col-md-3 col-sm-3 label-align">Scan dokumen tanda tangan syarat & ketentuan<br> 
                 <a target="__blank" href="{{ asset('doc/Syarat-dan-ketentuan-nikahyuk-printable-customer.docx') }}" style="color:red; margin-top:3px;">Download format disini</a>
