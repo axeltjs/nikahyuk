@@ -139,7 +139,7 @@ class User extends Authenticatable
 
     public function unreadNotificationOffer() 
     {
-        return $this->notifications()
+        return $this->morphMany(DatabaseNotification::class, 'notifiable')
                     ->whereNull('read_at')
                     ->whereIn('type', [OfferCompleteNotification::class, OfferNotification::class]);
     }
