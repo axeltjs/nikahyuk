@@ -78,16 +78,20 @@ class LaporanController extends Controller
 
     public function convertDate($date)
     {
-        $dateArray = explode(' - ', $date);
+        if($date){
+            $dateArray = explode(' - ', $date);
 
-        $date = date('Y-m-d',strtotime($dateArray[0]));
-        $date_end = date('Y-m-d', strtotime($dateArray[1]));
+            $date = date('Y-m-d',strtotime($dateArray[0]));
+            $date_end = date('Y-m-d', strtotime($dateArray[1]));
 
-        $data = [
-            'date' => $date,
-            'date_end' => $date_end,
-        ];
+            $data = [
+                'date' => $date,
+                'date_end' => $date_end,
+            ];
 
-        return $data;
+            return $data;
+        }
+
+        return null;
     }
 }
