@@ -94,7 +94,6 @@ class ChatController extends Controller
 
                 $transaction = $this->transaction->where(['vendor_id' => $chat->vendor_id, 'customer_id' => $chat->customer_id])
                     ->where('status', 1)
-                    ->orWhere('status', 0)
                     ->count();
 
                 $quotations = $this->quotation->where(['creator_id' => $chat->vendor_id, 'customer_id' => $chat->customer_id])
