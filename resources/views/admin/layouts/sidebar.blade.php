@@ -15,7 +15,7 @@
             </ul>
         </li>
             <li><a href="{{ url('vendor/promotion') }}"><i class="fa fa-newspaper-o"></i> Promosi</a></li>
-            <li><a href="{{ route('vendor.setup') }}">Konfigurasi Usaha</a></li>
+            <li><a href="{{ route('vendor.setup') }}"> <i class="fa fa-gears"></i> Konfigurasi Usaha</a></li>
 
         @endhasrole
         @hasrole('Admin')
