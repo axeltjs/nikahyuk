@@ -25,24 +25,11 @@
           <li role="presentation" class="nav-item dropdown open">
             <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
               <i class="fa fa-envelope-o"></i>
-              <span class="badge bg-green" id="unread-notification-chat-count">{{ auth()->user()->unreadNotificationChat->count() + auth()->user()->unreadTransactionNotification->count() }}</span>
+              <span class="badge bg-green" id="unread-notification-chat-count">{{ auth()->user()->unreadNotif->count() }}</span>
             </a>
             <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1" id="unread-notification-chat-message">
-              @foreach(auth()->user()->unreadTransactionNotification as $notif)
-              <li class="nav-item">
-                <a class="dropdown-item" href="{{ $notif->data['next_route'] }}">
-                  <span class="image"><i class="fa fa-bell"></i></span>
-                  <span>
-                    <span>{{ $notif->data['user_name'] }}</span>
-                    <!-- <span class="time">3 mins ago</span> -->
-                  </span>
-                  <span class="message">
-                    {!! $notif->data['message'] !!}
-                  </span>
-                </a>
-              </li>
-            @endforeach
-              @foreach (auth()->user()->unreadNotificationChat as $unreadNotificationChat)
+            @foreach(auth()->user()->unreadNotif as $notif)
+              @if ($notif->type == 'App\Notifications\ChatNotification')
                 <li class="nav-item">
                   <a class="dropdown-item">
                   <span class="image"><i class="fa fa-bell"></i></span>
@@ -55,7 +42,21 @@
                     </span>
                   </a>
                 </li>
-              @endforeach
+              @else
+                <li class="nav-item">
+                  <a class="dropdown-item" href="{{ $notif->data['next_route'] }}">
+                    <span class="image"><i class="fa fa-bell"></i></span>
+                    <span>
+                      <span>{{ $notif->data['user_name'] }}</span>
+                      <!-- <span class="time">3 mins ago</span> -->
+                    </span>
+                    <span class="message">
+                      {!! $notif->data['message'] !!}
+                    </span>
+                  </a>
+                </li>
+              @endif
+            @endforeach
 
               {{-- <li class="nav-item">
                  <div class="text-center">

@@ -13,6 +13,7 @@ use App\Notifications\OfferNotification;
 use App\Notifications\PaymentConfirmNotification;
 use App\Notifications\CreateTransactionNotication;
 use App\Notifications\PromotionVendorNotif;
+use Illuminate\Notifications\DatabaseNotification;
 
 class User extends Authenticatable
 {
@@ -104,9 +105,21 @@ class User extends Authenticatable
         return $this->hasMany(Notification::class, 'user_id');
     }
 
+    public function unreadNotif() {
+        return $this->morphMany(DatabaseNotification::class, 'notifiable')
+                    ->whereNull('read_at')
+                    ->whereIn('type', [
+                        ChatNotification::class,
+                        PaymentConfirmNotification::class,
+                        CreateTransactionNotication::class,
+                        PromotionVendorNotif::class
+                    ])
+                    ->latest();
+    }
+
     public function unreadNotificationChat()
     {
-        return $this->notifications()
+        return $this->morphMany(DatabaseNotification::class, 'notifiable')
                     ->whereNull('read_at')
                     ->where('type', ChatNotification::class)
                     ->latest()
@@ -115,7 +128,7 @@ class User extends Authenticatable
 
     public function unreadTransactionNotification()
     {
-        return $this->notifications()
+        return $this->morphMany(DatabaseNotification::class, 'notifiable')
                     ->whereNull('read_at')
                     ->where('type', PaymentConfirmNotification::class)
                     ->orWhere('type', CreateTransactionNotication::class)
