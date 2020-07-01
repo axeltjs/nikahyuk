@@ -42,6 +42,23 @@ class Transaction extends Model
         return $query->where('status', 0)->orWhere('status', 1);
     }
 
+    public function scopeFilter($query, $request, $date = null)
+    {
+        if($date){
+            // search by date
+        }
+
+        if($request->get('status') != null){
+
+        }
+
+        if($request->get('q') != null){
+            
+        }
+
+        return $query;
+    }
+
     /**
      * 
      * Mutator

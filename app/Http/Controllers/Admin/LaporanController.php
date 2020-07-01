@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\EventItem;
+use App\Models\Transaction;
 use PDF;
 use DB;
 
@@ -75,6 +76,26 @@ class LaporanController extends Controller
         $pdf = PDF::loadView('admin.laporan.event_item_cetak', compact('items', 'date'));
         return $pdf->download('laporan_item_'.date("dmYHis").'.pdf');
     }
+    /**
+     * 
+     * TODO: 
+     * 1. Scope Transaksi
+     * 2. Blade Transaksi Rekap
+     * 3. Arahkan Laporan Transaksi Detail ke yang sudah ada
+     * done 
+     */
+    public function transaksi(Request $request)
+    {
+        $date = $this->convertDate($request->get('date'));
+
+        $item = Transaction::filter($request, $date)->paginate(15);
+
+        $data = [
+            'items' => $item
+        ];
+
+        return view('admin.laporan.transaksi')->with($data);
+    }
     
     public function convertDate($date)
     {
@@ -83,7 +104,11 @@ class LaporanController extends Controller
 
             $date = date('Y-m-d',strtotime($dateArray[0]));
             $date_end = date('Y-m-d', strtotime($dateArray[1]));
-
+            
+            if($date == $date_end){
+                return null;
+            }
+            
             $data = [
                 'date' => $date,
                 'date_end' => $date_end,

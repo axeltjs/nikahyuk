@@ -10,7 +10,7 @@
     <title>Laporan Transaksi {{ $user->company->name }}</title>
 </head>
 <body>
-    <h1>Laporan Transaksi Customer</h1>
+    <h1>Laporan Transaksi Vendor</h1>
     <table class="table">
         <tr>
             <td>Nama Usaha</td>

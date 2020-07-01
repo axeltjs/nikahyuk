@@ -81,4 +81,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('admin/laporan/item-acara','Admin\LaporanController@itemAcara')->name('admin.laporan.item-acara');
         Route::get('admin/laporan/item-acara/cetak','Admin\LaporanController@itemAcaraCetak');
     });
+
+    Route::group(['middleware' => 'role:Admin|Vendor'], function () {
+        Route::get('laporan/transaksi','Admin\LaporanController@transaksi')->name('laporan.transaksi');
+    });
 });

@@ -15,6 +15,7 @@
             </ul>
         </li>
             <li><a href="{{ url('vendor/promotion') }}"><i class="fa fa-newspaper-o"></i> Promosi</a></li>
+            <li><a href="{{ route('laporan.transaksi') }}"><i class="fa fa-file-o"></i> Laporan Transaksi</a></li>
             <li><a href="{{ route('vendor.setup') }}"> <i class="fa fa-gears"></i> Konfigurasi Usaha</a></li>
 
         @endhasrole
@@ -33,6 +34,7 @@
                 <li><a href="{{ route('admin.laporan.user') }}">Customer</a></li>
                 <li><a href="{{ route('admin.laporan.vendor') }}">Vendor</a></li>
                 <li><a href="{{ route('admin.laporan.item-acara') }}">Item Acara</a></li>
+                <li><a href="{{ route('laporan.transaksi') }}">Transaksi</a></li>
                 </ul>
             </li>  
         @endhasrole
