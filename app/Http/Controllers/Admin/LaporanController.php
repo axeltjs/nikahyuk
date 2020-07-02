@@ -96,6 +96,24 @@ class LaporanController extends Controller
 
         return view('admin.laporan.transaksi')->with($data);
     }
+
+    public function cetakTransaksi(Request $request)
+    {
+        $date = $this->convertDate($request->get('date'));
+
+        $items = Transaction::filter($request, $date)->get();
+
+        $pdf = PDF::loadView('admin.laporan.transaksi-cetak', compact('items', 'date'));
+        return $pdf->download('laporan_transaksi_'.date("dmYHis").'.pdf');
+    }
+
+    public function cetakTransaksiTunggal($id)
+    {
+        $item = Transaction::findOrFail($id);
+
+        $pdf = PDF::loadView('admin.laporan.transaksi-cetak-tunggal', compact('item'));
+        return $pdf->download('laporan_transaksi_tunggal_'.date("dmYHis").'.pdf');
+    }
     
     public function convertDate($date)
     {

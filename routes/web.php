@@ -84,5 +84,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['middleware' => 'role:Admin|Vendor'], function () {
         Route::get('laporan/transaksi','Admin\LaporanController@transaksi')->name('laporan.transaksi');
+        Route::get('laporan/transaksi/cetak','Admin\LaporanController@cetakTransaksi')->name('laporan.transaksi.cetak');
+        Route::get('laporan/transaksi/{id}', 'Admin\LaporanController@cetakTransaksiTunggal')->name('laporan.transaksi.tunggal');
     });
 });
