@@ -207,7 +207,7 @@
     @endif
 
     <script>
-        const socketChat = io('http://localhost:3000');
+        const socketChat = io('https://nikahyuk.online:3000');
 
         socketChat.on('receive-chat-notif', function (item) {
             if (item.user_id == "{{ auth()->user()->id }}") {
