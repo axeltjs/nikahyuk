@@ -176,7 +176,7 @@
 @section('js')
 <script>
   
-        const socket = io('https://nikahyuk.online:3000');
+        const socket = io('https://socket.nikahyuk.online');
 
         socket.on('receive-message', function (item) {
             if (item.user_id == "{{ $user_id }}") {
