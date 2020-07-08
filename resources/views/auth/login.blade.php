@@ -45,7 +45,7 @@
           <section class="login_content">
             <form method="POST" action="{{ route('login') }}">
                 @csrf
-                <h1>Login Form</h1>
+                <h1>Masuk ke Nikahyuk</h1>
                 <div>
                     <input id="email" type="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                     @error('email')
@@ -67,18 +67,18 @@
                     <button type="submit" class="btn btn-primary btn-block submit">
                         {{ __('Login') }}
                     </button>
-                    @if (Route::has('password.request'))
+                    {{-- @if (Route::has('password.request'))
                         <a class="pull-left" href="{{ route('password.request') }}">
                             {{ __('Forgot Your Password?') }}
                         </a>
-                    @endif
+                    @endif --}}
                 </div>
 
                 <div class="clearfix"></div>
 
                 <div class="separator">
-                <p class="change_link">New to site?
-                  <a href="#signup" class="to_register"> Create Account </a>
+                <p class="change_link">Pengguna baru?
+                  <a href="#signup" class="to_register"> Registrasi Akun </a>
                 </p>
 
                 <div class="clearfix"></div>
@@ -99,9 +99,9 @@
           <section class="login_content">
             <form method="POST" action="{{ route('register') }}#signup">
                 @csrf
-              <h1>Create Account</h1>
+              <h1>Buat Akun</h1>
               <div>
-                <input id="name" type="text" placeholder="Name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                <input id="name" type="text" placeholder="Nama" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
                 @error('name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -118,7 +118,7 @@
                 @enderror
               </div>
               <div>
-                <input id="phone" type="text" placeholder="Phone" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone" >
+                <input id="phone" type="text" placeholder="No. Handphone" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone" >
                 
                 @error('phone')
                     <span class="invalid-feedback" role="alert">
@@ -127,7 +127,7 @@
                 @enderror
               </div>
               <div>
-                <input id="address" type="text" placeholder="Address" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" required autocomplete="address" >
+                <input id="address" type="text" placeholder="Alamat" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" required autocomplete="address" >
                 
                 @error('address')
                     <span class="invalid-feedback" role="alert">
@@ -145,17 +145,17 @@
                 @enderror
               </div>
               <div>
-                <input id="password-confirm" placeholder="Password Confirmation" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                <input id="password-confirm" placeholder="Konfirmasi Password" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
               </div>
               <div>
                 <div class="radio pull-left">
                     <label>
-                      <input type="radio" class="flat" value="Customer" checked name="role"> I want to sign in as a <b style="color:#27ae60">Customer</b>
+                      <input type="radio" class="flat" value="Customer" checked name="role"> Saya ingin mendaftar sebagai <b style="color:#27ae60">Customer</b>
                     </label>
                   </div>
                   <div class="radio pull-left">
                     <label>
-                      <input type="radio" class="flat" value="Vendor" name="role"> I want to sign in as a <b style="color:#8e44ad">Vendor (Mitra Nikahyuk)</b>
+                      <input type="radio" class="flat" value="Vendor" name="role"> Saya ingin mendaftar sebagai <b style="color:#8e44ad">Vendor (Mitra Nikahyuk)</b>
                     </label>
                   </div>
               </div>
@@ -173,8 +173,8 @@
               <div class="clearfix"></div>
 
               <div class="separator">
-                <p class="change_link">Already a member ?
-                  <a href="#signin" class="to_register"> Log in </a>
+                <p class="change_link">Sudah registrasi?
+                  <a href="#signin" class="to_register"> Masuk ke Nikahyuk </a>
                 </p>
 
                 <div class="clearfix"></div>
