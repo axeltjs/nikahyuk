@@ -35,25 +35,26 @@
                                 </div>
                             </a> -->
 
-                            @foreach ($chatItems as $chatItem)
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-chat list-group-item-light rounded-0" data-id="{{ $chatItem->id }}">
-                                    <div class="media">
-                                        <img src="{{ $chatItem->vendor->photo_format_url }}" alt="user" width="50" class="rounded-circle">
-                                        <div class="media-body ml-4">
-                                            <div class="d-flex align-items-center justify-content-between mb-1">
-                                                <h6 class="mb-0">{{ $chatItem->vendor->company->name }}</h6>
-                                                <input type="hidden" id="chatbox-vendor-id" value="{{ $chatItem->vendor->id }}">
-                                                <small class="small font-weight-bold">
-                                                    {!! $chatItem->vendor->company->overall_score !!}
-                                                </small>
-                                                <!-- <small >14 Dec</small> -->
+                            @if(isset($chatItems))
+                                @foreach ($chatItems as $chatItem)
+                                    <a href="#" class="list-group-item list-group-item-action list-group-item-chat list-group-item-light rounded-0" data-id="{{ $chatItem->id }}">
+                                        <div class="media">
+                                            <img src="{{ $chatItem->vendor->photo_format_url }}" alt="user" width="50" class="rounded-circle">
+                                            <div class="media-body ml-4">
+                                                <div class="d-flex align-items-center justify-content-between mb-1">
+                                                    <h6 class="mb-0">{{ $chatItem->vendor->company->name }}</h6>
+                                                    <input type="hidden" id="chatbox-vendor-id" value="{{ $chatItem->vendor->id }}">
+                                                    <small class="small font-weight-bold">
+                                                        {!! $chatItem->vendor->company->overall_score !!}
+                                                    </small>
+                                                    <!-- <small >14 Dec</small> -->
+                                                </div>
+                                                <p class="font-italic text-muted mb-0 text-small">{{ $chatItem->vendor->name }}</p> 
                                             </div>
-                                             <p class="font-italic text-muted mb-0 text-small">{{ $chatItem->vendor->name }}</p> 
                                         </div>
-                                    </div>
-                                </a>
-                            @endforeach
-
+                                    </a>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -120,7 +121,7 @@
           <input type="number" name="amount" class="form-control" placeholder="Masukkan harga kesepakan (Rp)" required>
           <br>
           <small>Metode pembayaran:</small>
-          {!! Form::select('payment_method', ['cash' => 'cash', '2' => 'cicilan 2x', '3' => 'cicilan 3x', '4' => 'cicilan 4x'], old('payment_method'), ['class' => 'form-control', 'placeholder' => 'Pilih metode pembayaran', 'required']) !!}
+          {!! Form::select('payment_method', ['cash' => 'cash (DP 30%)', '2' => 'cicilan 2x (DP 10%, 40%, 50%)', '3' => 'cicilan 3x (DP 5%, 15%, 50%, 30%)'], old('payment_method'), ['class' => 'form-control', 'placeholder' => 'Pilih metode pembayaran', 'required']) !!}
           <br>
           <small>Paket yang dipilih:</small>
           <select name="quotation_id" class="form-control" id="quotation_id" placeholder="Pilih Penawaran yang sesuai" required></select>

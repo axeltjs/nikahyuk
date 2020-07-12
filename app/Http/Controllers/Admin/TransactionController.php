@@ -54,6 +54,13 @@ class TransactionController extends Controller
     public function dealTransaction(Request $request)
     {
         $number = $this->getTransactionCode(Auth::user()->id, $request->get('vendor_id'));
+        
+        // if(is_numeric($request->get('payment_method'))){
+        //     if(Carbon::parse(Auth::user()->survey->event_date)->subDays(14) <= Carbon::now()){
+        //         $this->message('Transaksi gagal dibuat! Khusus kredit, tanggal acara harus lebih dari 2 minggu (14 Hari)', 'danger');
+        //         return redirect()->back();
+        //     }
+        // }
 
         $transaksi = Transaction::create([
             'number' => $number,
@@ -88,41 +95,118 @@ class TransactionController extends Controller
         DB::beginTransaction();
 
         try {
+            $invoice = new Invoice;
+            $tglAcara = $transaction->customer->survey->event_date;
+            $amount = $transaction->amount;
+
             if($status){ // jika true alias setuju
-            
-                // membuat invoice atau tagihan
-                $invoice = new Invoice;
-                
                 if(is_numeric($transaction->payment_method)){
                     // jika user mencicil atau kredit
-                    $newInvoices = [];
-                    $amount = $transaction->amount / $transaction->payment_method;
-    
-                    for ($i=1; $i <= $transaction->payment_method; $i++) { 
-                        $date = Carbon::now()->addMonths($i);
+                    if($transaction->payment_method == 2){
+                        $dp = $amount * 0.1;
+
+                        // $date = Carbon::now()->addMonths($i);
+                        $date1 = Carbon::now()->addDays(3);
                         $newInvoices[] = [
-                            'number' => $this->getInvoiceCode($transaction, $i, $date),
-                            'amount' => $amount,
-                            'jatuh_tempo' => $date,
+                            'number' => $this->getInvoiceCode($transaction, 0, $date1),
+                            'amount' => $dp,
+                            'jatuh_tempo' => $date1,
                             'status' => 0,
                             'transaction_id' => $transaction_id
                         ];
-                    }
+                        
+                        $tenor1 = $amount * 0.4;
+                        $date2 = Carbon::parse($tglAcara)->subDays(14);
 
+                        $newInvoices[] = [
+                            'number' => $this->getInvoiceCode($transaction, 1, $date2),
+                            'amount' => $tenor1,
+                            'jatuh_tempo' => $date2,
+                            'status' => 0,
+                            'transaction_id' => $transaction_id
+                        ];
+
+                        $tenor2 = $amount * 0.5;
+                        
+                        $newInvoices[] = [
+                            'number' => $this->getInvoiceCode($transaction, 2, $date2),
+                            'amount' => $tenor2,
+                            'jatuh_tempo' => $date2,
+                            'status' => 0,
+                            'transaction_id' => $transaction_id
+                        ];
+                    }else{ //3
+                        $dp = $amount * 0.05;
+
+                        // $date = Carbon::now()->addMonths($i);
+                        $date1 = Carbon::now()->addDays(3);
+                        $newInvoices[] = [
+                            'number' => $this->getInvoiceCode($transaction, 0, $date1),
+                            'amount' => $dp,
+                            'jatuh_tempo' => $date1,
+                            'status' => 0,
+                            'transaction_id' => $transaction_id
+                        ];
+                        
+                        $tenor1 = $amount * 0.15;
+                        $date2 = Carbon::parse($tglAcara)->subDays(14);
+
+                        $newInvoices[] = [
+                            'number' => $this->getInvoiceCode($transaction, 1, $date2),
+                            'amount' => $tenor1,
+                            'jatuh_tempo' => $date2,
+                            'status' => 0,
+                            'transaction_id' => $transaction_id
+                        ];
+
+                        $tenor2 = $amount * 0.5;
+                        
+                        $newInvoices[] = [
+                            'number' => $this->getInvoiceCode($transaction, 2, $date2),
+                            'amount' => $tenor2,
+                            'jatuh_tempo' => $date2,
+                            'status' => 0,
+                            'transaction_id' => $transaction_id
+                        ];
+
+                        $tenor3 = $amount * 0.3;
+                        
+                        $newInvoices[] = [
+                            'number' => $this->getInvoiceCode($transaction, 3, $date2),
+                            'amount' => $tenor3,
+                            'jatuh_tempo' => $date2,
+                            'status' => 0,
+                            'transaction_id' => $transaction_id
+                        ];
+
+                    }
                     $invoice->insert($newInvoices);
 
                 }else{
                     // by default if payment method is cash
-                    $amount = $transaction->amount;
                     $date = Carbon::now();
     
-                    $invoice->create([
-                        'number' => $this->getInvoiceCode($transaction, 0, $date),
-                        'amount' => $amount,
-                        'jatuh_tempo' => null,
+                    $tenor1 = $amount * 0.3;
+                    $date1 = Carbon::parse($tglAcara)->subDays(14);
+
+                    $newInvoices[] = ([
+                        'number' => $this->getInvoiceCode($transaction, 0, $date1),
+                        'amount' => $tenor1,
+                        'jatuh_tempo' => date1,
                         'status' => 0,
                         'transaction_id' => $transaction_id
                     ]);
+
+                    $tenor2 = $amount * 0.7;
+                    $newInvoices[] = ([
+                        'number' => $this->getInvoiceCode($transaction, 1, $date1),
+                        'amount' => $tenor2,
+                        'jatuh_tempo' => date1,
+                        'status' => 0,
+                        'transaction_id' => $transaction_id
+                    ]);
+
+                    $invoice->insert($newInvoices);
                 }
     
                 $transaction->update(['status' => 1]);

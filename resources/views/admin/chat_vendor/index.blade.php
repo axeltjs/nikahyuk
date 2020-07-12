@@ -34,21 +34,21 @@
                                     </div>
                                 </div>
                             </a> -->
-
-                            @foreach ($chatItems as $chatItem)
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-chat list-group-item-light rounded-0" data-id="{{ $chatItem->id }}">
-                                    <div class="media">
-                                        <img src="{{ $chatItem->customer->photo_format_url }}" alt="user" width="50" class="rounded-circle">
-                                        <div class="media-body ml-4">
-                                            <div class="d-flex align-items-center justify-content-between mb-1">
-                                                <h6 class="mb-0">{{ $chatItem->customer->name }}</h6>
-                                                <!-- <small class="small font-weight-bold">14 Dec</small> -->
-                                            </div> 
+                            @if(isset($chatItems))
+                                @foreach ($chatItems as $chatItem)
+                                    <a href="#" class="list-group-item list-group-item-action list-group-item-chat list-group-item-light rounded-0" data-id="{{ $chatItem->id }}">
+                                        <div class="media">
+                                            <img src="{{ $chatItem->customer->photo_format_url }}" alt="user" width="50" class="rounded-circle">
+                                            <div class="media-body ml-4">
+                                                <div class="d-flex align-items-center justify-content-between mb-1">
+                                                    <h6 class="mb-0">{{ $chatItem->customer->name }}</h6>
+                                                    <!-- <small class="small font-weight-bold">14 Dec</small> -->
+                                                </div> 
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                            @endforeach
-
+                                    </a>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>

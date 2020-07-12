@@ -97,6 +97,12 @@ class SurveyController extends Controller
         DB::beginTransaction();
 
         try {
+            $date = $this->rangeToSql($request->get('event_date_range'));
+            if(Carbon::parse($date['start'])->subDays(14) <= Carbon::now()){
+                $this->message('Tanggal acara harus lebih dari 2 minggu (14 Hari)', 'danger');
+                
+                return redirect()->back();
+            }
             $company = $this->company->where(function ($query) use ($request) {
                 // Penyesuaian Budget
                 $query->where('budget_max', '>=', $request->budget)
@@ -169,7 +175,6 @@ class SurveyController extends Controller
                 );
             }
 
-            $date = $this->rangeToSql($request->get('event_date_range'));
             // Update or Create the survey (1 person 1 survey)
             $survey = $this->survey->updateOrCreate(
                 ['user_id' => Auth::user()->id],
