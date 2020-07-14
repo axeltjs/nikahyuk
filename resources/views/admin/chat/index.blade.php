@@ -178,6 +178,7 @@
 <script>
   
         const socket = io('https://socket.nikahyuk.online');
+        socket.origins(‘*:*’);
 
         socket.on('receive-message', function (item) {
             if (item.user_id == "{{ $user_id }}") {
@@ -300,14 +301,16 @@
 
             var el = $(this);
             var id = el.data('id');
-
+            
+            console.log(id);
+            console.log(el);
             $('.list-group-item-action').addClass('list-group-item-light list-group-item-chat');
             el.removeClass('list-group-item-light list-group-item-chat').addClass('active text-white');
 
             $('#chat-box').empty();
             $('#quotation_id').empty();
             $('#form-typing-message').val('');
-            $('.confirm-vendor-id').val($('#chatbox-vendor-id').val());
+            $('.confirm-vendor-id').val('');
             $('.btn-select').prop('disabled', false);
             $('.btn-rate').prop('disabled', true);
 
