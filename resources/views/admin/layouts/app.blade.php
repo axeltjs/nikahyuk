@@ -207,7 +207,7 @@
     @endif
 
     <script>
-        const socketChat = io('https://socket.nikahyuk.online').set('origins','*:*');
+        const socketChat = io('https://socket.nikahyuk.online');
         socketChat.on('receive-chat-notif', function (item) {
             if (item.user_id == "{{ auth()->user()->id }}") {
                 $.ajax({
