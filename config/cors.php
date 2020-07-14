@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'paths' => ['/'],
+    'paths' => ['socket.io/*'],
 
     'allowed_methods' => ['*'],
 
