@@ -49,8 +49,11 @@ class SetupController extends Controller
             'Band',
             'MC',
         ];
-
-        $has_company = $this->company->with(['vendorSetup'])->where('user_id', Auth::user()->id)->first();
+        $myCompany = $this->company->where('user_id', Auth::user()->id)->first();
+        
+        $has_company = $this->company->whereHas('vendorSetup', function($query) use ($myCompany){
+            return $query->where('company_id', $myCompany->id);
+        })->where('user_id', Auth::user()->id)->first();
 
         if($has_company){
             $sk = User::find(Auth::user()->id)->toArray()['sk_photo'];

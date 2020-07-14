@@ -15,6 +15,8 @@ use App\Models\SelectedVendor;
 use App\Events\SendOfferNotification;
 use App\Events\DeleteSendOfferNotification;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+
 class SurveyController extends Controller
 {
     use \App\Http\Controllers\Traits\TraitMessage;
@@ -98,11 +100,13 @@ class SurveyController extends Controller
 
         try {
             $date = $this->rangeToSql($request->get('event_date_range'));
+            
             if(Carbon::parse($date['start'])->subDays(14) <= Carbon::now()){
                 $this->message('Tanggal acara harus lebih dari 2 minggu (14 Hari)', 'danger');
-                
+
                 return redirect()->back();
             }
+
             $company = $this->company->where(function ($query) use ($request) {
                 // Penyesuaian Budget
                 $query->where('budget_max', '>=', $request->budget)
