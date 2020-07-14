@@ -99,7 +99,7 @@
 
 @section('js')
     <script>
-        const socket = io('https://socket.nikahyuk.online');
+        const socket = io('https://socket.nikahyuk.online',{ transport : ['websocket'] });
         socket.on('receive-message', function (item) {
             if (item.user_id == "{{ $user_id }}") {
 
