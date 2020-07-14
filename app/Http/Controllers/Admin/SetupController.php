@@ -49,29 +49,28 @@ class SetupController extends Controller
             'Band',
             'MC',
         ];
-        $myCompany = $this->company->where('user_id', Auth::user()->id)->first();
-        
-        $has_company = $this->company->whereHas('vendorSetup', function($query) use ($myCompany){
-            return $query->where('company_id', $myCompany->id);
-        })->where('user_id', Auth::user()->id)->first();
+        // $myCompany = $this->company->where('user_id', Auth::user()->id)->first();
 
+        $has_company = $this->company->where('user_id', Auth::user()->id)->first();
+        
         if($has_company){
             $sk = User::find(Auth::user()->id)->toArray()['sk_photo'];
 
-            $citys = $has_company->vendorSetup->map(function($item){
-                return $item->where('name', 'city_id')->pluck('value');
+            $citys = $has_company->vendorSetup->map(function($item) use ($has_company){
+                return $item->where(['name' => 'city_id','company_id' => $has_company->id])->pluck('value');
             })->first();
 
-            $themes = $has_company->vendorSetup->map(function($item){
-                return $item->where('name', 'theme')->pluck('value');
+            $themes = $has_company->vendorSetup->map(function($item) use ($has_company){
+                return $item->where(['name' => 'theme','company_id' => $has_company->id])->pluck('value');
             })->first();
 
-            $event_items = $has_company->vendorSetup->map(function($item){
-                return $item->where('name', 'item_acara')->pluck('value');
+            $event_items = $has_company->vendorSetup->map(function($item) use ($has_company){
+                return $item->where(['name' => 'item_acara', 'company_id' => $has_company->id])->pluck('value');
             })->first();
 
             $has_company->toArray();
             $has_company = collect($has_company)->union(['city_id' => $citys, 'theme' => $themes, 'item_acara' => $event_items->toArray(), 'sk' => $sk]);
+
             session()->flash('_old_input', $has_company);
         }
         return view('admin.vendor-setup.index', compact('tema','item_acara','has_company'));

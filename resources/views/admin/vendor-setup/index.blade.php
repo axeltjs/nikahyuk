@@ -55,6 +55,7 @@ $('document').ready(function(){
     var clicked = 0;
     let ct = @php echo json_encode($has_company['city_id']); @endphp;
     getCityById(0, ct);
+    console.log(ct);
     // clicked = 1;
     getProvince();
 
