@@ -72,7 +72,7 @@ class TransactionController extends Controller
             'quotation_id' => $request->get('quotation_id'),
         ]);
 
-        event(new SendCreateTransactionNotificationEvent('customer', Auth::user()->id, $request->get('vendor_id'), $transaksi));
+        event(new SendCreateTransactionNotificationEvent('customer', $request->get('vendor_id'), Auth::user()->id, $transaksi));
 
         $this->message('Transaksi berhasil dibuat!');
 

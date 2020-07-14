@@ -47,7 +47,7 @@ class CreateTransactionNotication extends Notification
         if($this->role == 'vendor'){
             $message = 'Transaksi Anda telah di '.$this->transaction->status_format.'! dengan nomor transaksi: '.$this->transaction->number;
         }else{
-            $message = 'Transaksi Anda telah dibuat! dengan nomor transaksi: '.$this->transaction->number;
+            $message = 'Ada transaksi yang perlu diulas. nomor transaksi: '.$this->transaction->number;
         }
 
         return [
