@@ -302,15 +302,13 @@
             var id = el.data('id');
             let vendor_id = el.data('vendor');
 
-            console.log(vendor_id);
-
             $('.list-group-item-action').addClass('list-group-item-light list-group-item-chat');
             el.removeClass('list-group-item-light list-group-item-chat').addClass('active text-white');
 
             $('#chat-box').empty();
             $('#quotation_id').empty();
             $('#form-typing-message').val('');
-            $('.confirm-vendor-id').val('');
+            $('.confirm-vendor-id').val(vendor_id);
             $('.btn-select').prop('disabled', false);
             $('.btn-rate').prop('disabled', true);
 
