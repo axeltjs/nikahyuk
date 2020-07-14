@@ -137,7 +137,7 @@
   @hasanyrole('Admin|Vendor')
   var transaction = {!! $transactionChart !!};
   var data = [];
-  transaction.sort();
+  // transaction.sort();
   $.each(transaction, function(index, item){
     data.push({'y':index, 'a':item.amount});
   });
