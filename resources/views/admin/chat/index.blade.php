@@ -37,7 +37,7 @@
 
                             @if(isset($chatItems))
                                 @foreach ($chatItems as $chatItem)
-                                    <a href="#" class="list-group-item list-group-item-action list-group-item-chat list-group-item-light rounded-0" data-id="{{ $chatItem->id }}">
+                                    <a href="#" class="list-group-item list-group-item-action list-group-item-chat list-group-item-light rounded-0" data-id="{{ $chatItem->id }}" data-vendor="{{ $chatItem->vendor->id }}">
                                         <div class="media">
                                             <img src="{{ $chatItem->vendor->photo_format_url }}" alt="user" width="50" class="rounded-circle">
                                             <div class="media-body ml-4">
@@ -300,9 +300,10 @@
 
             var el = $(this);
             var id = el.data('id');
+            let vendor_id = el.data('vendor');
 
-            console.log(id);
-            console.log(el);
+            console.log(vendor_id);
+
             $('.list-group-item-action').addClass('list-group-item-light list-group-item-chat');
             el.removeClass('list-group-item-light list-group-item-chat').addClass('active text-white');
 
