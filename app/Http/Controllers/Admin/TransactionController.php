@@ -192,7 +192,7 @@ class TransactionController extends Controller
                     $newInvoices[] = ([
                         'number' => $this->getInvoiceCode($transaction, 0, $date1),
                         'amount' => $tenor1,
-                        'jatuh_tempo' => date1,
+                        'jatuh_tempo' => $date1,
                         'status' => 0,
                         'transaction_id' => $transaction_id
                     ]);
@@ -201,7 +201,7 @@ class TransactionController extends Controller
                     $newInvoices[] = ([
                         'number' => $this->getInvoiceCode($transaction, 1, $date1),
                         'amount' => $tenor2,
-                        'jatuh_tempo' => date1,
+                        'jatuh_tempo' => $date1,
                         'status' => 0,
                         'transaction_id' => $transaction_id
                     ]);
