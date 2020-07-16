@@ -141,7 +141,8 @@ class User extends Authenticatable
     {
         return $this->morphMany(DatabaseNotification::class, 'notifiable')
                     ->whereNull('read_at')
-                    ->whereIn('type', [OfferCompleteNotification::class, OfferNotification::class]);
+                    ->whereIn('type', [OfferCompleteNotification::class, OfferNotification::class])
+                    ->orderBy('created_at','desc');
     }
 
     public function scopeFilter($query, $request)

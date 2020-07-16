@@ -31,7 +31,7 @@ class HomeController extends Controller
                 'transaction' => $transModel->where('vendor_id', $user->id)->count()
             ];
 
-            $transaksi = $transModel->where('vendor_id', $user->id)->orderBy('created_at','desc')->limit(5)->get();
+            $transaksi = $transModel->where('vendor_id', $user->id)->orderBy('created_at','asc')->limit(5)->get();
             $paymentMethod = $transaksi->countBy(function ($item) {
                 return $item->payment_method_format;
             });
