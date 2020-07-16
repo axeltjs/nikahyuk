@@ -44,6 +44,10 @@
                             <td style="color:green">{{ "Rp. ".number_format($survey['budget']) }}</td>
                         </tr>
                         <tr>
+                            <th width="13%">Jumlah Undangan</th>
+                            <td>{{ $survey['invitation_qty'] }}</td>
+                        </tr>
+                        <tr>
                             <th width="13%">Waktu Acara</th>
                             <td>{{ $survey['event_date_range'] }}</td>
                         </tr>
