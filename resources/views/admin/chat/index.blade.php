@@ -2,6 +2,11 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/chat.css') }}">
+    <style>
+    .active div div p{
+        color:#fff !important; 
+    }
+    </style>
 @endsection
 
 @section('content')
@@ -302,7 +307,7 @@
             var id = el.data('id');
             let vendor_id = el.data('vendor');
 
-            $('.list-group-item-action').addClass('list-group-item-light list-group-item-chat');
+            $('.list-group-item-action').addClass('list-group-item-light list-group-item-chat').removeClass('active text-white');
             el.removeClass('list-group-item-light list-group-item-chat').addClass('active text-white');
 
             $('#chat-box').empty();
