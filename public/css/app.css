@@ -6059,8 +6059,8 @@ a.badge-dark.focus {
 }
 
 .list-group-item-light.list-group-item-action.active {
-  color: #fff;
-  background-color: #818182;
+  color: #818182;
+  background-color: #fff;
   border-color: #818182;
 }
 
