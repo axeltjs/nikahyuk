@@ -111,11 +111,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<li class="hidden"><a class="page-scroll" href="#page-top"></a>	</li>
 							@if(Request::segment(1) == 'promo')
 								<li><a class="hvr-sweep-to-right" href="{{ url('/#home') }}">Home</a></li>
+								<li><a class="hvr-sweep-to-right" href="{{ url('/#cara-kerja') }}">Cara Kerja</a></li>
 								<li><a class="hvr-sweep-to-right" href="{{ url('/#fitur') }}">Fitur</a></li>
 								<li><a class="hvr-sweep-to-right" href="{{ url('/#paket-nikah') }}">Paket Pernikahan</a></li>
 								<li><a class="hvr-sweep-to-right" href="{{ url('/#nilai-ulasan') }}">Nilai & Ulasan</a></li>
 							@else 
 								<li><a class="hvr-sweep-to-right" href="#home">Home</a></li>
+								<li><a class="hvr-sweep-to-right" href="#cara-kerja">Cara Kerja</a></li>
 								<li><a class="hvr-sweep-to-right" href="#fitur">Fitur</a></li>
 								<li><a class="hvr-sweep-to-right" href="#paket-nikah">Paket Pernikahan</a></li>
 								<li><a class="hvr-sweep-to-right" href="#nilai-ulasan">Nilai & Ulasan</a></li>

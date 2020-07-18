@@ -2,9 +2,48 @@
 
 @section('content')
     <!-- ser_agile -->
+    <div class="ser_agile" id="cara-kerja" style="background:#c8d6e5;">
+        <div class="container">
+        <h2 class="heading-agileinfo">Selamat Datang<span>Bagaimana cara aplikasi nikahyuk bekerja?</span></h2>
+            <div class="col-md-12">  
+                <div class="col-md-6" style="text-align: center">
+                    <img src="{{ asset('img/survey-img.png') }}" style="max-width: 280px; height:auto" alt="Survey image">
+                </div>
+                <div class="col-md-6">
+                    <br><br><br>
+                    <p>
+                        Calon pengantin mengisi lembar survey, yang berfungsi untuk mencatat budget, tanggal pernikahan, tempat pernikahan dan kebutuhan calon pengantin untuk menggelar acara pernikahan. Dan jangan lupa untuk mengisi data diri kamu.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-12">  
+                <div class="col-md-6">
+                    <br><br><br>
+                    <p>
+                        Setelah mengisi survey, calon pengantin cukup menunggu notifikasi penawaran dari mitra kami. Dan calon pengantin dapat bernegosiasi dengan mitra kami.
+                    </p>
+                    <br>
+                </div>
+                <div class="col-md-6" style="text-align: center">
+                    <img src="{{ asset('img/notifikasi2.png') }}" style="max-width: 280px; height:auto" alt="Survey image">
+                </div>
+            </div>
+            <div class="col-md-12">  
+                <div class="col-md-6" style="text-align: center">
+                    <img src="{{ asset('img/deal.png') }}" style="max-width: 280px; height:auto" alt="Survey image">
+                </div>
+                <div class="col-md-6">
+                    <br><br><br>
+                    <p>
+                        Setelah selesai bernegosiasi, calon pengantin dapat bebas memilih vendor yang cocok dengan kebutuhannya dan bebas memilih metode pembayaran yang dikehendaki.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="ser_agile" id="fitur">
         <div class="container">
-        <h2 class="heading-agileinfo">Selamat Datang<span>Nikahyuk memberikan kemudahan dalam merencanakan pernikahanmu!</span></h2>
+        <h2 class="heading-agileinfo">Fitur Kami<span>Nikahyuk memberikan kemudahan dalam merencanakan pernikahanmu!</span></h2>
         <p>Kami berkomitmen untuk membantu dan mensukseskan acara pernikahanmu dari perencanaan hingga selesai. Bergabunglah dengan kami dan dapatkan layanan terbaik dari mitra kami.</p>
         <div class="ser_w3l">  
             <div class="outer-wrapper">
